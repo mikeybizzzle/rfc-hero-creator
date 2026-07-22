@@ -5,11 +5,10 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const links = [
-  ["Guide", "/guide"],
-  ["Builder", "/builder"],
-  ["Templates", "/templates"],
+  ["Hero Card", "/hero"],
+  ["Custom", "/custom"],
+  ["Unique", "/unique"],
   ["Gallery", "/gallery"],
-  ["Walkthroughs", "/walkthroughs"],
 ] as const;
 
 export function SiteNav() {

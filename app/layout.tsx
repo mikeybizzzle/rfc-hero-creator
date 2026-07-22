@@ -40,11 +40,10 @@ export default function RootLayout({
             <p className="hud text-xs text-muted">RFC Hero Creator</p>
             <nav className="flex flex-wrap gap-x-5 gap-y-2">
               {[
-                ["Guide", "/guide"],
-                ["Builder", "/builder"],
-                ["Templates", "/templates"],
+                ["Hero Card", "/hero"],
+                ["Custom", "/custom"],
+                ["Unique", "/unique"],
                 ["Gallery", "/gallery"],
-                ["Walkthroughs", "/walkthroughs"],
               ].map(([label, href]) => (
                 <Link
                   key={href}
