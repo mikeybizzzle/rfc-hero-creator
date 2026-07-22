@@ -5,6 +5,7 @@ import { CardSlider } from "@/components/card-slider";
 import { CopyImageCard } from "@/components/copy-image-card";
 import { ExampleDropdown } from "@/components/chat-example";
 import { FlowHeader, StepHeading } from "@/components/flow";
+import { ProcessStrip } from "@/components/process-strip";
 import { PromptForm } from "@/components/prompt-form";
 
 export const metadata: Metadata = {
@@ -37,6 +38,10 @@ export default function UniquePage() {
           "Copy the prompt, fill out your hero's name and details, paste it into ChatGPT, and hit Go.",
         ]}
       />
+
+      <div className="mb-3">
+        <ProcessStrip walkthrough={walkthrough} />
+      </div>
 
       <div className="mb-10">
         <ExampleDropdown walkthrough={walkthrough} />
