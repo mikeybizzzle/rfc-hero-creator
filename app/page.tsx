@@ -28,12 +28,12 @@ export default function Home() {
   return (
     <div>
       <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pt-10 pb-8 md:pt-16 md:pb-12">
+        <div className="mx-auto max-w-6xl px-4 pt-8 pb-6 md:pt-16 md:pb-12">
           <p className="hud text-xs text-gold mb-3">RFC Alliance — Last Z: Survival Shooter</p>
           <h1 className="display text-3xl md:text-5xl leading-[0.95] max-w-3xl mb-4">
             Make your own hero card
           </h1>
-          <p className="text-muted text-sm md:text-base leading-relaxed max-w-2xl mb-8">
+          <p className="text-muted text-sm md:text-base leading-relaxed max-w-2xl mb-6">
             Real simple: pick one of the three image types below. Each page walks you
             through three copy-paste steps into ChatGPT.
           </p>
@@ -42,7 +42,7 @@ export default function Home() {
               const img = findGallery(o.imageSlug);
               return (
                 <Link key={o.href} href={o.href} className="card-frame overflow-hidden group">
-                  <div className="relative aspect-[2/1] sm:aspect-square">
+                  <div className="relative aspect-[3/1] sm:aspect-square">
                     <Image
                       src={img.src}
                       alt={galleryName(img)}
