@@ -1,0 +1,633 @@
+{
+  "baseTemplates": [
+    {
+      "slug": "a-purple-template",
+      "file": "A_Purple_Template.png",
+      "src": "/images/templates/a-purple-template.webp",
+      "width": 1200,
+      "height": 1200,
+      "download": "/downloads/templates/a-purple-template.png"
+    },
+    {
+      "slug": "b-blue-template",
+      "file": "B_Blue_Template.png",
+      "src": "/images/templates/b-blue-template.webp",
+      "width": 1200,
+      "height": 1200,
+      "download": "/downloads/templates/b-blue-template.png"
+    },
+    {
+      "slug": "s-orange-template",
+      "file": "S_Orange_Template.png",
+      "src": "/images/templates/s-orange-template.webp",
+      "width": 1200,
+      "height": 1200,
+      "download": "/downloads/templates/s-orange-template.png"
+    }
+  ],
+  "heroRefs": [
+    {
+      "slug": "a-ava",
+      "file": "A - Ava.png",
+      "src": "/images/heroes/a-ava.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-ava.png"
+    },
+    {
+      "slug": "a-christina",
+      "file": "A - Christina.png",
+      "src": "/images/heroes/a-christina.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-christina.png"
+    },
+    {
+      "slug": "a-elizabeth",
+      "file": "A - Elizabeth.png",
+      "src": "/images/heroes/a-elizabeth.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-elizabeth.png"
+    },
+    {
+      "slug": "a-fiona",
+      "file": "A - Fiona.png",
+      "src": "/images/heroes/a-fiona.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-fiona.png"
+    },
+    {
+      "slug": "a-isabella",
+      "file": "A - Isabella.png",
+      "src": "/images/heroes/a-isabella.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-isabella.png"
+    },
+    {
+      "slug": "a-leah",
+      "file": "A - Leah.png",
+      "src": "/images/heroes/a-leah.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-leah.png"
+    },
+    {
+      "slug": "a-maria",
+      "file": "A - Maria.png",
+      "src": "/images/heroes/a-maria.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-maria.png"
+    },
+    {
+      "slug": "a-miranda",
+      "file": "A - Miranda.png",
+      "src": "/images/heroes/a-miranda.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-miranda.png"
+    },
+    {
+      "slug": "a-vivian",
+      "file": "A - Vivian.png",
+      "src": "/images/heroes/a-vivian.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/a-vivian.png"
+    },
+    {
+      "slug": "b-angelina",
+      "file": "B - Angelina.png",
+      "src": "/images/heroes/b-angelina.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/b-angelina.png"
+    },
+    {
+      "slug": "s-alma",
+      "file": "S - Alma.png",
+      "src": "/images/heroes/s-alma.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-alma.png"
+    },
+    {
+      "slug": "s-amelia",
+      "file": "S - Amelia.png",
+      "src": "/images/heroes/s-amelia.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-amelia.png"
+    },
+    {
+      "slug": "s-bella",
+      "file": "S - Bella.png",
+      "src": "/images/heroes/s-bella.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-bella.png"
+    },
+    {
+      "slug": "s-chinatsu",
+      "file": "S - Chinatsu.png",
+      "src": "/images/heroes/s-chinatsu.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-chinatsu.png"
+    },
+    {
+      "slug": "s-evelyn",
+      "file": "S - Evelyn.png",
+      "src": "/images/heroes/s-evelyn.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-evelyn.png"
+    },
+    {
+      "slug": "s-harleyna",
+      "file": "S - Harleyna.png",
+      "src": "/images/heroes/s-harleyna.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-harleyna.png"
+    },
+    {
+      "slug": "s-katrina-01",
+      "file": "S - Katrina 01.png",
+      "src": "/images/heroes/s-katrina-01.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-katrina-01.png"
+    },
+    {
+      "slug": "s-katrina-02",
+      "file": "S - Katrina 02.png",
+      "src": "/images/heroes/s-katrina-02.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-katrina-02.png"
+    },
+    {
+      "slug": "s-laura",
+      "file": "S - Laura.png",
+      "src": "/images/heroes/s-laura.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-laura.png"
+    },
+    {
+      "slug": "s-mia",
+      "file": "S - Mia.png",
+      "src": "/images/heroes/s-mia.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-mia.png"
+    },
+    {
+      "slug": "s-nyx",
+      "file": "S - Nyx.png",
+      "src": "/images/heroes/s-nyx.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-nyx.png"
+    },
+    {
+      "slug": "s-oliveira",
+      "file": "S - Oliveira.png",
+      "src": "/images/heroes/s-oliveira.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-oliveira.png"
+    },
+    {
+      "slug": "s-sakura",
+      "file": "S - Sakura.png",
+      "src": "/images/heroes/s-sakura.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-sakura.png"
+    },
+    {
+      "slug": "s-scarlett",
+      "file": "S - Scarlett.png",
+      "src": "/images/heroes/s-scarlett.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-scarlett.png"
+    },
+    {
+      "slug": "s-selena",
+      "file": "S - Selena.png",
+      "src": "/images/heroes/s-selena.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-selena.png"
+    },
+    {
+      "slug": "s-sophia",
+      "file": "S - Sophia.png",
+      "src": "/images/heroes/s-sophia.webp",
+      "width": 960,
+      "height": 960,
+      "download": "/downloads/heroes/s-sophia.png"
+    }
+  ],
+  "gallery": [
+    {
+      "slug": "ausryte",
+      "file": "Aušrytė.png",
+      "src": "/images/gallery/ausryte.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "azteca-mau",
+      "file": "azteca-mau.jpeg",
+      "src": "/images/gallery/azteca-mau.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "babyyaga",
+      "file": "babyyaga.png",
+      "src": "/images/gallery/babyyaga.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "castor-troy",
+      "file": "castor-troy.jpeg",
+      "src": "/images/gallery/castor-troy.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "coachardi",
+      "file": "coachardi.jpeg",
+      "src": "/images/gallery/coachardi.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "coqueta-farm",
+      "file": "coqueta-farm.png",
+      "src": "/images/gallery/coqueta-farm.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "deathhawk",
+      "file": "deathhawk.png",
+      "src": "/images/gallery/deathhawk.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "diamond-party-heros",
+      "file": "diamond-party-heros.png",
+      "src": "/images/gallery/diamond-party-heros.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "gerardo-o",
+      "file": "gerardo-o.png",
+      "src": "/images/gallery/gerardo-o.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "ironbastion",
+      "file": "ironbastion.jpeg",
+      "src": "/images/gallery/ironbastion.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "jungle-boy-stats",
+      "file": "jungle-boy-stats.png",
+      "src": "/images/gallery/jungle-boy-stats.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "jungle-boy",
+      "file": "jungle-boy.png",
+      "src": "/images/gallery/jungle-boy.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "jungle-lindy",
+      "file": "jungle-lindy.jpeg",
+      "src": "/images/gallery/jungle-lindy.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "kriss-de-valnor",
+      "file": "kriss-de-valnor.png",
+      "src": "/images/gallery/kriss-de-valnor.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "lolybear",
+      "file": "lolybear.png",
+      "src": "/images/gallery/lolybear.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "mbizzzle",
+      "file": "mbizzzle.png",
+      "src": "/images/gallery/mbizzzle.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "mr-bean",
+      "file": "Mr-Bean.jpeg",
+      "src": "/images/gallery/mr-bean.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "new-season-heros",
+      "file": "new-season-heros.png",
+      "src": "/images/gallery/new-season-heros.webp",
+      "width": 675,
+      "height": 1200
+    },
+    {
+      "slug": "nisse",
+      "file": "nisse.png",
+      "src": "/images/gallery/nisse.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "nyabinghi-x",
+      "file": "nyabinghi-x.png",
+      "src": "/images/gallery/nyabinghi-x.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "oldhippie",
+      "file": "oldhippie.jpeg",
+      "src": "/images/gallery/oldhippie.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "pope-bear-hot-tub",
+      "file": "pope-bear-hot-tub.png",
+      "src": "/images/gallery/pope-bear-hot-tub.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "pope-bear",
+      "file": "pope-bear.jpeg",
+      "src": "/images/gallery/pope-bear.webp",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "slug": "remon-pharaoh",
+      "file": "remon-pharaoh.jpeg",
+      "src": "/images/gallery/remon-pharaoh.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "supert-diamond-party",
+      "file": "SuperT-Diamond-Party.png",
+      "src": "/images/gallery/supert-diamond-party.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "supert",
+      "file": "SuperT.jpeg",
+      "src": "/images/gallery/supert.webp",
+      "width": 1200,
+      "height": 1200
+    },
+    {
+      "slug": "yousef-rocket-man",
+      "file": "yousef-rocket-man.png",
+      "src": "/images/gallery/yousef-rocket-man.webp",
+      "width": 1200,
+      "height": 1200
+    }
+  ],
+  "chats": {
+    "chat1": {
+      "image-outputs": [
+        {
+          "slug": "message-1-image-output",
+          "file": "message-1-image-output.png",
+          "src": "/images/chats/chat1/image-outputs/message-1-image-output.webp",
+          "width": 900,
+          "height": 900
+        }
+      ],
+      "message-1-provided-images": [
+        {
+          "slug": "provided-image-1",
+          "file": "provided-image-1.jpeg",
+          "src": "/images/chats/chat1/message-1-provided-images/provided-image-1.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-2",
+          "file": "provided-image-2.jpeg",
+          "src": "/images/chats/chat1/message-1-provided-images/provided-image-2.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-3",
+          "file": "provided-image-3.jpeg",
+          "src": "/images/chats/chat1/message-1-provided-images/provided-image-3.webp",
+          "width": 900,
+          "height": 877
+        }
+      ]
+    },
+    "chat2": {
+      "image-outputs": [
+        {
+          "slug": "message-2-image-output",
+          "file": "message-2-image-output.png",
+          "src": "/images/chats/chat2/image-outputs/message-2-image-output.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-3-image-output",
+          "file": "message-3-image-output.png",
+          "src": "/images/chats/chat2/image-outputs/message-3-image-output.webp",
+          "width": 900,
+          "height": 900
+        }
+      ],
+      "message-1-provided-images": [
+        {
+          "slug": "provided-image-1",
+          "file": "provided-image-1.png",
+          "src": "/images/chats/chat2/message-1-provided-images/provided-image-1.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-2",
+          "file": "provided-image-2.png",
+          "src": "/images/chats/chat2/message-1-provided-images/provided-image-2.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-3",
+          "file": "provided-image-3.png",
+          "src": "/images/chats/chat2/message-1-provided-images/provided-image-3.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-4",
+          "file": "provided-image-4.png",
+          "src": "/images/chats/chat2/message-1-provided-images/provided-image-4.webp",
+          "width": 900,
+          "height": 900
+        }
+      ],
+      "message-2-provided-images": [
+        {
+          "slug": "message-2-provided-image-1",
+          "file": "message-2-provided-image-1.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-1.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-2",
+          "file": "message-2-provided-image-2.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-2.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-3",
+          "file": "message-2-provided-image-3.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-3.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-4",
+          "file": "message-2-provided-image-4.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-4.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-5",
+          "file": "message-2-provided-image-5.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-5.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-6",
+          "file": "message-2-provided-image-6.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-6.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-7",
+          "file": "message-2-provided-image-7.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-7.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-8",
+          "file": "message-2-provided-image-8.png",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-8.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "message-2-provided-image-9",
+          "file": "message-2-provided-image-9.jpeg",
+          "src": "/images/chats/chat2/message-2-provided-images/message-2-provided-image-9.webp",
+          "width": 900,
+          "height": 860
+        }
+      ]
+    },
+    "chat3": {
+      "image-outputs": [
+        {
+          "slug": "message-1-image-output",
+          "file": "message-1-image-output.png",
+          "src": "/images/chats/chat3/image-outputs/message-1-image-output.webp",
+          "width": 900,
+          "height": 900
+        }
+      ],
+      "message-1-provided-images": [
+        {
+          "slug": "provided-image-1",
+          "file": "provided-image-1.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-1.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-2",
+          "file": "provided-image-2.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-2.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-3",
+          "file": "provided-image-3.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-3.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-4",
+          "file": "provided-image-4.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-4.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-5",
+          "file": "provided-image-5.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-5.webp",
+          "width": 900,
+          "height": 900
+        },
+        {
+          "slug": "provided-image-6",
+          "file": "provided-image-6.png",
+          "src": "/images/chats/chat3/message-1-provided-images/provided-image-6.webp",
+          "width": 900,
+          "height": 900
+        }
+      ]
+    }
+  }
+}
