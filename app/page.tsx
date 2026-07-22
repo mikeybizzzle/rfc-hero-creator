@@ -14,7 +14,7 @@ const options = [
     href: "/custom",
     title: "Custom image",
     text: "Make any kind of hero image you want — like a group hero image.",
-    imageSlug: "supert",
+    imageSlug: "supert-diamond-party",
   },
   {
     href: "/unique",
