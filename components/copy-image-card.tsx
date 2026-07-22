@@ -47,11 +47,15 @@ export function CopyImageCard({
   label,
   sizes,
   priority,
+  prefix,
+  prefixClass,
 }: {
   image: ManifestImage;
   label: string;
   sizes: string;
   priority?: boolean;
+  prefix?: string;
+  prefixClass?: string;
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
@@ -73,7 +77,7 @@ export function CopyImageCard({
     <button
       type="button"
       onClick={onClick}
-      className="card-frame overflow-hidden group text-left w-full snap-start"
+      className="card-frame overflow-hidden group text-left w-full snap-start transition-colors hover:border-gold/60 active:border-gold active:scale-[0.99] transition-transform duration-100"
       aria-label={`Copy ${label} to clipboard`}
     >
       <div className="relative aspect-square">
@@ -86,13 +90,21 @@ export function CopyImageCard({
           className="object-cover"
         />
         {status !== "idle" && (
-          <span className="absolute inset-0 bg-bg/85 flex items-center justify-center hud text-xs text-gold">
-            {status === "copied" ? "Copied" : "Saved"}
+          <span
+            role="status"
+            className={`absolute inset-0 bg-bg/85 flex items-center justify-center text-center px-2 hud text-gold transition-opacity duration-150 starting:opacity-0 ${
+              status === "copied" ? "text-xs" : "text-[10px]"
+            }`}
+          >
+            {status === "copied" ? "Copied" : "Downloaded — attach in ChatGPT"}
           </span>
         )}
       </div>
       <div className="px-2 py-1.5 flex items-baseline justify-between gap-2">
-        <span className="hud text-[11px] text-cream truncate">{label}</span>
+        <span className="hud text-[11px] text-cream truncate">
+          {prefix && <span className={prefixClass}>{prefix}</span>}
+          {label}
+        </span>
         <span className="hud text-[10px] text-muted group-hover:text-gold transition-colors shrink-0">
           Copy
         </span>

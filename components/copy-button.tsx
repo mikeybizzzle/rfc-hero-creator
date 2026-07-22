@@ -15,13 +15,14 @@ export function CopyButton({ text, label = "Copy prompt" }: { text: string; labe
     <button
       type="button"
       onClick={copy}
+      aria-live="polite"
       className={`hud text-xs px-4 py-2.5 border transition-colors ${
         copied
           ? "border-gold bg-gold text-bg"
           : "border-gold text-gold hover:bg-gold hover:text-bg"
       }`}
     >
-      {copied ? "Copied" : label}
+      <span role="status">{copied ? "Copied" : label}</span>
     </button>
   );
 }

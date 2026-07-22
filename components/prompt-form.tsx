@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   heroCardPrompt,
   heroCardNoPhotoPrompt,
   metaPrompt,
-  metaPromptExample,
   rankInfo,
   type Rank,
 } from "@/lib/prompts";
@@ -19,6 +18,28 @@ const rankRing: Record<Rank, string> = {
 
 const inputClass =
   "w-full bg-bg border border-line px-3 py-2.5 text-sm text-cream placeholder:text-muted/70 focus:border-gold";
+
+const PLACEHOLDER_TOKENS = [
+  "[HERO CHARACTER NAME]",
+  "[Describe your hero character here]",
+  "[Details about the image you want generated]",
+];
+
+function renderPromptWithPlaceholders(text: string) {
+  const pattern = new RegExp(
+    `(${PLACEHOLDER_TOKENS.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
+    "g"
+  );
+  return text.split(pattern).map((part, i) =>
+    PLACEHOLDER_TOKENS.includes(part) ? (
+      <span key={i} className="text-gold-bright">
+        {part}
+      </span>
+    ) : (
+      part
+    )
+  );
+}
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -34,6 +55,24 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
   const [name, setName] = useState("");
   const [details, setDetails] = useState("");
   const [groupDescription, setGroupDescription] = useState("");
+  const ranks = Object.keys(rankInfo) as Rank[];
+  const radioRefs = useRef<Record<Rank, HTMLButtonElement | null>>({} as Record<Rank, HTMLButtonElement | null>);
+
+  function handleRadioKeyDown(e: React.KeyboardEvent<HTMLDivElement>) {
+    const currentIndex = ranks.indexOf(rank);
+    let nextIndex = currentIndex;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") {
+      nextIndex = (currentIndex + 1) % ranks.length;
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
+      nextIndex = (currentIndex - 1 + ranks.length) % ranks.length;
+    } else {
+      return;
+    }
+    e.preventDefault();
+    const nextRank = ranks[nextIndex];
+    setRank(nextRank);
+    radioRefs.current[nextRank]?.focus();
+  }
 
   const prompt =
     mode === "photo"
@@ -51,7 +90,7 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
               value={groupDescription}
               onChange={(e) => setGroupDescription(e.target.value)}
               rows={6}
-              placeholder={metaPromptExample}
+              placeholder="e.g. Generate a prompt for adding additional hero characters to the image of Super T throwing a diamond party"
               className={inputClass}
             />
           </Field>
@@ -59,17 +98,26 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
           <>
             <div>
               <span className="hud text-xs text-muted block mb-2">Rank template</span>
-              <div className="flex gap-2" role="radiogroup" aria-label="Rank template">
-                {(Object.keys(rankInfo) as Rank[]).map((r) => (
+              <div
+                className="flex gap-2"
+                role="radiogroup"
+                aria-label="Rank template"
+                onKeyDown={handleRadioKeyDown}
+              >
+                {ranks.map((r) => (
                   <button
                     key={r}
+                    ref={(el) => {
+                      radioRefs.current[r] = el;
+                    }}
                     role="radio"
                     aria-checked={rank === r}
+                    tabIndex={rank === r ? 0 : -1}
                     onClick={() => setRank(r)}
                     className={`display text-lg w-12 h-12 border transition-colors ${
                       rank === r
                         ? `${rankRing[r]} bg-raised`
-                        : "border-line text-muted hover:text-cream"
+                        : "border-line text-muted hover:text-cream hover:border-cream/40 active:bg-raised"
                     }`}
                   >
                     {r}
@@ -110,7 +158,14 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
           <span className="hud text-xs text-muted">Your prompt</span>
           <CopyButton text={prompt} />
         </div>
-        <pre className="prompt-block text-cream/90 p-4 overflow-auto max-h-[50vh]">{prompt}</pre>
+        <pre
+          tabIndex={0}
+          role="region"
+          aria-label="Prompt text"
+          className="prompt-block text-cream/90 p-4 overflow-auto max-h-[50vh]"
+        >
+          {renderPromptWithPlaceholders(prompt)}
+        </pre>
       </div>
     </div>
   );

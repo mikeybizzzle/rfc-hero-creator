@@ -34,7 +34,7 @@ export const heroRefsSorted = [...heroRefs].sort((a, b) => {
 });
 
 export function galleryName(img: ManifestImage): string {
-  return img.file.replace(/\.[^.]+$/, "");
+  return img.file.replace(/\.[^.]+$/, "").replace(/-/g, " ");
 }
 
 export function findGallery(slug: string): ManifestImage {

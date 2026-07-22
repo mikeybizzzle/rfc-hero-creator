@@ -5,8 +5,7 @@ import type { Walkthrough } from "@/lib/chats";
 export function ProcessStrip({ walkthrough }: { walkthrough: Walkthrough }) {
   const inputs = walkthrough.messages[0].images ?? [];
   const outputs =
-    [...walkthrough.messages].reverse().find((m) => m.role === "assistant" && m.images?.length)
-      ?.images ?? [];
+    walkthrough.messages.find((m) => m.role === "assistant" && m.images?.length)?.images ?? [];
   const output = outputs[outputs.length - 1];
 
   return (
@@ -20,11 +19,11 @@ export function ProcessStrip({ walkthrough }: { walkthrough: Walkthrough }) {
                 src={img.src}
                 alt={`Image ${i + 1}`}
                 fill
-                sizes="64px"
+                sizes="(max-width: 640px) 48px, 64px"
                 className="object-cover"
               />
             </div>
-            <p className="hud text-[10px] text-muted text-center mt-1">{i + 1}</p>
+            <p className="hud text-[11px] text-muted text-center mt-1">{i + 1}</p>
           </div>
         </Fragment>
       ))}
@@ -32,9 +31,15 @@ export function ProcessStrip({ walkthrough }: { walkthrough: Walkthrough }) {
         <span className="display text-lg text-gold ml-1.5">&rarr;</span>
         <div>
           <div className="relative w-20 h-20 sm:w-24 sm:h-24 card-frame overflow-hidden">
-            <Image src={output.src} alt="Output" fill sizes="96px" className="object-cover" />
+            <Image
+              src={output.src}
+              alt="Output"
+              fill
+              sizes="(max-width: 640px) 80px, 96px"
+              className="object-cover"
+            />
           </div>
-          <p className="hud text-[10px] text-gold text-center mt-1">Output</p>
+          <p className="hud text-[11px] text-gold text-center mt-1">Output</p>
         </div>
       </div>
     </div>
