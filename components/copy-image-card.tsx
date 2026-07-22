@@ -6,20 +6,34 @@ import type { ManifestImage } from "@/lib/data";
 
 type Status = "idle" | "copied" | "saved";
 
+async function toPngBlob(blob: Blob): Promise<Blob> {
+  if (blob.type === "image/png") return blob;
+  const bitmap = await createImageBitmap(blob);
+  const canvas = document.createElement("canvas");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
+  canvas.getContext("2d")!.drawImage(bitmap, 0, 0);
+  return new Promise((resolve, reject) =>
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob failed"))), "image/png")
+  );
+}
+
 async function writeImageToClipboard(url: string): Promise<boolean> {
   if (typeof ClipboardItem === "undefined" || !navigator.clipboard?.write) return false;
   try {
     // Safari requires the ClipboardItem to be constructed synchronously in the
     // user gesture, with the blob supplied as a promise.
-    const blobPromise = fetch(url).then((r) => {
-      if (!r.ok) throw new Error(String(r.status));
-      return r.blob();
-    });
+    const blobPromise = fetch(url)
+      .then((r) => {
+        if (!r.ok) throw new Error(String(r.status));
+        return r.blob();
+      })
+      .then(toPngBlob);
     await navigator.clipboard.write([new ClipboardItem({ "image/png": blobPromise })]);
     return true;
   } catch {
     try {
-      const blob = await (await fetch(url)).blob();
+      const blob = await (await fetch(url)).blob().then(toPngBlob);
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
       return true;
     } catch {
