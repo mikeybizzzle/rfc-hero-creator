@@ -60,7 +60,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:grid-cols-4">
         {items.map((item, i) => (
           <button
             key={item.slug}
@@ -68,7 +68,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               triggerRef.current = e.currentTarget;
               setIndex(i);
             }}
-            className="group card-frame overflow-hidden text-left"
+            className="interactive-card group card-frame overflow-hidden text-left"
             aria-label={`View ${item.name}`}
           >
             <div className="relative aspect-square overflow-hidden">
@@ -81,7 +81,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
                 priority={i < 4}
               />
             </div>
-            <p className="hud text-xs text-muted group-hover:text-gold px-3 py-2.5 truncate transition-colors">
+            <p className="truncate px-3 py-2.5 text-[12.5px] font-bold text-muted transition-colors group-hover:text-gold">
               {item.name}
             </p>
           </button>
@@ -91,14 +91,14 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
       {index !== null && (
         <div
           ref={dialogRef}
-          className="fixed inset-0 z-50 bg-bg/95 flex flex-col items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-bg/92 p-3 backdrop-blur-xl sm:p-6"
           role="dialog"
           aria-modal="true"
           aria-label={items[index].name}
           onClick={close}
         >
           <div
-            className="relative w-full max-w-3xl aspect-square"
+            className="relative aspect-square w-full max-w-3xl overflow-hidden rounded-2xl border border-line bg-raised shadow-[0_28px_90px_rgba(0,0,0,.6)]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -111,19 +111,21 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
             />
           </div>
           <div
-            className="flex items-center gap-6 mt-4"
+            className="mt-3 flex max-w-full items-center gap-2 rounded-xl border border-line bg-surface/90 p-1.5 sm:mt-4 sm:gap-4"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => step(-1)}
-              className="hud text-xs text-muted hover:text-gold px-3 py-2 min-h-11 flex items-center"
+              className="flex min-h-11 items-center rounded-lg px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-muted transition-colors hover:bg-raised hover:text-gold"
             >
               Prev
             </button>
-            <span className="hud text-sm text-cream">{items[index].name}</span>
+            <span className="min-w-0 truncate px-1 text-sm font-bold text-cream">
+              {items[index].name}
+            </span>
             <button
               onClick={() => step(1)}
-              className="hud text-xs text-muted hover:text-gold px-3 py-2 min-h-11 flex items-center"
+              className="flex min-h-11 items-center rounded-lg px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-muted transition-colors hover:bg-raised hover:text-gold"
             >
               Next
             </button>
@@ -131,7 +133,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
           <button
             ref={closeButtonRef}
             onClick={close}
-            className="absolute top-4 right-4 hud text-xs text-cream border border-line px-3 py-2 min-h-11 flex items-center hover:border-gold hover:text-gold"
+            className="absolute right-3 top-3 flex min-h-11 items-center rounded-lg border border-line bg-bg/75 px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-cream backdrop-blur-md transition-colors hover:border-gold hover:text-gold sm:right-5 sm:top-5"
           >
             Close
           </button>

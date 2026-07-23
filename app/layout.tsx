@@ -32,12 +32,22 @@ export default function RootLayout({
       className={`${barlow.variable} ${lilita.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <a href="#main-content" className="skip-link">
+          Skip to content
+        </a>
         <SiteNav />
-        <main className="flex-1">{children}</main>
-        <footer className="mt-16">
-          <div className="mx-auto max-w-6xl px-4 py-8 flex flex-wrap gap-x-4 gap-y-2 text-[13px] text-muted">
-            <span className="font-bold text-gold">RfC alliance</span>
-            <span>Last Z: Survival Shooter</span>
+        <main id="main-content" className="flex-1">
+          {children}
+        </main>
+        <footer className="mt-14 border-t border-line bg-raised/55">
+          <div className="mx-auto flex max-w-6xl flex-col gap-2 px-4 py-7 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-2.5">
+              <span className="display text-base text-gold">RfC alliance</span>
+              <span aria-hidden="true" className="text-line">
+                /
+              </span>
+              <span>Last Z: Survival Shooter</span>
+            </div>
             <span>Works with the ChatGPT app or chatgpt.com</span>
           </div>
         </footer>

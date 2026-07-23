@@ -21,12 +21,15 @@ export function ProcessStrip({
   const output = outputs[outputs.length - 1];
 
   return (
-    <div className="card-frame rounded-[18px] px-[18px] py-4 flex flex-col items-center sm:flex-row gap-3">
-      <div className="flex gap-2.5 flex-wrap justify-center sm:justify-start sm:flex-1 sm:min-w-0">
+    <div
+      className="card-frame flex flex-col items-center gap-2.5 rounded-[18px] px-4 py-4 sm:flex-row sm:justify-center sm:gap-5 sm:p-5"
+      aria-label="Image creation flow"
+    >
+      <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5">
         {inputs.map((img, i) => (
           <figure key={img.slug} className="m-0 grid gap-[5px] justify-items-center">
             <div
-              className={`relative w-[min(20vw,84px)] aspect-square rounded-[10px] overflow-hidden ${thumbBorder}`}
+              className={`relative aspect-square w-[min(18vw,76px)] overflow-hidden rounded-[10px] ${thumbBorder}`}
             >
               <Image
                 src={img.src}
@@ -36,21 +39,26 @@ export function ProcessStrip({
                 className="object-cover"
               />
             </div>
-            <figcaption className="text-[11.5px] font-bold text-muted whitespace-nowrap">
+            <figcaption className="whitespace-nowrap text-[11px] font-bold text-muted">
               {i + 1}
               {inputLabels?.[i] ? ` · ${inputLabels[i]}` : ""}
             </figcaption>
           </figure>
         ))}
       </div>
-      <span className="display text-[26px] text-gold shrink-0 rotate-90 sm:rotate-0">&rarr;</span>
+      <span
+        className="display grid h-7 w-7 shrink-0 rotate-90 place-items-center rounded-full border border-line bg-raised text-lg text-gold sm:rotate-0"
+        aria-hidden="true"
+      >
+        &rarr;
+      </span>
       <figure className="m-0 grid gap-[5px] justify-items-center shrink-0">
         <div
-          className={`relative w-[min(34vw,140px)] aspect-square rounded-[10px] overflow-hidden ${thumbBorder}`}
+          className={`relative aspect-square w-[min(29vw,116px)] overflow-hidden rounded-xl ${thumbBorder}`}
         >
-          <Image src={output.src} alt={outputLabel} fill sizes="140px" className="object-cover" />
+          <Image src={output.src} alt={outputLabel} fill sizes="116px" className="object-cover" />
         </div>
-        <figcaption className="text-[11.5px] font-bold text-muted whitespace-nowrap">
+        <figcaption className="whitespace-nowrap text-[11px] font-bold text-muted">
           {outputLabel}
         </figcaption>
       </figure>

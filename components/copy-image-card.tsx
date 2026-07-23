@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { ManifestImage } from "@/lib/data";
 
 type Status = "idle" | "copied" | "saved";
@@ -63,6 +63,12 @@ export function CopyImageCard({
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
+  useEffect(() => {
+    if (status === "idle") return;
+    const timer = setTimeout(() => setStatus("idle"), 2000);
+    return () => clearTimeout(timer);
+  }, [status]);
+
   async function onClick() {
     onCopy?.();
     const url = image.download ?? image.src;
@@ -75,14 +81,13 @@ export function CopyImageCard({
       a.click();
       setStatus("saved");
     }
-    setTimeout(() => setStatus("idle"), 2000);
   }
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`card-frame rounded-xl bg-raised overflow-hidden group text-left w-full snap-start transition-colors active:border-gold active:scale-[0.99] transition-transform duration-100 ${
+      className={`interactive-card card-frame group w-full snap-start overflow-hidden rounded-xl bg-raised text-left ${
         selected ? "border-gold" : "hover:border-gold"
       }`}
       aria-label={`Copy ${prefix ?? ""}${label} to clipboard`}
@@ -94,7 +99,7 @@ export function CopyImageCard({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
         />
         {status !== "idle" && (
           <span
@@ -107,13 +112,13 @@ export function CopyImageCard({
           </span>
         )}
       </div>
-      <div className="px-2.5 py-2 flex items-center justify-between gap-2">
-        <span className="font-bold text-[12.5px] text-cream/90 truncate">
+      <div className="flex min-h-9 items-center justify-between gap-1.5 px-2 py-1.5 sm:gap-2 sm:px-2.5 sm:py-2">
+        <span className="truncate text-[11.5px] font-bold text-cream/90 sm:text-[12.5px]">
           {prefix && <span className={prefixClass}>{prefix}</span>}
           {label}
         </span>
         <span
-          className={`text-[11px] font-extrabold uppercase tracking-[.5px] transition-colors shrink-0 ${
+          className={`shrink-0 text-[10px] font-extrabold uppercase tracking-[.5px] transition-colors sm:text-[11px] ${
             selected ? "text-gold" : "text-muted group-hover:text-gold"
           }`}
         >

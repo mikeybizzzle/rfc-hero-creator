@@ -19,9 +19,9 @@ export default function CustomPage() {
   const walkthrough = findWalkthrough("group-scene")!;
 
   return (
-    <div className="pb-8">
+    <div className="pb-10">
       <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pt-6 pb-4 md:pt-10">
+        <div className="mx-auto max-w-6xl px-4 pb-4 pt-6 sm:pt-9">
           <FlowHeader
             eyebrow="Custom image"
             title="Make any kind of hero image"
@@ -34,64 +34,64 @@ export default function CustomPage() {
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4 pt-8">
-      <div className="mb-4">
-        <ProcessStrip
-          walkthrough={walkthrough}
-          inputLabels={["Base image", "Hero", "Hero", "Hero"]}
-          outputLabel="Your custom image"
-        />
-      </div>
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
+        <div className="mb-4 sm:mb-5">
+          <ProcessStrip
+            walkthrough={walkthrough}
+            inputLabels={["Base image", "Hero", "Hero", "Hero"]}
+            outputLabel="Your custom image"
+          />
+        </div>
 
-      <div className="mb-4">
-        <ExampleDropdown walkthrough={walkthrough} />
-      </div>
+        <div className="mb-4 sm:mb-5">
+          <ExampleDropdown walkthrough={walkthrough} />
+        </div>
 
-      <div className="space-y-4">
-        <section className="card-frame rounded-[18px] p-[18px]">
-          <StepHeading n="1" title="Copy the base image" />
-          <p className="text-[14.5px] text-muted leading-normal">
-            Image 1 is the image you want to work from — pick one from the cards in step
-            2, or use your own.
-          </p>
-        </section>
+        <div className="space-y-4 sm:space-y-5">
+          <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
+            <StepHeading n="1" title="Copy the base image" />
+            <p className="max-w-[72ch] text-[14.5px] leading-relaxed text-muted">
+              Image 1 is the image you want to work from — pick one from the cards in step
+              2, or use your own.
+            </p>
+          </section>
 
-        <section className="card-frame rounded-[18px] p-[18px]">
-          <StepHeading n="2" title="Copy your heroes" />
-          <CardSlider>
-            {gallery.map((g) => (
-              <CopyImageCard
-                key={g.slug}
-                image={g}
-                label={galleryName(g)}
-                sizes="(max-width: 640px) 31vw, 175px"
-              />
-            ))}
-          </CardSlider>
-        </section>
+          <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
+            <StepHeading n="2" title="Copy your heroes" />
+            <CardSlider>
+              {gallery.map((g) => (
+                <CopyImageCard
+                  key={g.slug}
+                  image={g}
+                  label={galleryName(g)}
+                  sizes="(max-width: 640px) 31vw, 175px"
+                />
+              ))}
+            </CardSlider>
+          </section>
 
-        <section className="card-frame rounded-[18px] p-[18px]">
-          <StepHeading n="3" title="Ask ChatGPT to write your prompt" />
-          <p className="text-[14.5px] text-muted leading-normal mb-3.5">
-            Describe your image, copy the prompt, and paste it into ChatGPT. ChatGPT
-            replies with a full image prompt — copy that reply and send it back in the
-            same conversation with the same images.
-          </p>
-          <PromptForm mode="group" />
-        </section>
-      </div>
+          <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
+            <StepHeading n="3" title="Ask ChatGPT to write your prompt" />
+            <p className="mb-3.5 max-w-[72ch] text-[14.5px] leading-relaxed text-muted">
+              Describe your image, copy the prompt, and paste it into ChatGPT. ChatGPT
+              replies with a full image prompt — copy that reply and send it back in the
+              same conversation with the same images.
+            </p>
+            <PromptForm mode="group" />
+          </section>
+        </div>
 
-      <nav className="flex flex-wrap gap-x-[18px] gap-y-2 pt-6 font-bold text-sm">
-        <Link href="/" className="text-gold hover:text-gold-bright transition-colors">
-          &larr; Home
-        </Link>
-        <Link href="/hero" className="text-gold hover:text-gold-bright transition-colors">
-          Hero (From Image) &rarr;
-        </Link>
-        <Link href="/unique" className="text-gold hover:text-gold-bright transition-colors">
-          Hero (Without Image) &rarr;
-        </Link>
-      </nav>
+        <nav className="mt-7 flex flex-wrap gap-2 border-t border-line pt-5 text-sm font-bold">
+          <Link href="/" className="min-h-10 rounded-lg px-3 py-2 text-muted transition-colors hover:bg-surface hover:text-cream">
+            &larr; Home
+          </Link>
+          <Link href="/hero" className="min-h-10 rounded-lg px-3 py-2 text-gold transition-colors hover:bg-surface hover:text-gold-bright">
+            Hero (From Image) &rarr;
+          </Link>
+          <Link href="/unique" className="min-h-10 rounded-lg px-3 py-2 text-gold transition-colors hover:bg-surface hover:text-gold-bright">
+            Hero (Without Image) &rarr;
+          </Link>
+        </nav>
       </div>
     </div>
   );

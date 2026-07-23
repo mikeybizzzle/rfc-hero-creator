@@ -13,7 +13,7 @@ import { CopyButton } from "./copy-button";
 const rankChoices: RankChoice[] = ["S", "A", "B", "custom"];
 
 const inputClass =
-  "w-full bg-raised border border-[rgba(255,214,122,.28)] rounded-[10px] px-3.5 py-3 text-base text-cream placeholder:text-muted/70 outline-none focus:border-gold";
+  "w-full min-h-12 bg-raised border border-[rgba(255,214,122,.28)] rounded-[10px] px-3.5 py-3 text-base text-cream placeholder:text-muted/70 outline-none transition-[border-color,box-shadow] duration-200 focus:border-gold focus:shadow-[0_0_0_3px_rgba(255,208,90,.1)]";
 
 const PLACEHOLDER_TOKENS = [
   "[HERO CHARACTER NAME]",
@@ -87,8 +87,8 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
         : metaPrompt(groupDescription);
 
   return (
-    <div className="grid lg:grid-cols-2 gap-6">
-      <div className="space-y-5">
+    <div className="grid gap-5 lg:grid-cols-[minmax(0,.9fr)_minmax(0,1.1fr)] lg:gap-6">
+      <div className="space-y-4 sm:space-y-5">
         {mode === "group" ? (
           <Field label="Describe the image you want generated">
             <textarea
@@ -106,7 +106,7 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
                 Rank template
               </span>
               <div
-                className="flex gap-2 flex-wrap"
+                className="flex flex-wrap gap-2"
                 role="radiogroup"
                 aria-label="Rank template"
                 onKeyDown={handleRadioKeyDown}
@@ -121,7 +121,7 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
                     aria-checked={rank === r}
                     tabIndex={rank === r ? 0 : -1}
                     onClick={() => setRank(r)}
-                    className={`font-extrabold text-[13.5px] tracking-[.5px] px-4 py-2 rounded-full border border-[rgba(255,214,122,.28)] transition-colors ${
+                    className={`min-h-11 rounded-lg border border-[rgba(255,214,122,.28)] px-4 py-2 text-[13.5px] font-extrabold tracking-[.5px] transition-[color,background-color,border-color,transform] active:scale-[.98] ${
                       rank === r
                         ? "bg-gradient-to-br from-gold to-orange text-ink"
                         : "bg-raised text-cream/90 hover:text-cream hover:border-gold"
@@ -183,9 +183,9 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
         )}
       </div>
 
-      <div className="bg-raised border border-[rgba(255,214,122,.2)] rounded-[14px] overflow-hidden flex flex-col min-h-0">
-        <div className="flex items-center justify-between gap-2.5 px-3.5 py-2.5 border-b border-line">
-          <span className="font-extrabold text-[12.5px] tracking-[1px] uppercase text-muted">
+      <div className="flex min-h-0 flex-col overflow-hidden rounded-[14px] border border-[rgba(255,214,122,.24)] bg-raised shadow-[inset_0_1px_0_rgba(255,255,255,.025)]">
+        <div className="flex items-center justify-between gap-2.5 border-b border-line bg-surface/60 px-3 py-2.5 sm:px-3.5">
+          <span className="text-[11.5px] font-extrabold uppercase tracking-[1px] text-muted sm:text-[12.5px]">
             Your prompt{mode !== "group" && ` · ${rankLabel} rank card`}
           </span>
           <CopyButton text={prompt} />
@@ -194,7 +194,7 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
           tabIndex={0}
           role="region"
           aria-label="Prompt text"
-          className="prompt-block text-cream/90 p-4 overflow-auto max-h-[50vh]"
+          className="prompt-block max-h-[50vh] overflow-auto p-4 text-cream/90 selection:bg-gold selection:text-ink"
         >
           {renderPromptWithPlaceholders(prompt)}
         </pre>

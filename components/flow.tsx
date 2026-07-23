@@ -8,14 +8,21 @@ export function FlowHeader({
   steps: string[];
 }) {
   return (
-    <header className="pt-2 pb-5">
-      <p className="hud text-xs text-gold mb-2">{eyebrow}</p>
-      <h1 className="display text-[clamp(30px,6vw,46px)] leading-tight mb-2">{title}</h1>
-      <ol className="space-y-1.5 max-w-[680px]">
+    <header className="pb-5 pt-2 sm:pb-7">
+      <p className="hud mb-2 text-[11px] text-gold sm:text-xs">{eyebrow}</p>
+      <h1 className="display max-w-[820px] text-balance text-[clamp(32px,5.5vw,50px)] leading-[1.02] tracking-[-0.01em]">
+        {title}
+      </h1>
+      <ol className="mt-5 grid gap-3 md:grid-cols-3 md:gap-5">
         {steps.map((s, i) => (
-          <li key={i} className="flex gap-3 text-[15px] text-muted leading-normal">
-            <span className="display text-gold shrink-0">{i + 1}</span>
-            <span>{s}</span>
+          <li
+            key={i}
+            className="grid grid-cols-[28px_1fr] gap-2.5 text-[14.5px] leading-relaxed text-muted"
+          >
+            <span className="display grid h-7 w-7 shrink-0 place-items-center rounded-lg border border-line bg-bg/40 text-sm text-gold">
+              {i + 1}
+            </span>
+            <span className="text-pretty">{s}</span>
           </li>
         ))}
       </ol>
@@ -25,11 +32,11 @@ export function FlowHeader({
 
 export function StepHeading({ n, title }: { n: string; title: string }) {
   return (
-    <div className="flex items-center gap-3 mb-2">
-      <span className="display text-[19px] bg-gradient-to-br from-gold to-orange text-ink rounded-[10px] min-w-[34px] h-[34px] grid place-items-center">
+    <div className="relative z-10 mb-2.5 flex items-center gap-3">
+      <span className="display grid h-9 min-w-9 place-items-center rounded-[10px] bg-gradient-to-br from-gold to-orange text-[19px] text-ink shadow-[0_7px_18px_rgba(242,106,32,.18)]">
         {n}
       </span>
-      <h2 className="display text-[22px]">{title}</h2>
+      <h2 className="display text-balance text-[22px] leading-tight sm:text-[24px]">{title}</h2>
     </div>
   );
 }

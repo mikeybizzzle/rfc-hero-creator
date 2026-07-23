@@ -56,7 +56,7 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
   const loop = [...items, ...items];
 
   return (
-    <div className="overflow-hidden pt-0.5 pb-2.5">
+    <div className="overflow-hidden pb-2.5 pt-0.5 sm:[mask-image:linear-gradient(to_right,transparent,black_3%,black_97%,transparent)]">
       <div className="flex w-max [animation:marquee_112.5s_linear_infinite] hover:[animation-play-state:paused]">
         {loop.map((item, i) => (
           <button
@@ -66,7 +66,7 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
             title="Copy image"
             aria-hidden={i >= items.length || undefined}
             tabIndex={i >= items.length ? -1 : undefined}
-            className="relative w-[min(31vw,160px)] shrink-0 mr-2.5 cursor-pointer text-left border border-line rounded-xl overflow-hidden bg-surface hover:border-gold transition-colors"
+            className="relative mr-2.5 w-[min(31vw,160px)] shrink-0 cursor-pointer overflow-hidden rounded-xl border border-line bg-surface text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99]"
           >
             <div className="relative aspect-square">
               <Image
@@ -91,7 +91,7 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
       {toast && (
         <div
           role="status"
-          className="fixed left-1/2 bottom-[22px] -translate-x-1/2 bg-gradient-to-br from-gold to-orange text-ink font-extrabold text-sm px-[18px] py-[11px] rounded-full shadow-[0_6px_24px_rgba(0,0,0,.5)] z-50 max-w-[90vw] text-center"
+          className="fixed bottom-[max(22px,env(safe-area-inset-bottom))] left-1/2 z-50 max-w-[90vw] -translate-x-1/2 rounded-xl bg-gradient-to-br from-gold to-orange px-[18px] py-[11px] text-center text-sm font-extrabold text-ink shadow-[0_10px_32px_rgba(0,0,0,.55)]"
         >
           {toast}
         </div>

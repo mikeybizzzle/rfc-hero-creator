@@ -48,12 +48,17 @@ function Message({ m }: { m: ChatMessage }) {
 
 export function ExampleDropdown({ walkthrough }: { walkthrough: Walkthrough }) {
   return (
-    <details className="card-frame rounded-[18px] overflow-hidden group">
-      <summary className="font-bold text-sm text-cream hover:text-gold transition-colors px-[18px] py-3.5 cursor-pointer list-none flex items-center justify-between gap-3">
+    <details className="card-frame group overflow-hidden rounded-[18px]">
+      <summary className="flex min-h-[52px] cursor-pointer list-none items-center justify-between gap-3 px-4 py-3 text-sm font-bold text-cream transition-colors hover:bg-raised hover:text-gold group-open:bg-raised sm:px-5">
         See an example
-        <span className="text-muted transition-transform duration-150 group-open:rotate-45 inline-block">+</span>
+        <span
+          aria-hidden="true"
+          className="grid h-7 w-7 place-items-center rounded-lg border border-line text-lg text-muted transition-transform duration-150 group-open:rotate-45"
+        >
+          +
+        </span>
       </summary>
-      <div className="border-t border-line p-[18px] space-y-6">
+      <div className="space-y-6 border-t border-line p-4 sm:p-5">
         {walkthrough.messages.map((m, i) => (
           <Message key={i} m={m} />
         ))}

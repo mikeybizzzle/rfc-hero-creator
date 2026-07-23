@@ -3,10 +3,10 @@
 @theme {
   --color-bg: #090806;
   --color-surface: #18130e;
-  --color-raised: #0f0d0b;
-  --color-line: rgba(255, 214, 122, 0.16);
+  --color-raised: #100d0a;
+  --color-line: rgba(255, 214, 122, 0.18);
   --color-cream: #f7f1e8;
-  --color-muted: #b9ad9f;
+  --color-muted: #c9bba4;
   --color-gold: #ffd05a;
   --color-gold-bright: #ffe3a3;
   --color-orange: #f26a20;
@@ -22,12 +22,19 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--color-bg);
 }
 
 body {
-  background-color: var(--color-bg);
+  min-width: 320px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.012) 1px, transparent 1px),
+    var(--color-bg);
+  background-size: 48px 48px;
   color: var(--color-cream);
   font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
 }
 
 ::selection {
@@ -51,8 +58,9 @@ body {
 /* Dusty atmosphere behind hero sections, from the card art's light shafts */
 .atmosphere {
   background:
-    radial-gradient(1200px 500px at 75% -10%, rgba(242, 106, 32, 0.16), transparent 60%),
-    radial-gradient(800px 400px at 10% 0%, rgba(255, 208, 90, 0.07), transparent 55%);
+    radial-gradient(1100px 480px at 78% -15%, rgba(242, 106, 32, 0.2), transparent 61%),
+    radial-gradient(760px 380px at 7% -8%, rgba(255, 208, 90, 0.1), transparent 58%),
+    linear-gradient(180deg, rgba(28, 15, 8, 0.92), rgba(12, 10, 8, 0.84));
 }
 
 @keyframes marquee {
@@ -63,8 +71,54 @@ body {
 
 .card-frame {
   border: 1px solid var(--color-line);
-  background: var(--color-surface);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.022), transparent 44%),
+    var(--color-surface);
   border-radius: 16px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 242, 211, 0.025),
+    0 18px 44px rgba(16, 8, 2, 0.12);
+}
+
+.step-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.step-panel::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 2px;
+  background: linear-gradient(180deg, var(--color-gold), rgba(242, 106, 32, 0.18) 56%, transparent);
+  content: "";
+}
+
+.interactive-card {
+  transition:
+    transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    border-color 220ms ease,
+    box-shadow 220ms ease,
+    background-color 220ms ease;
+}
+
+.interactive-card:hover {
+  border-color: rgba(255, 208, 90, 0.62);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 242, 211, 0.06),
+    0 18px 44px rgba(41, 20, 5, 0.38);
+  transform: translateY(-3px);
+}
+
+.interactive-card:active {
+  transform: translateY(-1px) scale(0.99);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }
 
 .prompt-block {
@@ -82,6 +136,7 @@ textarea,
 select,
 summary {
   outline-offset: 2px;
+  -webkit-tap-highlight-color: transparent;
 }
 a:focus-visible,
 button:focus-visible,
@@ -90,6 +145,34 @@ textarea:focus-visible,
 select:focus-visible,
 summary:focus-visible {
   outline: 2px solid var(--color-gold);
+}
+
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 60;
+  transform: translateY(-160%);
+  border-radius: 0.6rem;
+  background: var(--color-gold);
+  color: var(--color-ink);
+  padding: 0.65rem 0.9rem;
+  font-weight: 800;
+  transition: transform 150ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+@media (max-width: 639px) {
+  body {
+    background-size: 36px 36px;
+  }
+
+  .interactive-card:hover {
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

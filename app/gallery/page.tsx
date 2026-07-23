@@ -13,19 +13,19 @@ export default function GalleryPage() {
   return (
     <div>
       <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 md:pt-12">
-          <p className="hud text-xs text-gold mb-2">Gallery</p>
-          <h1 className="display text-[clamp(30px,6vw,46px)] leading-tight mb-2">
+        <div className="mx-auto max-w-6xl px-4 pb-8 pt-7 sm:pb-10 sm:pt-11">
+          <p className="hud mb-2 text-[11px] text-gold sm:text-xs">Gallery</p>
+          <h1 className="display text-balance text-[clamp(34px,5.5vw,52px)] leading-[1.02] tracking-[-0.01em]">
             Alliance heroes
           </h1>
-          <p className="text-[clamp(15px,2.5vw,18px)] leading-normal text-muted max-w-[640px] text-pretty">
+          <p className="mt-3 max-w-[640px] text-pretty text-[clamp(15px,2.5vw,18px)] leading-relaxed text-muted">
             Cards created for RFC members with this workflow. Tap any card to view it full
             size.
           </p>
         </div>
       </section>
 
-      <div className="mx-auto max-w-6xl px-4 py-8">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:py-8">
         <LightboxGallery items={items} />
       </div>
     </div>

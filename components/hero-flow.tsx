@@ -20,14 +20,14 @@ const ranks: Rank[] = ["S", "A", "B"];
 
 export function HeroFlow() {
   return (
-    <div className="space-y-4">
-      <section className="card-frame rounded-[18px] p-[18px]">
+    <div className="space-y-4 sm:space-y-5">
+      <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
         <StepHeading n="1" title="Copy a base card" />
         <p className="text-[14.5px] text-muted leading-normal mb-3.5">
           Tap a card to copy it, then paste it into ChatGPT — pick whichever you like.
           You&rsquo;ll choose your prompt&rsquo;s rank in step 3.
         </p>
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 max-w-2xl">
+        <div className="grid max-w-2xl grid-cols-3 gap-2.5 sm:gap-3">
           {ranks.map((r, i) => (
             <CopyImageCard
               key={r}
@@ -35,14 +35,14 @@ export function HeroFlow() {
               label=" Rank"
               prefix={r}
               prefixClass={rankTextClass[r]}
-              sizes="(max-width: 640px) 50vw, 200px"
+              sizes="(max-width: 640px) 30vw, 200px"
               priority={i === 0}
             />
           ))}
         </div>
       </section>
 
-      <section className="card-frame rounded-[18px] p-[18px]">
+      <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
         <StepHeading n="2" title="Copy a hero style example" />
         <p className="text-[14.5px] text-muted leading-normal mb-3.5">
           Tap one to copy, paste it into ChatGPT after the base card. It only shows ChatGPT the
@@ -66,7 +66,7 @@ export function HeroFlow() {
         </p>
       </section>
 
-      <section className="card-frame rounded-[18px] p-[18px]">
+      <section className="step-panel card-frame rounded-[18px] p-4 sm:p-6">
         <StepHeading n="3" title="Build your prompt" />
         <p className="text-[14.5px] text-muted leading-normal mb-3.5">
           Fill in the blanks — the prompt updates itself. Copy it, attach a photo of who
