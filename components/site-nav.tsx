@@ -13,6 +13,8 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname();
 
+  if (pathname.startsWith("/hero/concepts")) return null;
+
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur-xl">
       <div className="mx-auto flex h-14 w-full max-w-6xl items-center justify-between gap-5 px-4">
