@@ -1,52 +1,74 @@
-// Prompt templates are verbatim from the source material:
-// - heroCardPrompt: chat1/image-gen-prompt-template.md
-// - heroCardNoPhotoPrompt: chat3/chat3.md message 1
-// - metaPrompt: chat2/meta-prompt-template.md
-// Only the bracketed placeholders and the rank-specific background lines
-// (which differ between the S template in chat1 and the B template in chat3)
-// are substituted.
+// Prompt templates are verbatim from the v2 Claude Design pages
+// (Hero Character From Image v2 / Without Image v2 / Custom Image v2).
+// Only the bracketed placeholders and rank-specific lines are substituted.
 
 export type Rank = "S" | "A" | "B";
 export type RankChoice = Rank | "custom";
-// Custom rank: the member picks their own emblem letter and theme color
-export type RankSelection = Rank | { letter: string; color: string };
+export type CustomCard = { letter: string; color: string };
 
-export const rankInfo: Record<
-  Rank,
-  { color: string; label: string; templateSlug: string }
-> = {
-  S: { color: "#e3a83b", label: "S Rank (orange)", templateSlug: "s-orange-template" },
-  A: { color: "#c06ae0", label: "A Rank (purple)", templateSlug: "a-purple-template" },
-  B: { color: "#4da3e8", label: "B Rank (blue)", templateSlug: "b-blue-template" },
+type RankLines = { bg: string; emblem: string; badges: string };
+
+const photoRanks: Record<Rank, RankLines> = {
+  S: {
+    bg: "warm golden/orange dusty game background",
+    emblem: "large gold “S” rank emblem on the left",
+    badges: "red badge icon, silver shield icon, and gold “S2” icon in the same positions",
+  },
+  A: {
+    bg: "purple misty game background",
+    emblem: "large purple “A” rank emblem on the left",
+    badges: "red badge icon, silver shield icon, and gold “S2” icon in the same positions",
+  },
+  B: {
+    bg: "blue gradient game background",
+    emblem: "large blue “B” rank emblem on the left",
+    badges: "red badge icon, silver shield icon, and gold “S2” icon in the same positions",
+  },
 };
 
-// Rank-specific "preserve the background" lines. S is verbatim from chat1,
-// B is verbatim from chat3. A follows the same pattern for the purple template.
-const rankLines: Record<Rank, string> = {
-  S: `- Keep the warm golden/orange dusty game background.
-- Keep the large gold “S” rank emblem on the left.
-- Keep the red badge icon, silver shield icon, and gold “S2” icon in the same positions.`,
-  A: `- Keep the purple gradient game background.
-- Keep the large purple “A” rank emblem on the left.
-- Keep the red badge icon, silver shield icon, and gold “S2” icon in the same positions.`,
-  B: `- Keep the blue gradient game background.
-- Keep the large gold “B” rank emblem on the left.
-- Keep the blue badge icon and silver shield icon in the same positions.`,
+const noPhotoRanks: Record<Rank, RankLines> = {
+  S: {
+    bg: "warm golden/orange dusty game background",
+    emblem: "large gold “S” rank emblem on the left",
+    badges: "red badge icon and silver shield icon in the same positions",
+  },
+  A: {
+    bg: "purple misty game background",
+    emblem: "large purple “A” rank emblem on the left",
+    badges: "red badge icon and silver shield icon in the same positions",
+  },
+  B: {
+    bg: "blue gradient game background",
+    emblem: "large blue “B” rank emblem on the left",
+    badges: "blue badge icon and silver shield icon in the same positions",
+  },
 };
 
-function rankLinesFor(sel: RankSelection): string {
-  if (typeof sel === "string") return rankLines[sel];
-  const letter = sel.letter.trim() || "[RANK LETTER]";
-  const color = sel.color.trim() || "[THEME COLOR]";
-  return `- Change the game background to ${color}, keeping the same dusty game style.
-- Replace the rank emblem on the left with a large ${color} “${letter}” rank emblem in the same style and position.
-- Keep the badge icons in the same positions.`;
+const rankThemeWord: Record<Rank, string> = {
+  S: "golden/orange",
+  A: "purple",
+  B: "blue",
+};
+
+function customBlock(rank: Rank, custom: CustomCard): string {
+  const letter = custom.letter.trim() || "[LETTER]";
+  const color = custom.color.trim() || "[THEME COLOR]";
+  return `
+
+Custom card changes — apply these to the base card from Image 1:
+- Change the “${rank}” rank letter to “${letter}”
+- Change the card’s ${rankThemeWord[rank]} theme (background tint, rank emblem, and UI accents) to ${color}`;
 }
 
-export function heroCardPrompt(rank: RankSelection, name: string, details: string): string {
-  const heroName = name.trim() || "[HERO CHARACTER NAME]";
-  const extra = details.trim();
-  return `Use the 3 attached images as references:
+export function heroCardPrompt(
+  rank: Rank,
+  name: string,
+  details: string,
+  custom: CustomCard | null
+): string {
+  const r = photoRanks[rank];
+  const heroName = name.trim() || "[YOUR HERO NAME]";
+  let p = `Use the 3 attached images as references:
 
 Image 1 = the base hero-card background with UI elements and no character.
 Image 2 = the example hero character image showing the target style, realism, lighting, character placement, scale, and game-card format.
@@ -55,7 +77,9 @@ Image 3 = the person/character to transform into the hero character.
 Generate a new hero character image using Image 1 as the exact base composition.
 
 Preserve Image 1’s background and UI layout as closely as possible:
-${rankLinesFor(rank)}
+- Keep the ${r.bg}.
+- Keep the ${r.emblem}.
+- Keep the ${r.badges}.
 - Keep the same overall portrait/square hero-card layout and cinematic game UI aesthetic.
 - Replace the name with: “${heroName}”
 - Match the name text style: bold cream/white letters, thick black outline, game UI font, same placement.
@@ -75,19 +99,28 @@ Important:
 - Do not crop off important parts of the character.
 - Keep the final image clean, polished, and ready to use as a hero character card.
 
-Hero character name: “${heroName}”${
-    extra
-      ? `
+Hero character name: “${heroName}”`;
+  if (details.trim()) {
+    p += `
 
-Additional details: ${extra}`
-      : ""
-  }`;
+Additional details: ${details.trim()}`;
+  }
+  if (custom) p += customBlock(rank, custom);
+  return p;
 }
 
-export function heroCardNoPhotoPrompt(rank: RankSelection, name: string, details: string): string {
-  const heroName = name.trim() || "[HERO CHARACTER NAME]";
-  const characterDetails = details.trim() || "[Describe your hero character here]";
-  return `Use the attached images as references:
+export function heroCardNoPhotoPrompt(
+  rank: Rank,
+  name: string,
+  details: string,
+  custom: CustomCard | null
+): string {
+  const r = noPhotoRanks[rank];
+  const heroName = name.trim() || "[YOUR HERO NAME]";
+  const characterDetails =
+    details.trim() ||
+    "[Describe your hero: look, vibe, outfit — plus any card changes like swapping the rank letter or recoloring the UI]";
+  let p = `Use the attached images as references:
 
 Image 1 = the base hero-card background with UI elements and no character.
 Image 2 = the example hero character image showing the target style, realism, lighting, character placement, scale, and game-card format.
@@ -96,13 +129,15 @@ Image 3 = an additional example hero character image for inspiration
 Generate a new hero character image using Image 1 as the exact base composition.
 
 Preserve Image 1’s background and UI layout as closely as possible:
-${rankLinesFor(rank)}
+- Keep the ${r.bg}.
+- Keep the ${r.emblem}.
+- Keep the ${r.badges}.
 - Keep the same overall portrait/square hero-card layout and cinematic game UI aesthetic.
 - Replace the name with: “${heroName}”
 - Match the name text style: bold cream/white letters, thick black outline, game UI font, same placement.
 
 Create a hero character in the same style as Image 2:
-- Use the image 3 reference along with the additional hero characters below to imagine your hero character.
+- Use the image 3 reference along with the hero character details below to imagine your hero character.
 - Turn the hero character details into a high-quality realistic game hero character.
 - Adapt the subject into a cinematic survival-shooter/mobile-game hero design.
 - The character should be positioned in the center/right foreground like Image 2.
@@ -120,6 +155,8 @@ Hero character name: “${heroName}”
 
 Additional hero character details:
 ${characterDetails}`;
+  if (custom) p += customBlock(rank, custom);
+  return p;
 }
 
 const referencePrompt = `Use the 3 attached images as references:
@@ -155,11 +192,10 @@ Important:
 
 Hero character name: “IronBastion”`;
 
-export const metaPromptExample =
-  "Generate a prompt for adding additional hero characters to the image of Super T throwing a diamond party, using image 1 (the image of Super T throwing a diamond party) as the base image we want to work from and each additional image will contain the hero characters that we want to incorporate into the Super T Diamond Party image. Maintain the same quality and level of detail of the images. This prompt will be provided along with the images. Format the prompt similar to the reference prompt below.";
-
 export function metaPrompt(description: string): string {
-  const details = description.trim() || "[Details about the image you want generated]";
+  const details =
+    description.trim() ||
+    "[Describe the image you want: what it shows, which attached image is the base, what each other image contains, and that quality/detail should match. This prompt will be provided along with the images. Format the prompt similar to the reference prompt below.]";
   return `${details}
 
 ## REFERENCE PROMPT

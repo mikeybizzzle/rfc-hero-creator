@@ -168,6 +168,19 @@ body {
     0 12px 30px rgba(73, 1, 1, 0.28);
 }
 
+/* Guide wizard: plain column on mobile, framed panel on larger screens */
+@media (min-width: 640px) {
+  .wizard-panel {
+    border: 1px solid var(--color-line);
+    background:
+      linear-gradient(145deg, rgba(255, 227, 126, 0.05), transparent 44%),
+      var(--color-surface);
+    border-radius: 16px;
+    padding: 20px 24px 24px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
 .scrollbar-none {
   scrollbar-width: none;
 }
