@@ -36,7 +36,7 @@ export function ProcessStrip({
         {inputs.map((img, i) => (
           <figure key={img.slug} className="m-0 grid gap-[5px] justify-items-center">
             <div
-              className={`relative aspect-square w-[min(16vw,76px)] overflow-hidden rounded-[10px] ${thumbBorder}`}
+              className={`relative aspect-square w-[min(16vw,76px)] overflow-hidden rounded-[10px] md:w-16 lg:w-[76px] ${thumbBorder}`}
             >
               <Image
                 src={img.src}
@@ -58,7 +58,7 @@ export function ProcessStrip({
       </span>
       <figure className="m-0 grid shrink-0 gap-[5px] justify-items-center">
         <div
-          className={`relative aspect-square w-[min(28vw,116px)] overflow-hidden rounded-xl ${thumbBorder}`}
+          className={`relative aspect-square w-[min(28vw,116px)] overflow-hidden rounded-xl md:w-24 lg:w-[116px] ${thumbBorder}`}
         >
           <Image src={output.src} alt={outputLabel} fill sizes="116px" className="object-cover" />
         </div>
