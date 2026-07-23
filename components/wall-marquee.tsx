@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
 export type WallItem = {
   src: string;
@@ -22,6 +23,7 @@ async function toPngBlob(blob: Blob): Promise<Blob> {
 }
 
 export function WallMarquee({ items }: { items: WallItem[] }) {
+  const t = useTranslations("Wall");
   const [toast, setToast] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -47,9 +49,9 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
         })
         .then(toPngBlob);
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blobPromise })]);
-      flash(`${item.name} copied — paste it into ChatGPT`, item.src);
+      flash(t("copiedToast", { name: item.name }), item.src);
     } catch {
-      flash("Copy blocked here — press & hold (or right-click) the image to copy/save it");
+      flash(t("copyBlockedToast"));
     }
   }
 
@@ -63,7 +65,7 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
             key={`${item.src}-${i}`}
             type="button"
             onClick={() => copyImage(item)}
-            title="Copy image"
+            title={t("copyImageTitle")}
             aria-hidden={i >= items.length || undefined}
             tabIndex={i >= items.length ? -1 : undefined}
             className="relative mr-2.5 w-[min(31vw,160px)] shrink-0 cursor-pointer overflow-hidden rounded-xl border border-line bg-surface text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99]"
@@ -82,7 +84,7 @@ export function WallMarquee({ items }: { items: WallItem[] }) {
             </div>
             {copied === item.src && (
               <span className="absolute inset-0 grid place-items-center bg-bg/80 text-gold-bright display text-lg">
-                COPIED &#10003;
+                {t("copied")}
               </span>
             )}
           </button>

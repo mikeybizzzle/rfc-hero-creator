@@ -30,12 +30,20 @@ See `context/` for workflow summaries and where each piece of site content comes
 
 ## Structure
 
-- `app/` — routes: `/` (home), `/guide`, `/builder`, `/templates`, `/gallery`, `/walkthroughs/[slug]`
+- `app/[locale]/` — routes: `/` (home), `/hero`, `/unique`, `/custom`, `/gallery`, localized via next-intl
+- `i18n/` — next-intl routing/request/navigation config; `proxy.ts` handles locale detection
+- `messages/` — UI copy per locale (`en`, `it`, `es`, `de`, `fr`, `pt`, `ru`, `ar`, `zh`, `hu`); keep files key-identical to `en.json`
 - `lib/prompts.ts` — verbatim prompt templates + fill functions
 - `lib/data.ts` — image manifests (gallery, hero refs, base templates)
 - `lib/chats.ts` — walkthrough transcript data
 - `public/images/` — optimized WebP display copies (generated, committed)
 - `public/downloads/` — original-quality PNGs members download (base templates + hero refs)
+
+## Localization rules
+
+- English URLs stay unprefixed (`/hero`); other locales get a prefix (`/it/hero`).
+- Never translate: the prompt templates in `lib/prompts.ts` (they stay English in every locale), hero/member proper names, "Last Z", "ChatGPT", "RfC", "Hero Forge", rank letters.
+- New UI copy goes into `messages/en.json` first, then mirrored into the other four files.
 
 ## The workflow the site teaches
 

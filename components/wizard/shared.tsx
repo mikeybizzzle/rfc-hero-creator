@@ -2,9 +2,11 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import { copyImageAsset } from "@/lib/image-clipboard";
 
 export function useCopyToast() {
+  const t = useTranslations("Wizard.shared");
   const [toast, setToast] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -22,11 +24,11 @@ export function useCopyToast() {
   async function copyImage(url: string, name: string, filename?: string) {
     const result = await copyImageAsset(url, filename);
     if (result === "copied") {
-      flash(`${name} copied — paste it into ChatGPT`, url);
+      flash(t("copiedToast", { name }), url);
     } else if (result === "downloaded") {
-      flash(`${name} downloaded — attach it in ChatGPT`, url);
+      flash(t("downloadedToast", { name }), url);
     } else {
-      flash("Copy blocked here — press & hold (or right-click) the image to copy/save it");
+      flash(t("copyBlockedToast"));
     }
   }
 
@@ -52,6 +54,7 @@ export function TopActions({
   onHow: () => void;
   onExample: () => void;
 }) {
+  const t = useTranslations("Wizard.shared");
   return (
     <div className="mb-3 flex gap-2">
       <button
@@ -59,14 +62,14 @@ export function TopActions({
         onClick={onHow}
         className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
       >
-        HOW IT WORKS
+        {t("how")}
       </button>
       <button
         type="button"
         onClick={onExample}
         className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
       >
-        SEE EXAMPLE
+        {t("seeExample")}
       </button>
     </div>
   );
@@ -162,6 +165,7 @@ export function WizardModal({
   children: React.ReactNode;
   tone?: "gold" | "chat";
 }) {
+  const t = useTranslations("Wizard.shared");
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -187,7 +191,7 @@ export function WizardModal({
         <button
           type="button"
           onClick={onClose}
-          aria-label="Close"
+          aria-label={t("close")}
           className={`absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-lg border text-sm ${
             tone === "gold"
               ? "border-line bg-raised text-gold"
@@ -217,13 +221,14 @@ export function ExampleChatModal({
   output: ChatImage;
   outputCaption: string;
 }) {
+  const t = useTranslations("Wizard.shared");
   return (
     <WizardModal onClose={onClose} labelledBy="example-title" tone="chat">
       <div
         id="example-title"
         className="mr-8 text-[11px] font-extrabold tracking-[1px] text-[#8f8f8f]"
       >
-        EXAMPLE — IN CHATGPT
+        {t("exampleChatTitle")}
       </div>
       <div className="grid max-w-[88%] justify-items-end gap-1.5 justify-self-end">
         <div className="flex gap-1.5">
@@ -264,11 +269,12 @@ export function CopyTile({
   className?: string;
   sizes: string;
 }) {
+  const t = useTranslations("Wizard.shared");
   return (
     <button
       type="button"
       onClick={onCopy}
-      title="Copy image"
+      title={t("copyImageTitle")}
       className={`relative cursor-pointer overflow-hidden rounded-xl border border-line bg-raised text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99] ${className}`}
     >
       <div className="relative aspect-square">
@@ -279,7 +285,7 @@ export function CopyTile({
       </div>
       {copied && (
         <span className="display absolute inset-0 grid place-items-center bg-bg/85 text-sm text-gold-bright">
-          COPIED &#10003;
+          {t("copied")}
         </span>
       )}
     </button>
@@ -316,14 +322,17 @@ export function RankPicker({
   onLetter: (v: string) => void;
   onColor: (v: string) => void;
 }) {
+  const t = useTranslations("Wizard.shared");
   return (
     <>
       <div
         className="mb-2.5 flex flex-wrap items-center gap-1.5"
         role="radiogroup"
-        aria-label="Rank"
+        aria-label={t("rankAria")}
       >
-        <span className="text-[12.5px] font-extrabold text-cream/90">Rank:</span>
+        <span className="text-[12.5px] font-extrabold text-cream/90">
+          {t("rankLabel")}
+        </span>
         {(["S", "A", "B"] as const).map((letter) => {
           const selected = !custom && letter === rank;
           return (
@@ -332,7 +341,7 @@ export function RankPicker({
               type="button"
               role="radio"
               aria-checked={selected}
-              title={`${letter} rank`}
+              title={t("rankTitle", { letter })}
               onClick={() => onPickRank(letter)}
               className={`grid min-h-11 place-items-center rounded-xl border-2 px-3 py-1 transition-[border-color,opacity] ${
                 selected
@@ -342,7 +351,7 @@ export function RankPicker({
             >
               <Image
                 src={RANK_ICONS[letter]}
-                alt={`${letter} rank`}
+                alt={t("rankTitle", { letter })}
                 width={17}
                 height={28}
                 className="h-7 w-auto"
@@ -361,29 +370,29 @@ export function RankPicker({
               : "border-line bg-raised text-cream/90 hover:border-gold"
           }`}
         >
-          CUSTOM
+          {t("customRank")}
         </button>
       </div>
       {custom && (
         <div className="mb-2.5 grid grid-cols-2 gap-2">
           <label className={labelClass}>
-            Rank letter
+            {t("rankLetter")}
             <input
               type="text"
               value={customLetter}
               onChange={(e) => onLetter(e.target.value)}
               maxLength={3}
-              placeholder="e.g. F"
+              placeholder={t("rankLetterPlaceholder")}
               className={inputClass}
             />
           </label>
           <label className={labelClass}>
-            Theme color
+            {t("themeColor")}
             <input
               type="text"
               value={customColor}
               onChange={(e) => onColor(e.target.value)}
-              placeholder="e.g. earthy green"
+              placeholder={t("themeColorPlaceholder")}
               className={inputClass}
             />
           </label>
@@ -395,8 +404,8 @@ export function RankPicker({
 
 export function PromptActions({
   prompt,
-  copyLabel = "+ COPY PROMPT",
-  viewLabel = "FULL PROMPT",
+  copyLabel,
+  viewLabel,
   onFail,
 }: {
   prompt: string;
@@ -404,6 +413,9 @@ export function PromptActions({
   viewLabel?: string;
   onFail: (msg: string) => void;
 }) {
+  const t = useTranslations("Wizard.shared");
+  const copyText = copyLabel ?? t("copyPrompt");
+  const viewText = viewLabel ?? t("fullPrompt");
   const [copied, setCopied] = useState(false);
   const [open, setOpen] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -415,7 +427,7 @@ export function PromptActions({
       clearTimeout(timer.current);
       timer.current = setTimeout(() => setCopied(false), 2200);
     } catch {
-      onFail("Copy failed — select the text and copy manually");
+      onFail(t("copyFailedToast"));
     }
   }
 
@@ -427,7 +439,7 @@ export function PromptActions({
         aria-live="polite"
         className="lz-cta min-h-12 w-full px-4 py-3 text-sm font-extrabold tracking-[.5px]"
       >
-        <span role="status">{copied ? "COPIED ✓" : copyLabel}</span>
+        <span role="status">{copied ? t("copied") : copyText}</span>
       </button>
       <button
         type="button"
@@ -435,13 +447,15 @@ export function PromptActions({
         aria-expanded={open}
         className="min-h-11 w-full rounded-xl border border-line bg-raised px-3 py-2.5 text-xs font-extrabold tracking-[.5px] text-gold transition-colors hover:border-gold"
       >
-        {open ? `▲ HIDE ${viewLabel}` : `▼ VIEW ${viewLabel}`}
+        {open
+          ? t("hideLabel", { label: viewText })
+          : t("viewLabel", { label: viewText })}
       </button>
       {open && (
         <pre
           tabIndex={0}
           role="region"
-          aria-label="Prompt text"
+          aria-label={t("promptRegionAria")}
           className="prompt-block max-h-[220px] overflow-auto rounded-xl border border-line bg-raised p-3 text-cream/90"
         >
           {prompt}
