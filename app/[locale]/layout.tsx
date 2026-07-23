@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow, Gemunu_Libre } from "next/font/google";
+import { Barlow, Gemunu_Libre, Saira } from "next/font/google";
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -18,6 +18,12 @@ const gemunu = Gemunu_Libre({
   variable: "--font-gemunu",
   subsets: ["latin", "latin-ext"],
   weight: "800",
+});
+
+const saira = Saira({
+  variable: "--font-saira",
+  subsets: ["latin", "latin-ext"],
+  weight: "900",
 });
 
 export function generateStaticParams() {
@@ -55,7 +61,7 @@ export default async function RootLayout({
     <html
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
-      className={`${barlow.variable} ${gemunu.variable} h-full antialiased`}
+      className={`${barlow.variable} ${gemunu.variable} ${saira.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <a href="#main-content" className="skip-link">
