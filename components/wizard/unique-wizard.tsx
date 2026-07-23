@@ -7,9 +7,9 @@ import {
   ExampleChatModal,
   PromptActions,
   RankPicker,
-  StickyBar,
-  Stepper,
+  StepSection,
   Toast,
+  TopActions,
   useCopyToast,
   WizardModal,
   inputClass,
@@ -18,7 +18,6 @@ import {
 } from "./shared";
 import type { WizardImage } from "./hero-wizard";
 
-const STEP_NAMES = ["Base", "Styles", "Prompt"];
 const CTAS = [
   "I PASTED THE BASE CARD →",
   "I PASTED MY HERO STYLES →",
@@ -64,123 +63,123 @@ export function UniqueWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <div className="mb-2 text-right text-xs font-extrabold text-muted">
-        Step {step} of 3
-      </div>
-      <Stepper names={STEP_NAMES} step={step} onGo={setStep} />
+      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
 
-      <div className="min-h-[340px] pb-4 pt-4">
-        {step === 1 && (
-          <section aria-label="Step 1 · Base card">
-            <h2 className="display mb-1.5 text-[21px]">Copy a base card</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Copy + paste a base card into ChatGPT.{" "}
-              <strong className="text-cream">(Tap a card to copy it.)</strong>{" "}
-              Rank &amp; colors come in step 3 — any card works.
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              {templates.map((t) => (
-                <CopyTile
-                  key={t.src}
-                  src={t.src}
-                  alt={t.name}
-                  label={t.label}
-                  sizes="(max-width: 640px) 30vw, 176px"
-                  copied={copied === t.copyUrl}
-                  onCopy={() => copyImage(t.copyUrl, t.name)}
-                />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {step === 2 && (
-          <section aria-label="Step 2 · Hero styles">
-            <h2 className="display mb-1.5 text-[21px]">Copy 1–2 hero styles</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Copy + paste <strong className="text-cream">1–2 heroes</strong>{" "}
-              into ChatGPT, one at a time.{" "}
-              <strong className="text-cream">(Tap an image to copy it.)</strong>{" "}
-              The first sets the style, a second adds inspiration — exact picks
-              don&rsquo;t matter much.
-            </p>
-            <div className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6">
-              {styles.map((s) => (
-                <CopyTile
-                  key={s.src}
-                  src={s.src}
-                  alt={s.name}
-                  label={s.label}
-                  sizes="112px"
-                  className="w-28 shrink-0"
-                  copied={copied === s.copyUrl}
-                  onCopy={() => copyImage(s.copyUrl, s.name)}
-                />
-              ))}
-            </div>
-            <p className="text-[11.5px] text-muted">
-              Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
-            </p>
-          </section>
-        )}
-
-        {step === 3 && (
-          <section aria-label="Step 3 · Describe & prompt">
-            <h2 className="display mb-1.5 text-[21px]">
-              Describe &amp; build your prompt
-            </h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Name &amp; describe your hero (plus any card changes), pick a
-              rank, then{" "}
-              <strong className="text-cream">
-                copy + paste the prompt into ChatGPT
-              </strong>{" "}
-              and hit send.
-            </p>
-            <label className={`${labelClass} mb-2.5`}>
-              Hero name
-              <input
-                type="text"
-                value={heroName}
-                onChange={(e) => setHeroName(e.target.value)}
-                placeholder="e.g. CoquetaFarm"
-                className={inputClass}
+      <div className="grid gap-2.5">
+        <StepSection
+          index={1}
+          title="Copy a base card"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[0]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Copy + paste a base card into ChatGPT.{" "}
+            <strong className="text-cream">(Tap a card to copy it.)</strong>{" "}
+            Rank &amp; colors come in step 3 — any card works.
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {templates.map((t) => (
+              <CopyTile
+                key={t.src}
+                src={t.src}
+                alt={t.name}
+                label={t.label}
+                sizes="(max-width: 640px) 30vw, 176px"
+                copied={copied === t.copyUrl}
+                onCopy={() => copyImage(t.copyUrl, t.name)}
               />
-            </label>
-            <label className={`${labelClass} mb-2.5`}>
-              Hero details &amp; card changes
-              <textarea
-                value={details}
-                onChange={(e) => setDetails(e.target.value)}
-                rows={4}
-                placeholder="e.g. cute and elegant, blonde hair, tight mythical dress. Change the “B” to “F”, change all blue elements to an earthy green, make her dress out of leaves and branches"
-                className={`${inputClass} resize-y`}
+            ))}
+          </div>
+        </StepSection>
+
+        <StepSection
+          index={2}
+          title="Copy 1–2 hero styles"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[1]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Copy + paste <strong className="text-cream">1–2 heroes</strong>{" "}
+            into ChatGPT, one at a time.{" "}
+            <strong className="text-cream">(Tap an image to copy it.)</strong>{" "}
+            The first sets the style, a second adds inspiration — exact picks
+            don&rsquo;t matter much.
+          </p>
+          <div className="scrollbar-none -mx-3.5 flex gap-2 overflow-x-auto px-3.5 pb-2">
+            {styles.map((s) => (
+              <CopyTile
+                key={s.src}
+                src={s.src}
+                alt={s.name}
+                label={s.label}
+                sizes="112px"
+                className="w-28 shrink-0"
+                copied={copied === s.copyUrl}
+                onCopy={() => copyImage(s.copyUrl, s.name)}
               />
-            </label>
-            <RankPicker
-              rank={rank}
-              custom={custom}
-              onPickRank={(r) => {
-                setRank(r);
-                setCustom(false);
-              }}
-              onPickCustom={() => setCustom(true)}
-              customLetter={customLetter}
-              customColor={customColor}
-              onLetter={setCustomLetter}
-              onColor={setCustomColor}
+            ))}
+          </div>
+          <p className="text-[11.5px] text-muted">
+            Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
+          </p>
+        </StepSection>
+
+        <StepSection
+          index={3}
+          title="Describe & build your prompt"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[2]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Name &amp; describe your hero (plus any card changes), pick a
+            rank, then{" "}
+            <strong className="text-cream">
+              copy + paste the prompt into ChatGPT
+            </strong>{" "}
+            and hit send.
+          </p>
+          <label className={`${labelClass} mb-2.5`}>
+            Hero name
+            <input
+              type="text"
+              value={heroName}
+              onChange={(e) => setHeroName(e.target.value)}
+              placeholder="e.g. CoquetaFarm"
+              className={inputClass}
             />
-            <PromptActions prompt={prompt} onFail={flash} />
-          </section>
-        )}
+          </label>
+          <label className={`${labelClass} mb-2.5`}>
+            Hero details &amp; card changes
+            <textarea
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+              rows={4}
+              placeholder="e.g. cute and elegant, blonde hair, tight mythical dress. Change the “B” to “F”, change all blue elements to an earthy green, make her dress out of leaves and branches"
+              className={`${inputClass} resize-y`}
+            />
+          </label>
+          <RankPicker
+            rank={rank}
+            custom={custom}
+            onPickRank={(r) => {
+              setRank(r);
+              setCustom(false);
+            }}
+            onPickCustom={() => setCustom(true)}
+            customLetter={customLetter}
+            customColor={customColor}
+            onLetter={setCustomLetter}
+            onColor={setCustomColor}
+          />
+          <PromptActions prompt={prompt} onFail={flash} />
+        </StepSection>
       </div>
-
-      <StickyBar
-        onHow={() => setModal("how")}
-        onExample={() => setModal("ex")}
-        cta={CTAS[step - 1]}
-        onNext={next}
-      />
 
       {modal === "how" && (
         <WizardModal onClose={() => setModal(null)} labelledBy="how-title">

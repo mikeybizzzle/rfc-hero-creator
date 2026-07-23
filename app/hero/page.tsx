@@ -57,39 +57,45 @@ export default function HeroPage() {
 
   return (
     <div className="pb-6">
-      <section className="atmosphere">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 pb-8 pt-7 sm:pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-12">
-          <div>
-            <h1 className="display max-w-[820px] text-balance text-[clamp(30px,5.5vw,46px)] leading-[1.02] tracking-[-0.01em]">
-              Hero Character (From Image)
-            </h1>
-            <p className="mt-3 max-w-[640px] text-pretty text-[clamp(14px,2.5vw,17px)] leading-relaxed text-muted">
-              Turn a photo into a Last Z hero card with your name on it.
-              You&rsquo;ll paste{" "}
-              <strong className="text-cream">3 images + 1 prompt</strong> into
-              ChatGPT — everything you need is on this page.
-            </p>
-            <div className="mt-4">
-              <ProcessStrip
-                walkthrough={walkthrough}
-                inputLabels={["Base card", "Style", "Photo"]}
-                outputLabel="Your hero card"
-              />
-            </div>
+      <section className="atmosphere border-b border-line/60">
+        <div className="mx-auto max-w-6xl px-4 pb-7 pt-8 sm:pb-9 sm:pt-12">
+          <h1 className="display max-w-[860px] text-balance text-[clamp(34px,6vw,56px)] leading-[1.02] tracking-[-0.01em]">
+            <span className="lz-goldtext">
+              <span aria-hidden="true" className="lz-goldtext-outline">
+                Hero&nbsp;Character
+              </span>
+              <span className="lz-goldtext-fill">Hero&nbsp;Character</span>
+            </span>{" "}
+            (From Image)
+          </h1>
+          <p className="mt-3 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-muted">
+            Turn a photo into a Last Z hero card with your name on it.
+            You&rsquo;ll paste{" "}
+            <strong className="text-cream">3 images + 1 prompt</strong> into
+            ChatGPT — everything you need is on this page.
+          </p>
+          <div className="mt-5">
+            <ProcessStrip
+              walkthrough={walkthrough}
+              inputLabels={["Base card", "Style", "Photo"]}
+              outputLabel="Your hero card"
+            />
           </div>
-          <HeroWizard
-            templates={templates}
-            styles={styles}
-            photoExample={{ src: provided[2].src, alt: "Example photo" }}
-            exampleInputs={[
-              { src: provided[0].src, alt: "Base card" },
-              { src: provided[1].src, alt: "Style example" },
-              { src: provided[2].src, alt: "Your photo" },
-            ]}
-            exampleOutput={{ src: output.src, alt: "Finished hero card" }}
-          />
         </div>
       </section>
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
+        <HeroWizard
+          templates={templates}
+          styles={styles}
+          photoExample={{ src: provided[2].src, alt: "Example photo" }}
+          exampleInputs={[
+            { src: provided[0].src, alt: "Base card" },
+            { src: provided[1].src, alt: "Style example" },
+            { src: provided[2].src, alt: "Your photo" },
+          ]}
+          exampleOutput={{ src: output.src, alt: "Finished hero card" }}
+        />
+      </div>
     </div>
   );
 }

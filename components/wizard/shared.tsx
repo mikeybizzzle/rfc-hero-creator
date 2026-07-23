@@ -45,84 +45,109 @@ export function Toast({ message }: { message: string | null }) {
   );
 }
 
-export function Stepper({
-  names,
-  step,
-  onGo,
+export function TopActions({
+  onHow,
+  onExample,
 }: {
-  names: string[];
-  step: number;
-  onGo: (step: number) => void;
+  onHow: () => void;
+  onExample: () => void;
 }) {
   return (
-    <div className="flex gap-1.5" role="list" aria-label="Steps">
-      {names.map((name, idx) => {
-        const i = idx + 1;
-        const done = step > i;
-        const current = step === i;
-        return (
-          <button
-            key={name}
-            type="button"
-            role="listitem"
-            aria-current={current ? "step" : undefined}
-            disabled={i >= step}
-            onClick={() => {
-              if (i < step) onGo(i);
-            }}
-            className={`min-h-10 flex-1 whitespace-nowrap rounded-[10px] border px-0.5 py-2 text-[11px] font-extrabold tracking-[.3px] transition-colors ${
-              current
-                ? "border-transparent bg-gradient-to-b from-amber to-orange text-white"
-                : done
-                  ? "cursor-pointer border-line bg-surface text-gold"
-                  : "border-line/60 bg-raised text-muted/60"
-            }`}
-          >
-            {done ? `✓ ${name}` : `${i}·${name}`}
-          </button>
-        );
-      })}
+    <div className="mb-3 flex gap-2">
+      <button
+        type="button"
+        onClick={onHow}
+        className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
+      >
+        HOW IT WORKS
+      </button>
+      <button
+        type="button"
+        onClick={onExample}
+        className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
+      >
+        SEE EXAMPLE
+      </button>
     </div>
   );
 }
 
-export function StickyBar({
-  onHow,
-  onExample,
+export function StepSection({
+  index,
+  title,
+  step,
+  onOpen,
   cta,
   onNext,
+  children,
 }: {
-  onHow: () => void;
-  onExample: () => void;
+  index: number;
+  title: string;
+  step: number;
+  onOpen: (step: number) => void;
   cta: string;
   onNext: () => void;
+  children: React.ReactNode;
 }) {
+  const open = step === index;
+  const done = step > index;
+  const bodyId = `step-${index}-body`;
+
   return (
-    <div className="sticky bottom-0 z-30 -mx-4 border-t border-line/60 bg-bg/95 px-4 pb-[max(18px,env(safe-area-inset-bottom))] pt-3 backdrop-blur-sm sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:backdrop-blur-none">
-      <div className="mb-2 flex gap-2">
-        <button
-          type="button"
-          onClick={onHow}
-          className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
-        >
-          HOW IT WORKS
-        </button>
-        <button
-          type="button"
-          onClick={onExample}
-          className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
-        >
-          SEE EXAMPLE
-        </button>
-      </div>
+    <section
+      className={`overflow-hidden rounded-xl border transition-colors ${
+        open ? "border-line bg-surface" : "border-line/50 bg-raised"
+      }`}
+    >
       <button
         type="button"
-        onClick={onNext}
-        className="lz-cta min-h-[52px] w-full px-4 py-3.5 text-[15px] font-extrabold tracking-[.5px]"
+        onClick={() => {
+          if (done) onOpen(index);
+        }}
+        disabled={!done}
+        aria-expanded={open}
+        aria-controls={bodyId}
+        className={`flex min-h-12 w-full items-center gap-2.5 px-3.5 py-2.5 text-left ${
+          done ? "cursor-pointer" : ""
+        }`}
       >
-        {cta}
+        <span
+          className={`grid h-7 w-7 shrink-0 place-items-center rounded-lg text-[13px] font-extrabold ${
+            open
+              ? "bg-gradient-to-b from-amber to-orange text-white"
+              : done
+                ? "border border-line bg-surface text-gold"
+                : "border border-line/60 bg-raised text-muted/50"
+          }`}
+        >
+          {done ? "✓" : index}
+        </span>
+        <span
+          className={`display text-[17px] leading-tight ${
+            open ? "text-cream" : done ? "text-gold" : "text-muted/50"
+          }`}
+        >
+          {title}
+        </span>
+        {done && (
+          <span aria-hidden="true" className="ml-auto text-[11px] text-muted">
+            ▼
+          </span>
+        )}
       </button>
-    </div>
+      {open && (
+        <div id={bodyId} className="px-3.5 pb-4">
+          {children}
+          <button
+            type="button"
+            onClick={onNext}
+            className="lz-cta mt-3.5 min-h-12 w-full px-4 py-3 text-sm font-extrabold tracking-[.5px]"
+          >
+            {cta}
+          </button>
+        </div>
+      )}
+    </section>
   );
 }
 
