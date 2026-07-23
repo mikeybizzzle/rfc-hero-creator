@@ -216,6 +216,60 @@
       "exampleCaption": "ChatGPT — az egyéni képed (1–2 perc)",
       "copyPromptGo": "PROMPT MÁSOLÁSA → CHATGPT",
       "promptAgain": "KATTINTS ÚJRA A CHATGPT MEGNYITÁSÁHOZ"
+    },
+    "anim": {
+      "hitSend": "Nyomd meg a KÜLDÉST",
+      "working": "A ChatGPT munkához lát…",
+      "generating": "Kép generálása",
+      "takes": "1–2 percet vesz igénybe",
+      "messageGhost": "Üzenet a ChatGPT-nek",
+      "messageSent": "Üzenet elküldve",
+      "promptCopied": "PROMPT KIMÁSOLVA ✓",
+      "imagesCopied": "KÉPEK KIMÁSOLVA ✓",
+      "step1Sub": "<strong>Koppints egy kártyára</strong>, hogy az 1. mezőbe kerüljön — bármelyik kártya megfelel.",
+      "step2Sub": "<strong>Koppints egy képre</strong> — csak a rajzstílust mutatja, bármelyik megfelel.",
+      "hero": {
+        "step3Sub": "<strong>Tölts fel egy fotót</strong> az átalakítandó személyről vagy karakterről — ez tölti ki a 3. mezőt.",
+        "step4Sub": "Töltsd ki az adatokat — a promptot <strong>mi állítjuk össze neked</strong>.",
+        "typedDetails": "misztikus, lávafényű szemek",
+        "attachCaption": "A ChatGPT-ben — illeszd be a 3 képedet",
+        "attachLine1": "Alapkártya · Stíluspélda · A fotód",
+        "attachLine2": "— a három kép, amit erről az oldalról másoltál",
+        "label1": "Alapkártya",
+        "label2": "Stílus",
+        "label3": "A fotód",
+        "pasteCaption": "Illeszd be a kimásolt promptot",
+        "done": "Íme a hőskártyád ✓",
+        "tagline": "A hőskártyád — <grad>kész 1–2 perc alatt</grad>"
+      },
+      "unique": {
+        "step3Sub": "Nevezd el és írd le a hősödet, válassz rangot — a promptot <strong>mi állítjuk össze neked</strong>.",
+        "typedDetails": "aranyos és elegáns, szőke haj, testhezálló misztikus ruha. Cseréld a „B” betűt „F”-re, kék → földzöld, levelekből és ágakból készült ruha",
+        "prompt": "Használd a csatolt képeket referenciaként: 1. kép = az alapkártya, 2. kép = a hősstílus-példa. Találj ki egy új hőst a leírásom alapján… <note>(a promptod)</note>",
+        "attachCaption": "A ChatGPT-ben — illeszd be a 2 képedet",
+        "attachLine1": "Alapkártya · Hősstílus-példa",
+        "attachLine2": "— a két kép, amit erről az oldalról másoltál",
+        "label1": "Alapkártya",
+        "label2": "Stílus",
+        "pasteCaption": "Illeszd be a kimásolt promptot",
+        "done": "Íme a kitalált hősöd ✓",
+        "tagline": "A kitalált hősöd — <grad>kész 1–2 perc alatt</grad>"
+      },
+      "custom": {
+        "describeCaption": "Írd le az ötletedet — ezen az oldalon",
+        "describeBody": "Írd le, mit szeretnél létrehozni, majd <strong>másold ki a promptot</strong>. A referenciaformátum automatikusan benne van.",
+        "topic": "Add hozzá a csatolt képek hőseit a SuperT gyémántpartis alapképéhez úgy, hogy mindenki felismerhető maradjon",
+        "attachCaption": "A ChatGPT-ben — csatold a hősképeidet",
+        "attachLine1": "A hőskártyák, amiket a jelenetben szeretnél",
+        "attachLine2": "— bármelyik kész hősöd megfelel",
+        "label1": "Hős 1",
+        "label2": "Hős 2",
+        "label3": "Hős 3",
+        "label4": "Hős 4",
+        "pasteCaption": "Illeszd be a kimásolt promptot",
+        "done": "Íme az egyedi képed ✓",
+        "tagline": "Az egyedi képed — <grad>kész 1–2 perc alatt</grad>"
+      }
     }
   },
   "Lightbox": {

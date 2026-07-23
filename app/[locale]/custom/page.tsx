@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { findWalkthrough } from "@/lib/chats";
-import { chatImages } from "@/lib/data";
 import { ProcessStrip } from "@/components/process-strip";
 import { CustomWizard } from "@/components/wizard/custom-wizard";
 
@@ -25,9 +24,6 @@ export default async function CustomPage({
   const t = await getTranslations("CustomPage");
 
   const walkthrough = findWalkthrough("group-scene")!;
-  const chat = chatImages.chat2;
-  const provided = chat["message-1-provided-images"];
-  const output = chat["image-outputs"][0];
 
   return (
     <div className="pb-6">
@@ -69,13 +65,7 @@ export default async function CustomPage({
         </div>
       </section>
       <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
-        <CustomWizard
-          exampleInputs={provided.map((img, i) => ({
-            src: img.src,
-            alt: i === 0 ? t("altBaseImage") : t("altHero"),
-          }))}
-          exampleOutput={{ src: output.src, alt: t("altResult") }}
-        />
+        <CustomWizard />
       </div>
     </div>
   );

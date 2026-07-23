@@ -4,28 +4,20 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { metaPrompt } from "@/lib/prompts";
 import {
-  ExampleChatModal,
   StepSection,
   Toast,
   TopActions,
   useCopyToast,
-  WizardModal,
   inputClass,
   labelClass,
-  type ChatImage,
 } from "./shared";
+import { HowItWorksModal } from "./example-animation";
 
-export function CustomWizard({
-  exampleInputs,
-  exampleOutput,
-}: {
-  exampleInputs: ChatImage[];
-  exampleOutput: ChatImage;
-}) {
+export function CustomWizard() {
   const t = useTranslations("Wizard.custom");
   const tShared = useTranslations("Wizard.shared");
   const [step, setStep] = useState(1);
-  const [modal, setModal] = useState<"how" | "ex" | null>(null);
+  const [modal, setModal] = useState<"how" | null>(null);
   const [idea, setIdea] = useState("");
   const [promptStage, setPromptStage] = useState<0 | 1>(0);
   const [promptDone, setPromptDone] = useState(false);
@@ -65,7 +57,7 @@ export function CustomWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
+      <TopActions onHow={() => setModal("how")} />
 
       <div className="grid gap-2.5">
         <StepSection
@@ -116,7 +108,11 @@ export function CustomWizard({
       </div>
 
       {modal === "how" && (
-        <WizardModal onClose={() => setModal(null)} labelledBy="how-title">
+        <HowItWorksModal
+          variant="custom"
+          labelledBy="how-title"
+          onClose={() => setModal(null)}
+        >
           <div id="how-title" className="display mr-8 text-lg text-gold">
             {tShared("how")}
           </div>
@@ -132,19 +128,7 @@ export function CustomWizard({
           <p className="text-[13px] font-bold leading-normal text-gold">
             {t("howResult")}
           </p>
-        </WizardModal>
-      )}
-
-      {modal === "ex" && (
-        <ExampleChatModal
-          onClose={() => setModal(null)}
-          inputs={exampleInputs}
-          message={t.rich("exampleMessage", {
-            note: (chunks) => <span className="text-[#9b9b9b]">{chunks}</span>,
-          })}
-          output={exampleOutput}
-          outputCaption={t("exampleCaption")}
-        />
+        </HowItWorksModal>
       )}
 
       <Toast message={toast} />

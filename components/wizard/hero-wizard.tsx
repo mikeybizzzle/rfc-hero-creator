@@ -13,12 +13,11 @@ import {
   Toast,
   TopActions,
   useCopyToast,
-  WizardModal,
   inputClass,
   labelClass,
   type ChatImage,
 } from "./shared";
-import { ExampleAnimationModal, HERO_EXAMPLE } from "./example-animation";
+import { HowItWorksModal } from "./example-animation";
 
 export type WizardImage = {
   src: string;
@@ -39,7 +38,7 @@ export function HeroWizard({
   const t = useTranslations("Wizard.hero");
   const tShared = useTranslations("Wizard.shared");
   const [step, setStep] = useState(1);
-  const [modal, setModal] = useState<"how" | "ex" | null>(null);
+  const [modal, setModal] = useState<"how" | null>(null);
   const [rank, setRank] = useState<Rank>("S");
   const [custom, setCustom] = useState(false);
   const [customLetter, setCustomLetter] = useState("");
@@ -157,7 +156,7 @@ export function HeroWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
+      <TopActions onHow={() => setModal("how")} />
 
       <div className="mb-3 grid grid-cols-3 gap-2">
         {slots.map((slot) => (
@@ -387,7 +386,11 @@ export function HeroWizard({
       </div>
 
       {modal === "how" && (
-        <WizardModal onClose={() => setModal(null)} labelledBy="how-title">
+        <HowItWorksModal
+          variant="hero"
+          labelledBy="how-title"
+          onClose={() => setModal(null)}
+        >
           <div id="how-title" className="display mr-8 text-lg text-gold">
             {tShared("how")}
           </div>
@@ -404,11 +407,7 @@ export function HeroWizard({
           <p className="text-[13px] font-bold leading-normal text-gold">
             {t("howResult")}
           </p>
-        </WizardModal>
-      )}
-
-      {modal === "ex" && (
-        <ExampleAnimationModal config={HERO_EXAMPLE} onClose={() => setModal(null)} />
+        </HowItWorksModal>
       )}
 
       <Toast message={toast} />

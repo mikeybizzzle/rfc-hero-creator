@@ -216,6 +216,60 @@
       "exampleCaption": "ChatGPT — dein individuelles Bild (1–2 Min.)",
       "copyPromptGo": "PROMPT KOPIEREN → CHATGPT",
       "promptAgain": "ERNEUT KLICKEN, UM CHATGPT ZU ÖFFNEN"
+    },
+    "anim": {
+      "hitSend": "Klick auf SENDEN",
+      "working": "ChatGPT legt los…",
+      "generating": "Bild wird generiert",
+      "takes": "Dauert 1–2 Minuten",
+      "messageGhost": "Nachricht an ChatGPT",
+      "messageSent": "Nachricht gesendet",
+      "promptCopied": "PROMPT KOPIERT ✓",
+      "imagesCopied": "BILDER KOPIERT ✓",
+      "step1Sub": "<strong>Tippe auf eine Karte</strong>, um sie in Feld 1 zu platzieren — jede Karte funktioniert.",
+      "step2Sub": "<strong>Tippe auf ein Bild</strong> — es zeigt nur den Kunststil, jedes funktioniert.",
+      "hero": {
+        "step3Sub": "<strong>Lade ein Foto</strong> der Person oder Figur hoch, die du verwandelst — es füllt Feld 3.",
+        "step4Sub": "Fülle die Details aus — der Prompt wird <strong>für dich erstellt</strong>.",
+        "typedDetails": "mystisch, glühende Lava-Augen",
+        "attachCaption": "In ChatGPT — füge deine 3 Bilder ein",
+        "attachLine1": "Basiskarte · Stilbeispiel · Dein Foto",
+        "attachLine2": "— die drei Bilder, die du von dieser Seite kopiert hast",
+        "label1": "Basiskarte",
+        "label2": "Stil",
+        "label3": "Dein Foto",
+        "pasteCaption": "Füge den kopierten Prompt ein",
+        "done": "Hier ist deine Heldenkarte ✓",
+        "tagline": "Deine Heldenkarte — <grad>fertig in 1–2 Min.</grad>"
+      },
+      "unique": {
+        "step3Sub": "Benenne und beschreibe deinen Helden, wähle einen Rang — der Prompt wird <strong>für dich erstellt</strong>.",
+        "typedDetails": "süß und elegant, blonde Haare, enges mystisches Kleid. Ändere das “B” in ein “F”, Blau → Erdgrün, Kleid aus Blättern und Zweigen",
+        "prompt": "Nutze die angehängten Bilder als Referenzen: Bild 1 = die Basiskarte, Bild 2 = das Heldenstil-Beispiel. Erfinde aus meiner Beschreibung einen neuen Helden… <note>(dein Prompt)</note>",
+        "attachCaption": "In ChatGPT — füge deine 2 Bilder ein",
+        "attachLine1": "Basiskarte · Heldenstil-Beispiel",
+        "attachLine2": "— die zwei Bilder, die du von dieser Seite kopiert hast",
+        "label1": "Basiskarte",
+        "label2": "Stil",
+        "pasteCaption": "Füge den kopierten Prompt ein",
+        "done": "Hier ist dein erfundener Held ✓",
+        "tagline": "Dein erfundener Held — <grad>fertig in 1–2 Min.</grad>"
+      },
+      "custom": {
+        "describeCaption": "Beschreibe deine Idee — auf dieser Seite",
+        "describeBody": "Beschreibe, was du erstellen willst, und <strong>kopiere dann den Prompt</strong>. Das Referenzformat ist automatisch enthalten.",
+        "topic": "Füge die Helden aus jedem angehängten Bild in das Basisbild von SuperT ein, der eine Diamantparty feiert — alle sollen erkennbar bleiben",
+        "attachCaption": "In ChatGPT — hänge deine Heldenbilder an",
+        "attachLine1": "Die Heldenkarten, die du in der Szene willst",
+        "attachLine2": "— jeder deiner fertigen Helden funktioniert",
+        "label1": "Held 1",
+        "label2": "Held 2",
+        "label3": "Held 3",
+        "label4": "Held 4",
+        "pasteCaption": "Füge den kopierten Prompt ein",
+        "done": "Hier ist dein individuelles Bild ✓",
+        "tagline": "Dein individuelles Bild — <grad>fertig in 1–2 Min.</grad>"
+      }
     }
   },
   "Lightbox": {
