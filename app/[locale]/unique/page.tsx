@@ -70,7 +70,7 @@ export default async function UniquePage({
   return (
     <div className="pb-6">
       <section className="atmosphere border-b border-line/60">
-        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 pb-7 pt-8 sm:pb-9 sm:pt-12 lg:flex-row lg:items-center lg:gap-8">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 pb-7 pt-8 sm:pb-9 sm:pt-12 md:flex-row md:items-center md:gap-6 lg:gap-8">
           <div className="min-w-0 flex-1">
           <h1 className="display max-w-[860px] text-balance text-[clamp(34px,6vw,56px)] leading-[1.02] tracking-[-0.01em]">
             {t.rich("title", {
@@ -92,7 +92,7 @@ export default async function UniquePage({
             })}
           </p>
           </div>
-          <div className="lg:shrink-0">
+          <div className="md:shrink-0">
             <ProcessStrip
               walkthrough={walkthrough}
               inputLabels={[t("inputBase"), t("inputStyle"), t("inputStyle")]}

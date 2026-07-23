@@ -89,12 +89,13 @@ export default async function Home({
               {t("subtitle")}
             </p>
           </div>
-          <div className="hidden w-[528px] shrink-0 lg:block">
+          <div className="hidden shrink-0 md:block md:w-[360px] lg:w-[528px]">
             <Image
               src="/images/hero-character-guide-v2.png"
               alt=""
               width={1471}
               height={803}
+              sizes="(max-width: 1024px) 360px, 528px"
               priority
               className="h-auto w-full [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%),radial-gradient(ellipse_at_center,black_53%,transparent_96%)]"
             />

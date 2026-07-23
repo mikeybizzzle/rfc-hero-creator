@@ -62,7 +62,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 lg:grid-cols-4">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 sm:gap-3.5 md:grid-cols-4">
         {items.map((item, i) => (
           <button
             key={item.slug}
@@ -78,7 +78,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
                 src={item.src}
                 alt={item.name}
                 fill
-                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
                 className="object-cover transition-transform duration-300 group-hover:scale-[1.03]"
                 priority={i < 4}
               />
