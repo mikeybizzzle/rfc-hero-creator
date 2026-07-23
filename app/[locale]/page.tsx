@@ -3,7 +3,6 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { findGallery } from "@/lib/data";
 import { WallMarquee } from "@/components/wall-marquee";
-import { HowItWorks } from "@/components/how-it-works/how-it-works";
 
 const wall: [string, string][] = [
   ["ausryte", "Aušrytė"],
@@ -105,10 +104,6 @@ export default async function Home({
       </section>
 
       <div className="mx-auto max-w-6xl px-4">
-        <section aria-label="How it works" className="pt-9 sm:pt-12">
-          <HowItWorks />
-        </section>
-
         <section className="pt-9 sm:pt-12">
           <div className="mb-4">
             <h2 className="display text-[clamp(25px,4vw,34px)]">{t("pickPath")}</h2>
