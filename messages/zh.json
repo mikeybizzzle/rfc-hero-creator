@@ -216,6 +216,60 @@
       "exampleCaption": "ChatGPT — 你的自定义图片（1–2 分钟）",
       "copyPromptGo": "复制提示词 → CHATGPT",
       "promptAgain": "再次点击打开 CHATGPT"
+    },
+    "anim": {
+      "hitSend": "点击发送",
+      "working": "ChatGPT 开始工作…",
+      "generating": "正在生成图片",
+      "takes": "大约需要 1–2 分钟",
+      "messageGhost": "给 ChatGPT 发消息",
+      "messageSent": "消息已发送",
+      "promptCopied": "提示词已复制 ✓",
+      "imagesCopied": "图片已复制 ✓",
+      "step1Sub": "<strong>点按一张卡片</strong>放入格子 1 — 任意卡片都可以。",
+      "step2Sub": "<strong>点按一张图片</strong> — 它只提供画风参考，任意一张都可以。",
+      "hero": {
+        "step3Sub": "<strong>上传要变身的人物或角色的照片</strong> — 它会填入格子 3。",
+        "step4Sub": "填写信息 — 提示词会<strong>自动为你生成</strong>。",
+        "typedDetails": "神秘感、熔岩发光的眼睛",
+        "attachCaption": "在 ChatGPT 中 — 粘贴你的 3 张图片",
+        "attachLine1": "基础卡 · 风格示例 · 你的照片",
+        "attachLine2": "— 你从本页复制的三张图片",
+        "label1": "基础卡",
+        "label2": "风格",
+        "label3": "你的照片",
+        "pasteCaption": "粘贴复制好的提示词",
+        "done": "你的英雄卡完成了 ✓",
+        "tagline": "你的英雄卡 — <grad>1–2 分钟即可完成</grad>"
+      },
+      "unique": {
+        "step3Sub": "为英雄命名并描述，选择等级 — 提示词会<strong>自动为你生成</strong>。",
+        "typedDetails": "可爱又优雅，金发，紧身神话长裙。把“B”改成“F”，蓝色 → 大地绿，裙子改用树叶和树枝制成",
+        "prompt": "把附上的图作为参考：图 1 = 底卡，图 2 = 英雄风格示例。根据我的描述创造一个新英雄…… <note>（你的提示词）</note>",
+        "attachCaption": "在 ChatGPT 中 — 粘贴你的 2 张图片",
+        "attachLine1": "基础卡 · 英雄风格示例",
+        "attachLine2": "— 你从本页复制的两张图片",
+        "label1": "基础卡",
+        "label2": "风格",
+        "pasteCaption": "粘贴复制好的提示词",
+        "done": "你的原创英雄完成了 ✓",
+        "tagline": "你的原创英雄 — <grad>1–2 分钟即可完成</grad>"
+      },
+      "custom": {
+        "describeCaption": "描述你的想法 — 在本页完成",
+        "describeBody": "描述你想创作的内容，然后<strong>复制提示词</strong>。参考格式会自动包含在内。",
+        "topic": "把每张附图中的英雄加入 SuperT 举办钻石派对的基础图片中，并保持每个人都可辨认",
+        "attachCaption": "在 ChatGPT 中 — 附上你的英雄图片",
+        "attachLine1": "你想加入场景的英雄卡",
+        "attachLine2": "— 任何一张你完成的英雄卡都可以",
+        "label1": "英雄 1",
+        "label2": "英雄 2",
+        "label3": "英雄 3",
+        "label4": "英雄 4",
+        "pasteCaption": "粘贴复制好的提示词",
+        "done": "你的自定义图片完成了 ✓",
+        "tagline": "你的自定义图片 — <grad>1–2 分钟即可完成</grad>"
+      }
     }
   },
   "Lightbox": {

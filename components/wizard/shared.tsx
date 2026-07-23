@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { copyImageAsset } from "@/lib/image-clipboard";
 
@@ -47,13 +47,7 @@ export function Toast({ message }: { message: string | null }) {
   );
 }
 
-export function TopActions({
-  onHow,
-  onExample,
-}: {
-  onHow: () => void;
-  onExample: () => void;
-}) {
+export function TopActions({ onHow }: { onHow: () => void }) {
   const t = useTranslations("Wizard.shared");
   return (
     <div className="mb-3 flex gap-2">
@@ -63,13 +57,6 @@ export function TopActions({
         className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
       >
         {t("how")}
-      </button>
-      <button
-        type="button"
-        onClick={onExample}
-        className="min-h-11 flex-1 rounded-xl border border-line bg-raised px-3 py-2.5 text-[11.5px] font-extrabold tracking-[.4px] text-gold transition-colors hover:border-gold"
-      >
-        {t("seeExample")}
       </button>
     </div>
   );
@@ -160,103 +147,7 @@ export function StepSection({
   );
 }
 
-export function WizardModal({
-  onClose,
-  labelledBy,
-  children,
-  tone = "gold",
-}: {
-  onClose: () => void;
-  labelledBy: string;
-  children: React.ReactNode;
-  tone?: "gold" | "chat";
-}) {
-  const t = useTranslations("Wizard.shared");
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  return (
-    <div
-      onClick={onClose}
-      className="fixed inset-0 z-40 grid place-items-center bg-black/75 p-[18px]"
-    >
-      <div
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={labelledBy}
-        onClick={(e) => e.stopPropagation()}
-        className={`relative grid max-h-full w-full max-w-[460px] gap-2.5 overflow-y-auto rounded-2xl border p-4 sm:px-[18px] ${
-          tone === "gold" ? "border-line bg-surface" : "border-white/15 bg-[#1b1b1b]"
-        }`}
-      >
-        <button
-          type="button"
-          onClick={onClose}
-          aria-label={t("close")}
-          className={`absolute right-2.5 top-2.5 grid h-8 w-8 place-items-center rounded-lg border text-sm ${
-            tone === "gold"
-              ? "border-line bg-raised text-gold"
-              : "border-white/20 bg-[#303030] text-[#ececec]"
-          }`}
-        >
-          &#10005;
-        </button>
-        {children}
-      </div>
-    </div>
-  );
-}
-
 export type ChatImage = { src: string; alt: string };
-
-export function ExampleChatModal({
-  onClose,
-  inputs,
-  message,
-  output,
-  outputCaption,
-}: {
-  onClose: () => void;
-  inputs: ChatImage[];
-  message: React.ReactNode;
-  output: ChatImage;
-  outputCaption: string;
-}) {
-  const t = useTranslations("Wizard.shared");
-  return (
-    <WizardModal onClose={onClose} labelledBy="example-title" tone="chat">
-      <div
-        id="example-title"
-        className="mr-8 text-[11px] font-extrabold tracking-[1px] text-[#8f8f8f]"
-      >
-        {t("exampleChatTitle")}
-      </div>
-      <div className="grid max-w-[88%] justify-items-end gap-1.5 justify-self-end">
-        <div className="flex gap-1.5">
-          {inputs.map((img) => (
-            <div key={img.src} className="relative h-[52px] w-[52px] overflow-hidden rounded-lg border border-white/15">
-              <Image src={img.src} alt={img.alt} fill sizes="52px" className="object-cover" />
-            </div>
-          ))}
-        </div>
-        <div className="max-w-[260px] rounded-[14px_14px_4px_14px] bg-[#303030] px-3 py-2 text-xs leading-normal text-[#ececec]">
-          {message}
-        </div>
-      </div>
-      <div className="grid max-w-[88%] gap-1.5">
-        <div className="relative h-[180px] w-[180px] overflow-hidden rounded-xl border border-white/15">
-          <Image src={output.src} alt={output.alt} fill sizes="180px" className="object-cover" />
-        </div>
-        <div className="text-[11px] font-bold text-[#8f8f8f]">{outputCaption}</div>
-      </div>
-    </WizardModal>
-  );
-}
 
 export function CopyTile({
   src,

@@ -7,34 +7,28 @@ import { buildReferenceSheet } from "@/lib/reference-sheet";
 import { copyImageBlobAsset } from "@/lib/image-clipboard";
 import {
   CopyTile,
-  ExampleChatModal,
   RankPicker,
   StepSection,
   Toast,
   TopActions,
   useCopyToast,
-  WizardModal,
   inputClass,
   labelClass,
-  type ChatImage,
 } from "./shared";
+import { HowItWorksModal } from "./example-animation";
 import type { WizardImage } from "./hero-wizard";
 
 export function UniqueWizard({
   templates,
   styles,
-  exampleInputs,
-  exampleOutput,
 }: {
   templates: WizardImage[];
   styles: WizardImage[];
-  exampleInputs: ChatImage[];
-  exampleOutput: ChatImage;
 }) {
   const t = useTranslations("Wizard.unique");
   const tShared = useTranslations("Wizard.shared");
   const [step, setStep] = useState(1);
-  const [modal, setModal] = useState<"how" | "ex" | null>(null);
+  const [modal, setModal] = useState<"how" | null>(null);
   const [rank, setRank] = useState<Rank>("B");
   const [custom, setCustom] = useState(false);
   const [customLetter, setCustomLetter] = useState("");
@@ -134,7 +128,7 @@ export function UniqueWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
+      <TopActions onHow={() => setModal("how")} />
 
       <div className="mb-3 grid grid-cols-2 gap-2">
         {slots.map((slot) => (
@@ -300,7 +294,11 @@ export function UniqueWizard({
       </div>
 
       {modal === "how" && (
-        <WizardModal onClose={() => setModal(null)} labelledBy="how-title">
+        <HowItWorksModal
+          variant="unique"
+          labelledBy="how-title"
+          onClose={() => setModal(null)}
+        >
           <div id="how-title" className="display mr-8 text-lg text-gold">
             {tShared("how")}
           </div>
@@ -316,19 +314,7 @@ export function UniqueWizard({
           <p className="text-[13px] font-bold leading-normal text-gold">
             {t("howResult")}
           </p>
-        </WizardModal>
-      )}
-
-      {modal === "ex" && (
-        <ExampleChatModal
-          onClose={() => setModal(null)}
-          inputs={exampleInputs}
-          message={t.rich("exampleMessage", {
-            note: (chunks) => <span className="text-[#9b9b9b]">{chunks}</span>,
-          })}
-          output={exampleOutput}
-          outputCaption={t("exampleCaption")}
-        />
+        </HowItWorksModal>
       )}
 
       <Toast message={toast} />

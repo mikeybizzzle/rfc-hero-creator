@@ -216,6 +216,60 @@
       "exampleCaption": "ChatGPT — tu imagen personalizada (1–2 min)",
       "copyPromptGo": "COPIAR PROMPT → CHATGPT",
       "promptAgain": "HAZ CLIC DE NUEVO PARA ABRIR CHATGPT"
+    },
+    "anim": {
+      "hitSend": "Pulsa ENVIAR",
+      "working": "ChatGPT se pone a trabajar…",
+      "generating": "Generando imagen",
+      "takes": "Tarda 1–2 minutos",
+      "messageGhost": "Escribe a ChatGPT",
+      "messageSent": "Mensaje enviado",
+      "promptCopied": "PROMPT COPIADO ✓",
+      "imagesCopied": "IMÁGENES COPIADAS ✓",
+      "step1Sub": "<strong>Toca una carta</strong> para colocarla en la casilla 1 — cualquier carta sirve.",
+      "step2Sub": "<strong>Toca una imagen</strong> — solo muestra el estilo artístico, cualquiera sirve.",
+      "hero": {
+        "step3Sub": "<strong>Sube una foto</strong> de la persona o personaje que vas a transformar — llena la casilla 3.",
+        "step4Sub": "Completa los datos — el prompt se <strong>crea por ti</strong>.",
+        "typedDetails": "místico, ojos con brillo de lava",
+        "attachCaption": "En ChatGPT — pega tus 3 imágenes",
+        "attachLine1": "Carta base · Ejemplo de estilo · Tu foto",
+        "attachLine2": "— las tres imágenes que copiaste de esta página",
+        "label1": "Carta base",
+        "label2": "Estilo",
+        "label3": "Tu foto",
+        "pasteCaption": "Pega el prompt copiado",
+        "done": "Aquí tienes tu carta de héroe ✓",
+        "tagline": "Tu carta de héroe — <grad>lista en 1–2 min</grad>"
+      },
+      "unique": {
+        "step3Sub": "Nombra y describe a tu héroe, elige un rango — el prompt se <strong>crea por ti</strong>.",
+        "typedDetails": "linda y elegante, pelo rubio, vestido místico ajustado. Cambia la “B” por una “F”, azul → verde tierra, vestido de hojas y ramas",
+        "prompt": "Usa las imágenes adjuntas como referencias: Imagen 1 = la carta base, Imagen 2 = el ejemplo de estilo de héroe. Inventa un héroe nuevo a partir de mi descripción… <note>(tu prompt)</note>",
+        "attachCaption": "En ChatGPT — pega tus 2 imágenes",
+        "attachLine1": "Carta base · Ejemplo de estilo de héroe",
+        "attachLine2": "— las dos imágenes que copiaste de esta página",
+        "label1": "Carta base",
+        "label2": "Estilo",
+        "pasteCaption": "Pega el prompt copiado",
+        "done": "Aquí tienes tu héroe inventado ✓",
+        "tagline": "Tu héroe inventado — <grad>listo en 1–2 min</grad>"
+      },
+      "custom": {
+        "describeCaption": "Describe tu idea — en esta página",
+        "describeBody": "Describe lo que quieres crear y luego <strong>copia el prompt</strong>. El formato de referencia se incluye automáticamente.",
+        "topic": "Añade los héroes de cada imagen adjunta a la imagen base de SuperT dando una fiesta de diamantes, manteniendo a todos reconocibles",
+        "attachCaption": "En ChatGPT — adjunta tus imágenes de héroes",
+        "attachLine1": "Las cartas de héroe que quieres en la escena",
+        "attachLine2": "— cualquiera de tus héroes terminados sirve",
+        "label1": "Héroe 1",
+        "label2": "Héroe 2",
+        "label3": "Héroe 3",
+        "label4": "Héroe 4",
+        "pasteCaption": "Pega el prompt copiado",
+        "done": "Aquí tienes tu imagen personalizada ✓",
+        "tagline": "Tu imagen personalizada — <grad>lista en 1–2 min</grad>"
+      }
     }
   },
   "Lightbox": {
