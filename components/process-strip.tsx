@@ -22,10 +22,10 @@ export function ProcessStrip({
 
   return (
     <div
-      className="card-frame flex flex-col items-center gap-2.5 rounded-[18px] px-4 py-4 sm:flex-row sm:justify-center sm:gap-5 sm:p-5"
+      className="flex flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-4"
       aria-label="Image creation flow"
     >
-      <div className="flex flex-wrap justify-center gap-2 sm:gap-2.5">
+      <div className="flex flex-wrap gap-2 sm:gap-2.5">
         {inputs.map((img, i) => (
           <figure key={img.slug} className="m-0 grid gap-[5px] justify-items-center">
             <div
@@ -47,7 +47,7 @@ export function ProcessStrip({
         ))}
       </div>
       <span
-        className="display grid h-7 w-7 shrink-0 rotate-90 place-items-center rounded-full border border-line bg-raised text-lg text-gold sm:rotate-0"
+        className="display shrink-0 rotate-90 pl-6 text-xl text-gold sm:rotate-0 sm:pl-0"
         aria-hidden="true"
       >
         &rarr;

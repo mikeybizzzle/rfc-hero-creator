@@ -37,43 +37,47 @@ export default function CustomPage() {
 
   const refs = refList.map(([slug, name]) => {
     const img = findGallery(slug);
-    return { src: img.src, copyUrl: img.download ?? img.src, name, label: name };
+    return {
+      src: img.src,
+      copyUrl: img.download ?? img.src,
+      name,
+      label: name,
+    };
   });
 
   return (
     <div className="pb-6">
-      <section className="atmosphere border-b border-line/60">
-        <div className="mx-auto max-w-6xl px-4 pb-6 pt-7 sm:pb-8 sm:pt-10">
-          <h1 className="display max-w-[820px] text-balance text-[clamp(30px,5.5vw,46px)] leading-[1.02] tracking-[-0.01em]">
-            Custom Image
-          </h1>
-          <p className="mt-3 max-w-[640px] text-pretty text-[clamp(14px,2.5vw,17px)] leading-relaxed text-muted">
-            Group shots, parties, events — anything. The trick:{" "}
-            <strong className="text-cream">
-              ChatGPT writes the image prompt for you first
-            </strong>
-            , then you run that prompt. Two messages total.
-          </p>
-          <div className="mt-4">
-            <ProcessStrip
-              walkthrough={walkthrough}
-              inputLabels={["Base image", "Hero", "Hero", "Hero"]}
-              outputLabel="Your custom image"
-            />
+      <section className="atmosphere">
+        <div className="mx-auto grid max-w-6xl gap-6 px-4 pb-8 pt-7 sm:pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-12">
+          <div>
+            <h1 className="display max-w-[820px] text-balance text-[clamp(30px,5.5vw,46px)] leading-[1.02] tracking-[-0.01em]">
+              Custom Image
+            </h1>
+            <p className="mt-3 max-w-[640px] text-pretty text-[clamp(14px,2.5vw,17px)] leading-relaxed text-muted">
+              Group shots, parties, events — anything. The trick:{" "}
+              <strong className="text-cream">
+                ChatGPT writes the image prompt for you first
+              </strong>
+              , then you run that prompt. Two messages total.
+            </p>
+            <div className="mt-4">
+              <ProcessStrip
+                walkthrough={walkthrough}
+                inputLabels={["Base image", "Hero", "Hero", "Hero"]}
+                outputLabel="Your custom image"
+              />
+            </div>
           </div>
+          <CustomWizard
+            refs={refs}
+            exampleInputs={provided.map((img, i) => ({
+              src: img.src,
+              alt: i === 0 ? "Base image" : "Hero",
+            }))}
+            exampleOutput={{ src: output.src, alt: "Custom image result" }}
+          />
         </div>
       </section>
-
-      <div className="mx-auto max-w-6xl px-4 pt-5">
-        <CustomWizard
-          refs={refs}
-          exampleInputs={provided.map((img, i) => ({
-            src: img.src,
-            alt: i === 0 ? "Base image" : "Hero",
-          }))}
-          exampleOutput={{ src: output.src, alt: "Custom image result" }}
-        />
-      </div>
     </div>
   );
 }
