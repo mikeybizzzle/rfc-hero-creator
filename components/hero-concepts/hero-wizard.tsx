@@ -561,10 +561,7 @@ function ActionDock({
 function PhotoStep() {
   return (
     <div className="rounded-xl border border-line bg-raised/70 p-3 sm:p-4">
-      <p className="text-sm font-bold leading-relaxed text-cream">
-        Attach 1-3 clear images of your person or character directly in ChatGPT.
-      </p>
-      <p className="mt-1.5 text-xs leading-relaxed text-muted">
+      <p className="text-xs leading-relaxed text-muted">
         One image works. Multiple angles or expressions can help ChatGPT preserve
         the subject more accurately.
       </p>

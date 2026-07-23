@@ -74,7 +74,7 @@ export function WorkflowHelpDropdowns({
     function onKeyDown(event: KeyboardEvent) {
       if (event.key !== "Escape") return;
       const trigger = open === "example" ? exampleRef.current : howRef.current;
-      setOpen(false);
+      setOpen(null);
       trigger?.focus();
     }
 

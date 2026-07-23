@@ -36,13 +36,19 @@ export default function ProtoA() {
         </div>
       </header>
 
-      <section className="border-b border-[#e8dcc0] bg-[radial-gradient(900px_360px_at_75%_-20%,rgba(245,166,35,0.18),transparent_60%)]">
+      <section className="border-b border-[#ffe37e]/12">
         <div className="mx-auto max-w-6xl px-4 pb-10 pt-9 sm:pb-12 sm:pt-14">
-          <h1 className="lz-display max-w-[860px] text-[clamp(38px,6.8vw,68px)] leading-[0.98] tracking-[-0.01em] text-balance text-[#132e6d]">
-            Make your own <span className="text-[#e5691e]">Last&nbsp;Z</span>{" "}
+          <h1 className="lz-display max-w-[860px] text-[clamp(38px,6.8vw,68px)] leading-[1.02] tracking-[-0.01em] text-balance text-[#f7f1e8]">
+            Make your own{" "}
+            <span className="lz-goldtext">
+              <span aria-hidden="true" className="lz-goldtext-outline">
+                Last&nbsp;Z
+              </span>
+              <span className="lz-goldtext-fill">Last&nbsp;Z</span>
+            </span>{" "}
             hero card
           </h1>
-          <p className="mt-4 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-[#515151]">
+          <p className="mt-4 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-[#c9bba4]">
             Copy a few reference images, fill in a prompt, paste it all into
             ChatGPT. Two minutes, no skills needed.
           </p>
@@ -52,10 +58,10 @@ export default function ProtoA() {
       <div className="mx-auto max-w-6xl px-4">
         <section className="pt-9 sm:pt-12">
           <div className="mb-4">
-            <h2 className="lz-display text-[clamp(25px,4vw,34px)] text-[#132e6d]">
+            <h2 className="lz-display text-[clamp(25px,4vw,34px)] text-[#f7f1e8]">
               Pick your path
             </h2>
-            <p className="mt-1 text-[15px] text-[#515151]">
+            <p className="mt-1 text-[15px] text-[#c9bba4]">
               Three ways to forge an image — each page walks you through it.
             </p>
           </div>
@@ -67,9 +73,9 @@ export default function ProtoA() {
                   <Link
                     key={o.href}
                     href={o.href}
-                    className="lz-card lz-card-hover group flex h-full snap-start flex-col overflow-hidden"
+                    className="lz-dark-card lz-card-hover group flex h-full snap-start flex-col overflow-hidden"
                   >
-                    <div className="relative aspect-square overflow-hidden bg-[#eee]">
+                    <div className="relative aspect-square overflow-hidden bg-black/40">
                       <Image
                         src={img.src}
                         alt={o.title}
@@ -78,12 +84,13 @@ export default function ProtoA() {
                         className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
                         priority={i === 0}
                       />
+                      <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
                     <div className="flex flex-1 flex-col items-start px-4 pb-4 pt-3.5 sm:px-5 sm:pb-5 sm:pt-4">
-                      <h3 className="lz-display text-balance text-[22px] leading-tight text-[#132e6d]">
+                      <h3 className="lz-display text-balance text-[22px] leading-tight text-[#ffe37e]">
                         {o.title}
                       </h3>
-                      <p className="mb-4 mt-1.5 max-w-[46ch] text-sm leading-relaxed text-[#515151]">
+                      <p className="mb-4 mt-1.5 max-w-[46ch] text-sm leading-relaxed text-[#c9bba4]">
                         {o.text}
                       </p>
                       <span className="lz-cta mt-auto inline-flex min-h-10 items-center gap-2 px-5 text-[15px]">
@@ -111,12 +118,12 @@ export default function ProtoA() {
               Heroes forged by RfC so far. Tap any image to copy it — great as
               style references.
             </p>
-            <WallMarquee items={wallItems()} tone="light" />
+            <WallMarquee items={wallItems()} />
           </div>
         </section>
       </div>
 
-      <footer className="mt-14 bg-black">
+      <footer className="mt-14 border-t border-[#ffe37e]/10 bg-black">
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-7 text-[13px] text-[#e5e5e5]">
           <span className="lz-display text-base text-white">RfC alliance</span>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">

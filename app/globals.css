@@ -244,13 +244,15 @@ body {
 }
 
 .proto-a {
-  background: #fdf3dd;
-  color: #333;
+  background:
+    radial-gradient(900px 360px at 75% -20%, rgba(245, 166, 35, 0.12), transparent 60%),
+    #0b0a09;
+  color: #c9bba4;
 }
 
 .proto-a ::selection {
-  background: #e5691e;
-  color: #fff;
+  background: #f5a623;
+  color: #1a1108;
 }
 
 .lz-card {
