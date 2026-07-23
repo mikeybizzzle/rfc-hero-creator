@@ -19,17 +19,22 @@ export default function CustomPage() {
   const walkthrough = findWalkthrough("group-scene")!;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-8">
-      <FlowHeader
-        eyebrow="Custom image"
-        title="Make any kind of hero image"
-        steps={[
-          "Copy the base image you want to build on into ChatGPT.",
-          "Copy each hero you want in the scene into ChatGPT.",
-          "Describe your image, copy the prompt below, paste it into ChatGPT, and send it — ChatGPT writes the full prompt; send that back with the same images.",
-        ]}
-      />
+    <div className="pb-8">
+      <section className="atmosphere border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pt-6 pb-4 md:pt-10">
+          <FlowHeader
+            eyebrow="Custom image"
+            title="Make any kind of hero image"
+            steps={[
+              "Copy the base image you want to build on into ChatGPT.",
+              "Copy each hero you want in the scene into ChatGPT.",
+              "Describe your image, copy the prompt below, paste it into ChatGPT, and send it — ChatGPT writes the full prompt; send that back with the same images.",
+            ]}
+          />
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-6xl px-4 pt-8">
       <div className="mb-4">
         <ProcessStrip
           walkthrough={walkthrough}
@@ -87,6 +92,7 @@ export default function CustomPage() {
           Hero (Without Image) &rarr;
         </Link>
       </nav>
+      </div>
     </div>
   );
 }

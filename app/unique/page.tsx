@@ -34,17 +34,22 @@ export default function UniquePage() {
     .filter((t): t is (typeof baseTemplates)[number] => Boolean(t));
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-8">
-      <FlowHeader
-        eyebrow="Hero character image"
-        title="Hero Character (Without Image)"
-        steps={[
-          "Copy the base card into ChatGPT.",
-          "Copy two hero styles into ChatGPT — one style reference plus one extra for inspiration.",
-          "Fill out your hero's name and details, copy the prompt, paste it into ChatGPT, and send it.",
-        ]}
-      />
+    <div className="pb-8">
+      <section className="atmosphere border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pt-6 pb-4 md:pt-10">
+          <FlowHeader
+            eyebrow="Hero character image"
+            title="Hero Character (Without Image)"
+            steps={[
+              "Copy the base card into ChatGPT.",
+              "Copy two hero styles into ChatGPT — one style reference plus one extra for inspiration.",
+              "Fill out your hero's name and details, copy the prompt, paste it into ChatGPT, and send it.",
+            ]}
+          />
+        </div>
+      </section>
 
+      <div className="mx-auto max-w-6xl px-4 pt-8">
       <div className="mb-4">
         <ProcessStrip
           walkthrough={walkthrough}
@@ -111,6 +116,7 @@ export default function UniquePage() {
           Custom Image &rarr;
         </Link>
       </nav>
+      </div>
     </div>
   );
 }

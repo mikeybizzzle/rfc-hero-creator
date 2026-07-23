@@ -25,10 +25,7 @@ html {
 }
 
 body {
-  background:
-    radial-gradient(circle at 80% 0%, rgba(242, 106, 32, 0.16), transparent 34rem),
-    radial-gradient(circle at 15% 25%, rgba(255, 208, 90, 0.08), transparent 28rem),
-    linear-gradient(180deg, #0b0907 0%, #090806 100%) #090806;
+  background-color: var(--color-bg);
   color: var(--color-cream);
   font-family: var(--font-sans);
 }
@@ -54,8 +51,8 @@ body {
 /* Dusty atmosphere behind hero sections, from the card art's light shafts */
 .atmosphere {
   background:
-    radial-gradient(1200px 500px at 75% -10%, rgba(242, 106, 32, 0.1), transparent 60%),
-    radial-gradient(800px 400px at 10% 0%, rgba(255, 208, 90, 0.06), transparent 55%);
+    radial-gradient(1200px 500px at 75% -10%, rgba(242, 106, 32, 0.16), transparent 60%),
+    radial-gradient(800px 400px at 10% 0%, rgba(255, 208, 90, 0.07), transparent 55%);
 }
 
 @keyframes marquee {

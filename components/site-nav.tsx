@@ -7,6 +7,7 @@ const links = [
   ["Hero (From Image)", "/hero"],
   ["Custom Image", "/custom"],
   ["Hero (Without Image)", "/unique"],
+  ["Gallery", "/gallery"],
 ] as const;
 
 export function SiteNav() {

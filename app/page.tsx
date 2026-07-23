@@ -60,22 +60,25 @@ export default function Home() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-8">
-      <section className="pt-6 pb-2">
-        <h1 className="display text-[clamp(34px,7vw,58px)] leading-[1.05] mb-3">
-          Make your own{" "}
-          <span className="bg-gradient-to-br from-[#fff7de] from-[12%] via-gold via-[45%] to-orange bg-clip-text text-transparent">
-            Last&nbsp;Z
-          </span>{" "}
-          hero card
-        </h1>
-        <p className="text-[clamp(16px,2.5vw,19px)] leading-normal text-muted max-w-[640px] text-pretty">
-          Copy a few reference images, fill in a prompt, paste it all into
-          ChatGPT. Two minutes, no skills needed.
-        </p>
+    <div className="pb-8">
+      <section className="atmosphere border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 md:pt-12 md:pb-10">
+          <h1 className="display text-[clamp(34px,7vw,58px)] leading-[1.05] mb-3">
+            Make your own{" "}
+            <span className="bg-gradient-to-br from-[#fff7de] from-[12%] via-gold via-[45%] to-orange bg-clip-text text-transparent">
+              Last&nbsp;Z
+            </span>{" "}
+            hero card
+          </h1>
+          <p className="text-[clamp(16px,2.5vw,19px)] leading-normal text-muted max-w-[640px] text-pretty">
+            Copy a few reference images, fill in a prompt, paste it all into
+            ChatGPT. Two minutes, no skills needed.
+          </p>
+        </div>
       </section>
 
-      <section className="pt-6">
+      <div className="mx-auto max-w-6xl px-4">
+      <section className="pt-8">
         <h2 className="display text-[clamp(22px,4vw,30px)] mb-1">
           Pick your path
         </h2>
@@ -124,6 +127,7 @@ export default function Home() {
         </p>
         <WallMarquee items={wallItems} />
       </section>
+      </div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { LightboxGallery } from "@/components/lightbox-gallery";
 import { gallery, galleryName } from "@/lib/data";
 
 export const metadata: Metadata = {
-  title: "Gallery — RFC Hero Creator",
+  title: "Gallery — RfC Hero Forge",
   description: "Hero character cards created for RFC alliance members.",
 };
 
@@ -13,10 +13,12 @@ export default function GalleryPage() {
   return (
     <div>
       <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pt-8 md:pt-12 pb-6">
-          <p className="hud text-xs text-gold mb-3">Gallery</p>
-          <h1 className="display text-3xl md:text-5xl mb-4">Alliance heroes</h1>
-          <p className="text-muted leading-relaxed max-w-2xl">
+        <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 md:pt-12">
+          <p className="hud text-xs text-gold mb-2">Gallery</p>
+          <h1 className="display text-[clamp(30px,6vw,46px)] leading-tight mb-2">
+            Alliance heroes
+          </h1>
+          <p className="text-[clamp(15px,2.5vw,18px)] leading-normal text-muted max-w-[640px] text-pretty">
             Cards created for RFC members with this workflow. Tap any card to view it full
             size.
           </p>

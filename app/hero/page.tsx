@@ -31,18 +31,21 @@ export default function HeroPage() {
   const walkthrough = findWalkthrough("hero-card-from-photo")!;
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-8">
-      <section className="pt-2 pb-5">
-        <h1 className="display text-[clamp(30px,6vw,46px)] leading-tight mb-2">
-          Hero Character (From Image)
-        </h1>
-        <p className="text-[clamp(15px,2.5vw,18px)] leading-normal text-muted max-w-[640px] text-pretty">
-          Turn a photo into a Last Z hero card with your name on it. You&rsquo;ll paste{" "}
-          <strong className="text-cream">3 images + 1 prompt</strong> into ChatGPT — everything
-          you need is on this page.
-        </p>
+    <div className="pb-8">
+      <section className="atmosphere border-b border-line">
+        <div className="mx-auto max-w-6xl px-4 pt-8 pb-8 md:pt-12">
+          <h1 className="display text-[clamp(30px,6vw,46px)] leading-tight mb-2">
+            Hero Character (From Image)
+          </h1>
+          <p className="text-[clamp(15px,2.5vw,18px)] leading-normal text-muted max-w-[640px] text-pretty">
+            Turn a photo into a Last Z hero card with your name on it. You&rsquo;ll paste{" "}
+            <strong className="text-cream">3 images + 1 prompt</strong> into ChatGPT — everything
+            you need is on this page.
+          </p>
+        </div>
       </section>
 
+      <div className="mx-auto max-w-6xl px-4 pt-8">
       <div className="mb-4">
         <ProcessStrip
           walkthrough={walkthrough}
@@ -81,6 +84,7 @@ export default function HeroPage() {
           Hero (Without Image) &rarr;
         </Link>
       </nav>
+      </div>
     </div>
   );
 }
