@@ -71,22 +71,34 @@ export default async function Home({
   return (
     <div className="pb-10">
       <section className="atmosphere border-b border-line/60">
-        <div className="mx-auto max-w-6xl px-4 pb-10 pt-9 sm:pb-12 sm:pt-14">
-          <h1 className="display max-w-[860px] text-[clamp(38px,6.8vw,68px)] leading-[1.02] tracking-[-0.01em] text-balance">
-            {t.rich("title", {
-              gold: (chunks) => (
-                <span className="lz-goldtext">
-                  <span aria-hidden="true" className="lz-goldtext-outline">
-                    {chunks}
+        <div className="mx-auto flex max-w-6xl items-center gap-8 px-4 pb-10 pt-9 sm:pb-12 sm:pt-14">
+          <div className="min-w-0 flex-1">
+            <h1 className="display max-w-[860px] text-[clamp(38px,6.8vw,68px)] leading-[1.02] tracking-[-0.01em] text-balance">
+              {t.rich("title", {
+                gold: (chunks) => (
+                  <span className="lz-goldtext">
+                    <span aria-hidden="true" className="lz-goldtext-outline">
+                      {chunks}
+                    </span>
+                    <span className="lz-goldtext-fill">{chunks}</span>
                   </span>
-                  <span className="lz-goldtext-fill">{chunks}</span>
-                </span>
-              ),
-            })}
-          </h1>
-          <p className="mt-4 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-muted">
-            {t("subtitle")}
-          </p>
+                ),
+              })}
+            </h1>
+            <p className="mt-4 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-muted">
+              {t("subtitle")}
+            </p>
+          </div>
+          <div className="hidden w-[528px] shrink-0 lg:block">
+            <Image
+              src="/images/hero-character-guide-v2.png"
+              alt=""
+              width={1471}
+              height={803}
+              priority
+              className="h-auto w-full [mask-composite:intersect] [mask-image:linear-gradient(to_bottom,transparent_0%,black_25%),radial-gradient(ellipse_at_center,black_53%,transparent_96%)]"
+            />
+          </div>
         </div>
       </section>
 

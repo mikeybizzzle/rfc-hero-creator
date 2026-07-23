@@ -61,7 +61,8 @@ export default async function CustomPage({
   return (
     <div className="pb-6">
       <section className="atmosphere border-b border-line/60">
-        <div className="mx-auto max-w-6xl px-4 pb-7 pt-8 sm:pb-9 sm:pt-12">
+        <div className="mx-auto flex max-w-6xl flex-col gap-5 px-4 pb-7 pt-8 sm:pb-9 sm:pt-12 lg:flex-row lg:items-center lg:gap-8">
+          <div className="min-w-0 flex-1">
           <h1 className="display max-w-[860px] text-balance text-[clamp(34px,6vw,56px)] leading-[1.02] tracking-[-0.01em]">
             {t.rich("title", {
               gold: (chunks) => (
@@ -81,7 +82,8 @@ export default async function CustomPage({
               ),
             })}
           </p>
-          <div className="mt-5">
+          </div>
+          <div className="lg:shrink-0">
             <ProcessStrip
               walkthrough={walkthrough}
               inputLabels={[
