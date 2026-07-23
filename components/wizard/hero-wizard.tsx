@@ -8,9 +8,9 @@ import {
   ExampleChatModal,
   PromptActions,
   RankPicker,
-  StickyBar,
-  Stepper,
+  StepSection,
   Toast,
+  TopActions,
   useCopyToast,
   WizardModal,
   inputClass,
@@ -25,7 +25,6 @@ export type WizardImage = {
   label: string;
 };
 
-const STEP_NAMES = ["Base", "Style", "Photo", "Prompt"];
 const CTAS = [
   "I PASTED THE BASE CARD →",
   "I PASTED THE STYLE →",
@@ -74,147 +73,153 @@ export function HeroWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <div className="mb-2 text-right text-xs font-extrabold text-muted">
-        Step {step} of 4
-      </div>
-      <Stepper names={STEP_NAMES} step={step} onGo={setStep} />
+      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
 
-      <div className="min-h-[340px] pb-4 pt-4">
-        {step === 1 && (
-          <section aria-label="Step 1 · Base card">
-            <h2 className="display mb-1.5 text-[21px]">Copy a base card</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Copy + paste a base card into ChatGPT.{" "}
-              <strong className="text-cream">(Tap a card to copy it.)</strong>{" "}
-              Rank &amp; colors come in step 4 — any card works.
-            </p>
-            <div className="grid grid-cols-3 gap-2">
-              {templates.map((t) => (
-                <CopyTile
-                  key={t.src}
-                  src={t.src}
-                  alt={t.name}
-                  label={t.label}
-                  sizes="(max-width: 640px) 30vw, 176px"
-                  copied={copied === t.copyUrl}
-                  onCopy={() => copyImage(t.copyUrl, t.name)}
-                />
-              ))}
+      <div className="grid gap-2.5">
+        <StepSection
+          index={1}
+          title="Copy a base card"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[0]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Copy + paste a base card into ChatGPT.{" "}
+            <strong className="text-cream">(Tap a card to copy it.)</strong>{" "}
+            Rank &amp; colors come in step 4 — any card works.
+          </p>
+          <div className="grid grid-cols-3 gap-2">
+            {templates.map((t) => (
+              <CopyTile
+                key={t.src}
+                src={t.src}
+                alt={t.name}
+                label={t.label}
+                sizes="(max-width: 640px) 30vw, 176px"
+                copied={copied === t.copyUrl}
+                onCopy={() => copyImage(t.copyUrl, t.name)}
+              />
+            ))}
+          </div>
+        </StepSection>
+
+        <StepSection
+          index={2}
+          title="Copy a style example"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[1]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Copy + paste a style example into ChatGPT.{" "}
+            <strong className="text-cream">(Tap an image to copy it.)</strong>{" "}
+            It only shows the art style — anyone works.
+          </p>
+          <div className="scrollbar-none -mx-3.5 flex gap-2 overflow-x-auto px-3.5 pb-2">
+            {styles.map((s) => (
+              <CopyTile
+                key={s.src}
+                src={s.src}
+                alt={s.name}
+                label={s.label}
+                sizes="112px"
+                className="w-28 shrink-0"
+                copied={copied === s.copyUrl}
+                onCopy={() => copyImage(s.copyUrl, s.name)}
+              />
+            ))}
+          </div>
+          <p className="text-[11.5px] text-muted">
+            Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
+          </p>
+        </StepSection>
+
+        <StepSection
+          index={3}
+          title="Attach your photo"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[2]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            In ChatGPT, <strong className="text-cream">attach 1–3 photos</strong>{" "}
+            of the person or character you&rsquo;re transforming. Clear,
+            well-lit shots work best.
+          </p>
+          <div className="flex items-center gap-3 rounded-xl border border-line bg-raised p-3">
+            <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[10px] border border-line">
+              <Image
+                src={photoExample.src}
+                alt={photoExample.alt}
+                fill
+                sizes="96px"
+                className="object-cover"
+              />
             </div>
-          </section>
-        )}
+            <p className="text-[12.5px] leading-normal text-cream/90">
+              One clear photo is enough — add up to 3 angles for a better
+              likeness. Pets, avatars, and characters work too.
+            </p>
+          </div>
+        </StepSection>
 
-        {step === 2 && (
-          <section aria-label="Step 2 · Style example">
-            <h2 className="display mb-1.5 text-[21px]">Copy a style example</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Copy + paste a style example into ChatGPT.{" "}
-              <strong className="text-cream">(Tap an image to copy it.)</strong>{" "}
-              It only shows the art style — anyone works.
-            </p>
-            <div className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6">
-              {styles.map((s) => (
-                <CopyTile
-                  key={s.src}
-                  src={s.src}
-                  alt={s.name}
-                  label={s.label}
-                  sizes="112px"
-                  className="w-28 shrink-0"
-                  copied={copied === s.copyUrl}
-                  onCopy={() => copyImage(s.copyUrl, s.name)}
-                />
-              ))}
-            </div>
-            <p className="text-[11.5px] text-muted">
-              Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
-            </p>
-          </section>
-        )}
-
-        {step === 3 && (
-          <section aria-label="Step 3 · Your photo">
-            <h2 className="display mb-1.5 text-[21px]">Attach your photo</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              In ChatGPT, <strong className="text-cream">attach 1–3 photos</strong>{" "}
-              of the person or character you&rsquo;re transforming. Clear,
-              well-lit shots work best.
-            </p>
-            <div className="flex items-center gap-3 rounded-xl border border-line bg-raised p-3">
-              <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-[10px] border border-line">
-                <Image
-                  src={photoExample.src}
-                  alt={photoExample.alt}
-                  fill
-                  sizes="96px"
-                  className="object-cover"
-                />
-              </div>
-              <p className="text-[12.5px] leading-normal text-cream/90">
-                One clear photo is enough — add up to 3 angles for a better
-                likeness. Pets, avatars, and characters work too.
-              </p>
-            </div>
-          </section>
-        )}
-
-        {step === 4 && (
-          <section aria-label="Step 4 · Prompt">
-            <h2 className="display mb-1.5 text-[21px]">Build your prompt</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Fill in the details, then{" "}
-              <strong className="text-cream">
-                copy + paste the prompt into ChatGPT
-              </strong>{" "}
-              and hit send.
-            </p>
-            <RankPicker
-              rank={rank}
-              custom={custom}
-              onPickRank={(r) => {
-                setRank(r);
-                setCustom(false);
-              }}
-              onPickCustom={() => setCustom(true)}
-              customLetter={customLetter}
-              customColor={customColor}
-              onLetter={setCustomLetter}
-              onColor={setCustomColor}
+        <StepSection
+          index={4}
+          title="Build your prompt"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[3]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Fill in the details, then{" "}
+            <strong className="text-cream">
+              copy + paste the prompt into ChatGPT
+            </strong>{" "}
+            and hit send.
+          </p>
+          <RankPicker
+            rank={rank}
+            custom={custom}
+            onPickRank={(r) => {
+              setRank(r);
+              setCustom(false);
+            }}
+            onPickCustom={() => setCustom(true)}
+            customLetter={customLetter}
+            customColor={customColor}
+            onLetter={setCustomLetter}
+            onColor={setCustomColor}
+          />
+          <label className={`${labelClass} mb-2.5`}>
+            Hero name
+            <input
+              type="text"
+              value={heroName}
+              onChange={(e) => setHeroName(e.target.value)}
+              placeholder="e.g. Aušrytė"
+              className={inputClass}
             />
-            <label className={`${labelClass} mb-2.5`}>
-              Hero name
-              <input
-                type="text"
-                value={heroName}
-                onChange={(e) => setHeroName(e.target.value)}
-                placeholder="e.g. Aušrytė"
-                className={inputClass}
-              />
-            </label>
-            <label className={`${labelClass} mb-2.5`}>
-              <span>
-                Extra details{" "}
-                <span className="font-medium text-muted">(optional)</span>
-              </span>
-              <textarea
-                value={details}
-                onChange={(e) => setDetails(e.target.value)}
-                rows={2}
-                placeholder="e.g. mystical, lava glow eyes"
-                className={`${inputClass} resize-y`}
-              />
-            </label>
-            <PromptActions prompt={prompt} onFail={flash} />
-          </section>
-        )}
+          </label>
+          <label className={`${labelClass} mb-2.5`}>
+            <span>
+              Extra details{" "}
+              <span className="font-medium text-muted">(optional)</span>
+            </span>
+            <textarea
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+              rows={2}
+              placeholder="e.g. mystical, lava glow eyes"
+              className={`${inputClass} resize-y`}
+            />
+          </label>
+          <PromptActions prompt={prompt} onFail={flash} />
+        </StepSection>
       </div>
-
-      <StickyBar
-        onHow={() => setModal("how")}
-        onExample={() => setModal("ex")}
-        cta={CTAS[step - 1]}
-        onNext={next}
-      />
 
       {modal === "how" && (
         <WizardModal onClose={() => setModal(null)} labelledBy="how-title">

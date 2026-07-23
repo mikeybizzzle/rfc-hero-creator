@@ -6,9 +6,9 @@ import {
   CopyTile,
   ExampleChatModal,
   PromptActions,
-  StickyBar,
-  Stepper,
+  StepSection,
   Toast,
+  TopActions,
   useCopyToast,
   WizardModal,
   inputClass,
@@ -17,7 +17,6 @@ import {
 } from "./shared";
 import type { WizardImage } from "./hero-wizard";
 
-const STEP_NAMES = ["Idea", "Images", "Run"];
 const CTAS = [
   "I COPIED MY MESSAGE →",
   "I SENT IMAGES + MESSAGE →",
@@ -52,109 +51,107 @@ export function CustomWizard({
 
   return (
     <div className="wizard-panel mx-auto max-w-[560px] sm:max-w-[680px]">
-      <div className="mb-2 text-right text-xs font-extrabold text-muted">
-        Step {step} of 3
-      </div>
-      <Stepper names={STEP_NAMES} step={step} onGo={setStep} />
+      <TopActions onHow={() => setModal("how")} onExample={() => setModal("ex")} />
 
-      <div className="min-h-[340px] pb-4 pt-4">
-        {step === 1 && (
-          <section aria-label="Step 1 · Idea">
-            <h2 className="display mb-1.5 text-[21px]">Describe your idea</h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Say what you want and which attached image is which, then{" "}
-              <strong className="text-cream">copy your message</strong>. A
-              reference prompt is included under your description automatically
-              — it teaches ChatGPT the format.
-            </p>
-            <label className={`${labelClass} mb-2.5`}>
-              Your description
-              <textarea
-                value={idea}
-                onChange={(e) => setIdea(e.target.value)}
-                rows={4}
-                placeholder="e.g. Generate a prompt for adding additional hero characters to the image of SuperT throwing a diamond party. Image 1 is the base image we want to work from; each additional image contains a hero to incorporate. Maintain the same quality and detail."
-                className={`${inputClass} resize-y`}
-              />
-            </label>
-            <PromptActions
-              prompt={message}
-              copyLabel="+ COPY MESSAGE"
-              viewLabel="FULL MESSAGE"
-              onFail={flash}
+      <div className="grid gap-2.5">
+        <StepSection
+          index={1}
+          title="Describe your idea"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[0]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Say what you want and which attached image is which, then{" "}
+            <strong className="text-cream">copy your message</strong>. A
+            reference prompt is included under your description automatically
+            — it teaches ChatGPT the format.
+          </p>
+          <label className={`${labelClass} mb-2.5`}>
+            Your description
+            <textarea
+              value={idea}
+              onChange={(e) => setIdea(e.target.value)}
+              rows={4}
+              placeholder="e.g. Generate a prompt for adding additional hero characters to the image of SuperT throwing a diamond party. Image 1 is the base image we want to work from; each additional image contains a hero to incorporate. Maintain the same quality and detail."
+              className={`${inputClass} resize-y`}
             />
-          </section>
-        )}
+          </label>
+          <PromptActions
+            prompt={message}
+            copyLabel="+ COPY MESSAGE"
+            viewLabel="FULL MESSAGE"
+            onFail={flash}
+          />
+        </StepSection>
 
-        {step === 2 && (
-          <section aria-label="Step 2 · Images">
-            <h2 className="display mb-1.5 text-[21px]">
-              Attach your images &amp; send
-            </h2>
-            <p className="mb-2 text-[13.5px] leading-normal text-muted">
-              In ChatGPT: attach the{" "}
-              <strong className="text-cream">base image first</strong>, then
-              each hero to include, paste your copied message, and send.{" "}
-              <strong className="text-cream">
-                ChatGPT replies with a ready-to-run image prompt.
-              </strong>
-            </p>
-            <p className="mb-2 text-xs font-bold text-cream/90">
-              Need images? Tap any to copy — members&rsquo; hero cards work
-              great.
-            </p>
-            <div className="scrollbar-none -mx-4 flex gap-2 overflow-x-auto px-4 pb-2 sm:-mx-6 sm:px-6">
-              {refs.map((r) => (
-                <CopyTile
-                  key={r.src}
-                  src={r.src}
-                  alt={r.name}
-                  label={r.label}
-                  sizes="112px"
-                  className="w-28 shrink-0"
-                  copied={copied === r.copyUrl}
-                  onCopy={() => copyImage(r.copyUrl, r.name)}
-                />
-              ))}
-            </div>
-            <p className="text-[11.5px] text-muted">
-              Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
-            </p>
-          </section>
-        )}
+        <StepSection
+          index={2}
+          title="Attach your images & send"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[1]}
+          onNext={next}
+        >
+          <p className="mb-2 text-[13.5px] leading-normal text-muted">
+            In ChatGPT: attach the{" "}
+            <strong className="text-cream">base image first</strong>, then
+            each hero to include, paste your copied message, and send.{" "}
+            <strong className="text-cream">
+              ChatGPT replies with a ready-to-run image prompt.
+            </strong>
+          </p>
+          <p className="mb-2 text-xs font-bold text-cream/90">
+            Need images? Tap any to copy — members&rsquo; hero cards work
+            great.
+          </p>
+          <div className="scrollbar-none -mx-3.5 flex gap-2 overflow-x-auto px-3.5 pb-2">
+            {refs.map((r) => (
+              <CopyTile
+                key={r.src}
+                src={r.src}
+                alt={r.name}
+                label={r.label}
+                sizes="112px"
+                className="w-28 shrink-0"
+                copied={copied === r.copyUrl}
+                onCopy={() => copyImage(r.copyUrl, r.name)}
+              />
+            ))}
+          </div>
+          <p className="text-[11.5px] text-muted">
+            Scroll for more &rarr; · Copy blocked? Press &amp; hold the image.
+          </p>
+        </StepSection>
 
-        {step === 3 && (
-          <section aria-label="Step 3 · Run">
-            <h2 className="display mb-1.5 text-[21px]">
-              Run the prompt ChatGPT gives you
-            </h2>
-            <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-              Copy ChatGPT&rsquo;s reply, start a{" "}
-              <strong className="text-cream">new message</strong>, attach the{" "}
-              <strong className="text-cream">same images again</strong>, paste
-              the prompt, and hit send.
+        <StepSection
+          index={3}
+          title="Run the prompt ChatGPT gives you"
+          step={step}
+          onOpen={setStep}
+          cta={CTAS[2]}
+          onNext={next}
+        >
+          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
+            Copy ChatGPT&rsquo;s reply, start a{" "}
+            <strong className="text-cream">new message</strong>, attach the{" "}
+            <strong className="text-cream">same images again</strong>, paste
+            the prompt, and hit send.
+          </p>
+          <div className="flex items-start gap-2.5 rounded-xl border border-line bg-raised px-3.5 py-3">
+            <span className="display text-[15px] text-gold">TIP</span>
+            <p className="text-[12.5px] leading-normal text-cream/90">
+              Not perfect? Just reply with tweaks — e.g.{" "}
+              <em>
+                &ldquo;remove the UI elements and spread the heroes out
+                evenly&rdquo;
+              </em>
+              .
             </p>
-            <div className="flex items-start gap-2.5 rounded-xl border border-line bg-raised px-3.5 py-3">
-              <span className="display text-[15px] text-gold">TIP</span>
-              <p className="text-[12.5px] leading-normal text-cream/90">
-                Not perfect? Just reply with tweaks — e.g.{" "}
-                <em>
-                  &ldquo;remove the UI elements and spread the heroes out
-                  evenly&rdquo;
-                </em>
-                .
-              </p>
-            </div>
-          </section>
-        )}
+          </div>
+        </StepSection>
       </div>
-
-      <StickyBar
-        onHow={() => setModal("how")}
-        onExample={() => setModal("ex")}
-        cta={CTAS[step - 1]}
-        onNext={next}
-      />
 
       {modal === "how" && (
         <WizardModal onClose={() => setModal(null)} labelledBy="how-title">
