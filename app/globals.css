@@ -1,21 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #16110c;
-  --color-surface: #201812;
-  --color-raised: #2a2018;
-  --color-line: #3a2d20;
-  --color-cream: #f0e6d2;
-  --color-muted: #c9bba4;
-  --color-gold: #e3a83b;
-  --color-gold-bright: #f5c95c;
-  --color-rank-s: #e3a83b;
+  --color-bg: #090806;
+  --color-surface: #18130e;
+  --color-raised: #0f0d0b;
+  --color-line: rgba(255, 214, 122, 0.16);
+  --color-cream: #f7f1e8;
+  --color-muted: #b9ad9f;
+  --color-gold: #ffd05a;
+  --color-gold-bright: #ffe3a3;
+  --color-orange: #f26a20;
+  --color-ink: #1a1108;
+  --color-rank-s: #ffd05a;
   --color-rank-a: #c06ae0;
   --color-rank-b: #4da3e8;
 
-  --font-display: var(--font-archivo), sans-serif;
-  --font-hud: var(--font-chakra), monospace;
-  --font-sans: var(--font-archivo), sans-serif;
+  --font-display: var(--font-lilita), sans-serif;
+  --font-hud: var(--font-barlow), sans-serif;
+  --font-sans: var(--font-barlow), sans-serif;
 }
 
 html {
@@ -23,45 +25,55 @@ html {
 }
 
 body {
-  background-color: var(--color-bg);
+  background:
+    radial-gradient(circle at 80% 0%, rgba(242, 106, 32, 0.16), transparent 34rem),
+    radial-gradient(circle at 15% 25%, rgba(255, 208, 90, 0.08), transparent 28rem),
+    linear-gradient(180deg, #0b0907 0%, #090806 100%) #090806;
   color: var(--color-cream);
   font-family: var(--font-sans);
 }
 
 ::selection {
   background: var(--color-gold);
-  color: #16110c;
+  color: #1a1108;
 }
 
 .display {
   font-family: var(--font-display);
-  font-weight: 900;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  font-weight: 400;
+  letter-spacing: 0.5px;
 }
 
 .hud {
   font-family: var(--font-hud);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
 }
 
 /* Dusty atmosphere behind hero sections, from the card art's light shafts */
 .atmosphere {
   background:
-    radial-gradient(1200px 500px at 75% -10%, rgba(227, 168, 59, 0.16), transparent 60%),
-    radial-gradient(800px 400px at 10% 0%, rgba(227, 168, 59, 0.07), transparent 55%);
+    radial-gradient(1200px 500px at 75% -10%, rgba(242, 106, 32, 0.1), transparent 60%),
+    radial-gradient(800px 400px at 10% 0%, rgba(255, 208, 90, 0.06), transparent 55%);
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .card-frame {
   border: 1px solid var(--color-line);
   background: var(--color-surface);
+  border-radius: 16px;
 }
 
 .prompt-block {
-  font-family: var(--font-hud);
-  font-size: 0.8rem;
-  line-height: 1.6;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.55;
   white-space: pre-wrap;
   word-break: break-word;
 }

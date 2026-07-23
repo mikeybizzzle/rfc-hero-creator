@@ -49,6 +49,8 @@ export function CopyImageCard({
   priority,
   prefix,
   prefixClass,
+  selected,
+  onCopy,
 }: {
   image: ManifestImage;
   label: string;
@@ -56,10 +58,13 @@ export function CopyImageCard({
   priority?: boolean;
   prefix?: string;
   prefixClass?: string;
+  selected?: boolean;
+  onCopy?: () => void;
 }) {
   const [status, setStatus] = useState<Status>("idle");
 
   async function onClick() {
+    onCopy?.();
     const url = image.download ?? image.src;
     if (await writeImageToClipboard(url)) {
       setStatus("copied");
@@ -77,7 +82,9 @@ export function CopyImageCard({
     <button
       type="button"
       onClick={onClick}
-      className="card-frame overflow-hidden group text-left w-full snap-start transition-colors hover:border-gold/60 active:border-gold active:scale-[0.99] transition-transform duration-100"
+      className={`card-frame rounded-xl bg-raised overflow-hidden group text-left w-full snap-start transition-colors active:border-gold active:scale-[0.99] transition-transform duration-100 ${
+        selected ? "border-gold" : "hover:border-gold"
+      }`}
       aria-label={`Copy ${prefix ?? ""}${label} to clipboard`}
     >
       <div className="relative aspect-square">
@@ -92,21 +99,25 @@ export function CopyImageCard({
         {status !== "idle" && (
           <span
             role="status"
-            className={`absolute inset-0 bg-bg/85 flex items-center justify-center text-center px-2 hud text-gold transition-opacity duration-150 starting:opacity-0 ${
-              status === "copied" ? "text-xs" : "text-[10px]"
+            className={`absolute inset-0 bg-bg/80 grid place-items-center text-center px-2 text-gold-bright transition-opacity duration-150 starting:opacity-0 ${
+              status === "copied" ? "display text-lg" : "font-bold text-xs"
             }`}
           >
-            {status === "copied" ? "Copied" : "Downloaded — attach in ChatGPT"}
+            {status === "copied" ? <>COPIED &#10003;</> : "Downloaded — attach in ChatGPT"}
           </span>
         )}
       </div>
-      <div className="px-2 py-1.5 flex items-baseline justify-between gap-2">
-        <span className="hud text-[11px] text-cream truncate">
+      <div className="px-2.5 py-2 flex items-center justify-between gap-2">
+        <span className="font-bold text-[12.5px] text-cream/90 truncate">
           {prefix && <span className={prefixClass}>{prefix}</span>}
           {label}
         </span>
-        <span className="hud text-[10px] text-muted group-hover:text-gold transition-colors shrink-0">
-          Copy
+        <span
+          className={`text-[11px] font-extrabold uppercase tracking-[.5px] transition-colors shrink-0 ${
+            selected ? "text-gold" : "text-muted group-hover:text-gold"
+          }`}
+        >
+          {selected ? "Selected" : "Copy"}
         </span>
       </div>
     </button>

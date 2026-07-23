@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { findWalkthrough } from "@/lib/chats";
 import { baseTemplates, heroRefsSorted, heroRefName, heroRefRank } from "@/lib/data";
 import { CardSlider } from "@/components/card-slider";
@@ -9,7 +10,7 @@ import { ProcessStrip } from "@/components/process-strip";
 import { PromptForm } from "@/components/prompt-form";
 
 export const metadata: Metadata = {
-  title: "Unique Hero Image — RFC Hero Creator",
+  title: "Hero Character (Without Image) — RfC Hero Forge",
   description:
     "No photo needed: describe your hero character in text and build the card with ChatGPT.",
 };
@@ -33,31 +34,33 @@ export default function UniquePage() {
     .filter((t): t is (typeof baseTemplates)[number] => Boolean(t));
 
   return (
-    <div>
-      <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-4xl px-4 pt-8 md:pt-12 pb-6">
-          <FlowHeader
-            eyebrow="Unique hero image"
-            title="Make a hero from a description"
-            steps={[
-              "Copy the base card into ChatGPT.",
-              "Copy five hero styles into ChatGPT — one style reference plus four extras for inspiration.",
-              "Fill out your hero's name and details, copy the prompt, paste it into ChatGPT, and send it.",
-            ]}
-          />
+    <div className="mx-auto max-w-6xl px-4 pb-8">
+      <FlowHeader
+        eyebrow="Hero character image"
+        title="Hero Character (Without Image)"
+        steps={[
+          "Copy the base card into ChatGPT.",
+          "Copy two hero styles into ChatGPT — one style reference plus one extra for inspiration.",
+          "Fill out your hero's name and details, copy the prompt, paste it into ChatGPT, and send it.",
+        ]}
+      />
 
-          <div className="mb-3">
-            <ProcessStrip walkthrough={walkthrough} />
-          </div>
+      <div className="mb-4">
+        <ProcessStrip
+          walkthrough={walkthrough}
+          inputLabels={["Base card", "Hero style", "Hero style"]}
+          outputLabel="Your hero card"
+        />
+      </div>
 
-          <ExampleDropdown walkthrough={walkthrough} />
-        </div>
-      </section>
+      <div className="mb-4">
+        <ExampleDropdown walkthrough={walkthrough} />
+      </div>
 
-      <div className="mx-auto max-w-4xl px-4 py-8 md:py-10">
-        <section className="mb-10">
+      <div className="space-y-4">
+        <section className="card-frame rounded-[18px] p-[18px]">
           <StepHeading n="1" title="Copy the base card" />
-          <div className="grid grid-cols-3 gap-2 sm:gap-3 max-w-xl">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-3 max-w-2xl">
             {orderedTemplates.map((t, i) => (
               <CopyImageCard
                 key={t.slug}
@@ -65,18 +68,17 @@ export default function UniquePage() {
                 label={templateLabels[t.slug].slice(1)}
                 prefix={templateLabels[t.slug][0]}
                 prefixClass={rankTextClass[templateLabels[t.slug][0]]}
-                sizes="(max-width: 640px) 33vw, 200px"
+                sizes="(max-width: 640px) 50vw, 200px"
                 priority={i === 0}
               />
             ))}
           </div>
         </section>
 
-        <section className="mb-10">
-          <StepHeading n="2" title="Copy a few hero styles" />
-          <p className="text-sm text-muted leading-relaxed mb-4 max-w-2xl">
-            Image 2 is the style reference; Images 3-6 are the four extra examples for
-            inspiration.
+        <section className="card-frame rounded-[18px] p-[18px]">
+          <StepHeading n="2" title="Copy two hero styles" />
+          <p className="text-[14.5px] text-muted leading-normal mb-3.5">
+            Image 2 is the style reference; Image 3 is the extra example for inspiration.
           </p>
           <CardSlider>
             {heroRefsSorted.map((h) => (
@@ -86,17 +88,29 @@ export default function UniquePage() {
                 label={heroRefName(h)}
                 prefix={`${heroRefRank(h)} `}
                 prefixClass={rankTextClass[heroRefRank(h)]}
-                sizes="(max-width: 640px) 30vw, 168px"
+                sizes="(max-width: 640px) 31vw, 175px"
               />
             ))}
           </CardSlider>
         </section>
 
-        <section>
+        <section className="card-frame rounded-[18px] p-[18px]">
           <StepHeading n="3" title="Copy the prompt" />
           <PromptForm mode="no-photo" />
         </section>
       </div>
+
+      <nav className="flex flex-wrap gap-x-[18px] gap-y-2 pt-6 font-bold text-sm">
+        <Link href="/" className="text-gold hover:text-gold-bright transition-colors">
+          &larr; Home
+        </Link>
+        <Link href="/hero" className="text-gold hover:text-gold-bright transition-colors">
+          Hero (From Image) &rarr;
+        </Link>
+        <Link href="/custom" className="text-gold hover:text-gold-bright transition-colors">
+          Custom Image &rarr;
+        </Link>
+      </nav>
     </div>
   );
 }

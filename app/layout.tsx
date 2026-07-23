@@ -1,25 +1,24 @@
 import type { Metadata } from "next";
-import { Archivo, Chakra_Petch } from "next/font/google";
-import Link from "next/link";
+import { Barlow, Lilita_One } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import "./globals.css";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const barlow = Barlow({
+  variable: "--font-barlow",
   subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "700", "900"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const chakra = Chakra_Petch({
-  variable: "--font-chakra",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const lilita = Lilita_One({
+  variable: "--font-lilita",
+  subsets: ["latin", "latin-ext"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: "RFC Hero Creator",
+  title: "RfC Hero Forge",
   description:
-    "Guide for RFC alliance members: create your own Last Z Survival Shooter hero character card with ChatGPT.",
+    "Guide for RfC alliance members: create your own Last Z Survival Shooter hero character card with ChatGPT.",
 };
 
 export default function RootLayout({
@@ -30,30 +29,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${chakra.variable} h-full antialiased`}
+      className={`${barlow.variable} ${lilita.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <SiteNav />
         <main className="flex-1">{children}</main>
-        <footer className="border-t border-line mt-24">
-          <div className="mx-auto max-w-6xl px-4 py-8 flex flex-wrap items-center justify-between gap-4">
-            <p className="hud text-xs text-muted">RFC Hero Creator</p>
-            <nav className="flex flex-wrap gap-x-5 gap-y-2">
-              {[
-                ["Hero Card", "/hero"],
-                ["Custom", "/custom"],
-                ["Unique", "/unique"],
-                ["Gallery", "/gallery"],
-              ].map(([label, href]) => (
-                <Link
-                  key={href}
-                  href={href}
-                  className="hud text-xs text-muted hover:text-gold transition-colors"
-                >
-                  {label}
-                </Link>
-              ))}
-            </nav>
+        <footer className="mt-16">
+          <div className="mx-auto max-w-6xl px-4 py-8 flex flex-wrap gap-x-4 gap-y-2 text-[13px] text-muted">
+            <span className="font-bold text-gold">RfC alliance</span>
+            <span>Last Z: Survival Shooter</span>
+            <span>Works with the ChatGPT app or chatgpt.com</span>
           </div>
         </footer>
       </body>

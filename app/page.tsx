@@ -1,87 +1,128 @@
 import Image from "next/image";
 import Link from "next/link";
-import { findGallery, gallery, galleryName } from "@/lib/data";
-import { CardSlider } from "@/components/card-slider";
+import { findGallery } from "@/lib/data";
+import { WallMarquee } from "@/components/wall-marquee";
 
-const options = [
+const paths = [
   {
     href: "/hero",
-    title: "Hero character image",
-    text: "Your photo becomes a hero card with your hero name.",
+    title: "Hero Character (From Image)",
+    text: "Turn yourself — or anyone — into a hero card with your name on it.",
     imageSlug: "ausryte",
   },
   {
-    href: "/custom",
-    title: "Custom image",
-    text: "Make any kind of hero image you want — like a group hero image.",
-    imageSlug: "supert-diamond-party",
+    href: "/unique",
+    title: "Hero Character (Without Image)",
+    text: "No photo needed — describe your hero and ChatGPT invents them.",
+    imageSlug: "coqueta-farm",
   },
   {
-    href: "/unique",
-    title: "Unique hero image",
-    text: "No photo — describe a character and ChatGPT creates it.",
-    imageSlug: "coqueta-farm",
+    href: "/custom",
+    title: "Custom Image",
+    text: "Make any kind of hero image you want — group shots, events, themes.",
+    imageSlug: "diamond-party-heros",
   },
 ];
 
+const wall: [string, string][] = [
+  ["ausryte", "Aušrytė"],
+  ["supert-diamond-party", "SuperT · Diamond Party"],
+  ["coqueta-farm", "CoquetaFarm"],
+  ["ironbastion", "IronBastion"],
+  ["deathhawk", "DeathHawk"],
+  ["babyyaga", "BabyYaga"],
+  ["kriss-de-valnor", "Kriss de Valnor"],
+  ["remon-pharaoh", "Remon Pharaoh"],
+  ["yousef-rocket-man", "Yousef Rocket Man"],
+  ["nyabinghi-x", "Nyabinghi X"],
+  ["azteca-mau", "Azteca Mau"],
+  ["castor-troy", "Castor Troy"],
+  ["coachardi", "CoachArdi"],
+  ["gerardo-o", "Gerardo O"],
+  ["jungle-boy", "Jungle Boy"],
+  ["jungle-lindy", "Jungle Lindy"],
+  ["lolybear", "LolyBear"],
+  ["mbizzzle", "MBizzzle"],
+  ["mr-bean", "Mr Bean"],
+  ["nisse", "Nisse"],
+  ["oldhippie", "OldHippie"],
+  ["pope-bear", "Pope Bear"],
+  ["pope-bear-hot-tub", "Pope Bear · Hot Tub"],
+  ["supert", "SuperT"],
+  ["diamond-party-heros", "Diamond Party Crew"],
+  ["new-season-heros", "New Season Heroes"],
+];
+
 export default function Home() {
+  const wallItems = wall.map(([slug, name]) => {
+    const img = findGallery(slug);
+    return { src: img.src, copyUrl: img.download ?? img.src, name };
+  });
+
   return (
-    <div>
-      <section className="atmosphere border-b border-line">
-        <div className="mx-auto max-w-6xl px-4 pt-8 pb-6 md:pt-16 md:pb-12">
-          <p className="hud text-xs text-gold mb-3">RFC Alliance — Last Z: Survival Shooter</p>
-          <h1 className="display text-3xl md:text-5xl leading-[0.95] max-w-3xl mb-4">
-            Make your own hero card
-          </h1>
-          <p className="text-muted text-sm md:text-base leading-relaxed max-w-2xl mb-6">
-            Real simple: pick one of the three image types below. Each page walks you
-            through three copy-paste steps into ChatGPT.
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {options.map((o) => {
-              const img = findGallery(o.imageSlug);
-              return (
-                <Link key={o.href} href={o.href} className="card-frame overflow-hidden group">
-                  <div className="relative aspect-[3/1] sm:aspect-square">
-                    <Image
-                      src={img.src}
-                      alt={galleryName(img)}
-                      fill
-                      sizes="(max-width: 640px) 100vw, 33vw"
-                      className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
-                      priority
-                    />
-                  </div>
-                  <div className="p-3">
-                    <h2 className="hud text-sm text-cream mb-1 group-hover:text-gold transition-colors">
-                      {o.title}
-                    </h2>
-                    <p className="text-xs text-muted leading-relaxed">{o.text}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+    <div className="mx-auto max-w-6xl px-4 pb-8">
+      <section className="pt-6 pb-2">
+        <h1 className="display text-[clamp(34px,7vw,58px)] leading-[1.05] mb-3">
+          Make your own{" "}
+          <span className="bg-gradient-to-br from-[#fff7de] from-[12%] via-gold via-[45%] to-orange bg-clip-text text-transparent">
+            Last&nbsp;Z
+          </span>{" "}
+          hero card
+        </h1>
+        <p className="text-[clamp(16px,2.5vw,19px)] leading-normal text-muted max-w-[640px] text-pretty">
+          Copy a few reference images, fill in a prompt, paste it all into
+          ChatGPT. Two minutes, no skills needed.
+        </p>
+      </section>
+
+      <section className="pt-6">
+        <h2 className="display text-[clamp(22px,4vw,30px)] mb-1">
+          Pick your path
+        </h2>
+        <p className="mb-3.5 text-muted text-[15px]">
+          Three ways to forge an image — each page walks you through it.
+        </p>
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3.5">
+          {paths.map((o) => {
+            const img = findGallery(o.imageSlug);
+            return (
+              <Link
+                key={o.href}
+                href={o.href}
+                className="block card-frame overflow-hidden text-cream hover:border-gold transition-colors"
+              >
+                <div className="relative aspect-square bg-raised">
+                  <Image
+                    src={img.src}
+                    alt={o.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+                <div className="px-4 pt-3.5 pb-4">
+                  <h3 className="display text-xl text-gold">{o.title}</h3>
+                  <p className="mt-1.5 mb-2.5 text-sm leading-snug text-muted">
+                    {o.text}
+                  </p>
+                  <span className="font-extrabold text-sm text-gold-bright">
+                    Start &rarr;
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-10 md:py-14">
-        <p className="hud text-xs text-gold mb-4">Made by the alliance</p>
-        <CardSlider>
-          {gallery.map((g) => (
-            <Link key={g.slug} href="/gallery" className="card-frame overflow-hidden snap-start">
-              <div className="relative aspect-square">
-                <Image
-                  src={g.src}
-                  alt={galleryName(g)}
-                  fill
-                  sizes="(max-width: 640px) 30vw, 168px"
-                  className="object-cover"
-                />
-              </div>
-            </Link>
-          ))}
-        </CardSlider>
+      <section className="pt-8">
+        <h2 className="display text-[clamp(22px,4vw,30px)] mb-1">The wall</h2>
+        <p className="mb-3 text-muted text-[15px]">
+          Heroes forged by RfC so far. Tap any image to copy it — great as
+          style references.
+        </p>
+        <WallMarquee items={wallItems} />
       </section>
     </div>
   );

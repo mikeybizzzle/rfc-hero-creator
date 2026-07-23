@@ -16,13 +16,13 @@ export function CopyButton({ text, label = "Copy prompt" }: { text: string; labe
       type="button"
       onClick={copy}
       aria-live="polite"
-      className={`hud text-xs px-4 py-2.5 border transition-colors ${
+      className={`font-extrabold text-[13.5px] tracking-[.5px] uppercase px-[18px] py-[9px] rounded-full transition-colors shrink-0 ${
         copied
-          ? "border-gold bg-gold text-bg"
-          : "border-gold text-gold hover:bg-gold hover:text-bg"
+          ? "bg-gold-bright text-ink"
+          : "bg-gradient-to-br from-gold to-orange text-ink hover:from-gold-bright hover:to-gold-bright"
       }`}
     >
-      <span role="status">{copied ? "Copied" : label}</span>
+      <span role="status">{copied ? <>Copied &#10003;</> : label}</span>
     </button>
   );
 }

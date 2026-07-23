@@ -7,6 +7,9 @@
 // are substituted.
 
 export type Rank = "S" | "A" | "B";
+export type RankChoice = Rank | "custom";
+// Custom rank: the member picks their own emblem letter and theme color
+export type RankSelection = Rank | { letter: string; color: string };
 
 export const rankInfo: Record<
   Rank,
@@ -31,7 +34,16 @@ const rankLines: Record<Rank, string> = {
 - Keep the blue badge icon and silver shield icon in the same positions.`,
 };
 
-export function heroCardPrompt(rank: Rank, name: string, details: string): string {
+function rankLinesFor(sel: RankSelection): string {
+  if (typeof sel === "string") return rankLines[sel];
+  const letter = sel.letter.trim() || "[RANK LETTER]";
+  const color = sel.color.trim() || "[THEME COLOR]";
+  return `- Change the game background to ${color}, keeping the same dusty game style.
+- Replace the rank emblem on the left with a large ${color} “${letter}” rank emblem in the same style and position.
+- Keep the badge icons in the same positions.`;
+}
+
+export function heroCardPrompt(rank: RankSelection, name: string, details: string): string {
   const heroName = name.trim() || "[HERO CHARACTER NAME]";
   const extra = details.trim();
   return `Use the 3 attached images as references:
@@ -43,7 +55,7 @@ Image 3 = the person/character to transform into the hero character.
 Generate a new hero character image using Image 1 as the exact base composition.
 
 Preserve Image 1’s background and UI layout as closely as possible:
-${rankLines[rank]}
+${rankLinesFor(rank)}
 - Keep the same overall portrait/square hero-card layout and cinematic game UI aesthetic.
 - Replace the name with: “${heroName}”
 - Match the name text style: bold cream/white letters, thick black outline, game UI font, same placement.
@@ -72,25 +84,25 @@ Additional details: ${extra}`
   }`;
 }
 
-export function heroCardNoPhotoPrompt(rank: Rank, name: string, details: string): string {
+export function heroCardNoPhotoPrompt(rank: RankSelection, name: string, details: string): string {
   const heroName = name.trim() || "[HERO CHARACTER NAME]";
   const characterDetails = details.trim() || "[Describe your hero character here]";
   return `Use the attached images as references:
 
 Image 1 = the base hero-card background with UI elements and no character.
 Image 2 = the example hero character image showing the target style, realism, lighting, character placement, scale, and game-card format.
-Image 3-6 = additional example hero character images for inspiration
+Image 3 = an additional example hero character image for inspiration
 
 Generate a new hero character image using Image 1 as the exact base composition.
 
 Preserve Image 1’s background and UI layout as closely as possible:
-${rankLines[rank]}
+${rankLinesFor(rank)}
 - Keep the same overall portrait/square hero-card layout and cinematic game UI aesthetic.
 - Replace the name with: “${heroName}”
 - Match the name text style: bold cream/white letters, thick black outline, game UI font, same placement.
 
 Create a hero character in the same style as Image 2:
-- Use the image 3-6 references along with the additional hero characters below to imagine your hero character.
+- Use the image 3 reference along with the additional hero characters below to imagine your hero character.
 - Turn the hero character details into a high-quality realistic game hero character.
 - Adapt the subject into a cinematic survival-shooter/mobile-game hero design.
 - The character should be positioned in the center/right foreground like Image 2.
