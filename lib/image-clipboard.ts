@@ -71,15 +71,26 @@ export async function copyImageAsset(
   url: string,
   filename?: string
 ): Promise<ImageTransferResult> {
-  if (await writeImage(url)) return "copied";
+  const copied = await Promise.race([
+    writeImage(url),
+    new Promise<boolean>((resolve) =>
+      window.setTimeout(() => resolve(false), 2500)
+    ),
+  ]);
+  if (copied) return "copied";
   return downloadImage(url, filename) ? "downloaded" : "failed";
 }
 
 export async function copyText(text: string): Promise<boolean> {
   if (navigator.clipboard?.writeText) {
     try {
-      await navigator.clipboard.writeText(text);
-      return true;
+      const copied = await Promise.race([
+        navigator.clipboard.writeText(text).then(() => true),
+        new Promise<boolean>((resolve) =>
+          window.setTimeout(() => resolve(false), 2500)
+        ),
+      ]);
+      if (copied) return true;
     } catch {
       // Continue to the legacy selection fallback.
     }

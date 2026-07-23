@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import type { Walkthrough } from "@/lib/chats";
 import {
   heroRefName,
@@ -22,10 +22,16 @@ import { SelectableImageCard } from "./selectable-image-card";
 export type HeroConcept = "focus" | "workbench" | "missions";
 type WizardStep = 1 | 2 | 3 | 4 | 5;
 type ContentStep = 1 | 2 | 3 | 4;
+type PreparedTransfer = {
+  step: 1 | 2 | 4;
+  key: string;
+  method: "copied" | "downloaded";
+};
 
 type WizardState = {
   activeStep: WizardStep;
   expandedStep: ContentStep | null;
+  revision: number;
   selectedBase: string;
   confirmedBase: string | null;
   selectedStyle: string;
@@ -62,6 +68,7 @@ function reducer(state: WizardState, action: WizardAction): WizardState {
         state.confirmedBase !== null && action.slug !== state.confirmedBase;
       return {
         ...state,
+        revision: state.revision + 1,
         selectedBase: action.slug,
         confirmedBase: changedConfirmedBase ? null : state.confirmedBase,
         confirmedStyle: changedConfirmedBase ? null : state.confirmedStyle,
@@ -85,6 +92,7 @@ function reducer(state: WizardState, action: WizardAction): WizardState {
         state.confirmedStyle !== null && action.slug !== state.confirmedStyle;
       return {
         ...state,
+        revision: state.revision + 1,
         selectedStyle: action.slug,
         confirmedStyle: changedConfirmedStyle ? null : state.confirmedStyle,
         confirmedPhoto: changedConfirmedStyle ? false : state.confirmedPhoto,
@@ -118,15 +126,23 @@ function reducer(state: WizardState, action: WizardAction): WizardState {
         expandedStep: state.expandedStep === action.step ? null : action.step,
       };
     case "set-rank":
-      return { ...state, rank: action.rank };
+      return { ...state, rank: action.rank, revision: state.revision + 1 };
     case "set-custom-letter":
-      return { ...state, customLetter: action.value };
+      return {
+        ...state,
+        customLetter: action.value,
+        revision: state.revision + 1,
+      };
     case "set-custom-color":
-      return { ...state, customColor: action.value };
+      return {
+        ...state,
+        customColor: action.value,
+        revision: state.revision + 1,
+      };
     case "set-name":
-      return { ...state, name: action.value };
+      return { ...state, name: action.value, revision: state.revision + 1 };
     case "set-details":
-      return { ...state, details: action.value };
+      return { ...state, details: action.value, revision: state.revision + 1 };
     case "toggle-prompt":
       return { ...state, promptOpen: !state.promptOpen };
     case "complete":
@@ -136,20 +152,17 @@ function reducer(state: WizardState, action: WizardAction): WizardState {
 
 const conceptMeta: Record<
   HeroConcept,
-  { eyebrow: string; title: string; shell: string }
+  { title: string; shell: string }
 > = {
   focus: {
-    eyebrow: "Concept 01",
     title: "Focus Card",
     shell: "hero-concept-focus",
   },
   workbench: {
-    eyebrow: "Concept 02",
     title: "Visual Workbench",
     shell: "hero-concept-workbench",
   },
   missions: {
-    eyebrow: "Concept 03",
     title: "Mission Stack",
     shell: "hero-concept-missions",
   },
@@ -489,8 +502,8 @@ function Completion({
         {name.trim()} is ready to forge
       </h2>
       <p className="mt-2 max-w-md text-xs leading-relaxed text-muted">
-        In ChatGPT, paste the base card, paste the style example, attach your
-        photo, paste the prompt, then send. Wait a minute or two.
+        In ChatGPT, confirm the base card, style example, and 1-3 photos are
+        attached. Paste the prompt, then hit Send.
       </p>
       <div className="mt-4 flex flex-wrap justify-center gap-2">
         <a
@@ -503,7 +516,7 @@ function Completion({
         </a>
         <button
           type="button"
-          onClick={() => dispatch({ type: "go-to", step: 3 })}
+          onClick={() => dispatch({ type: "go-to", step: 4 })}
           className="min-h-11 rounded-xl border border-line bg-raised px-4 text-sm font-extrabold text-cream transition-colors hover:border-gold/60"
         >
           Edit prompt
@@ -514,108 +527,130 @@ function Completion({
 }
 
 function ActionDock({
-  step,
   busy,
   disabled,
+  label,
+  microcopy,
   onAction,
 }: {
-  step: WizardStep;
   busy: boolean;
   disabled: boolean;
+  label: string;
+  microcopy?: string;
   onAction: () => void;
 }) {
-  if (step === 4) return null;
-
   return (
-    <div className="shrink-0 border-t border-line bg-bg/92 px-3 pb-[max(.7rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl sm:px-4">
+    <div className="shrink-0 border-t border-line bg-bg/92 px-3 pb-[max(.55rem,env(safe-area-inset-bottom))] pt-2 backdrop-blur-xl sm:px-4">
       <button
         type="button"
         disabled={disabled || busy}
         onClick={onAction}
         className="mx-auto flex min-h-12 w-full max-w-xl items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-gold to-orange px-4 text-sm font-black text-ink shadow-[0_12px_28px_rgba(242,106,32,.2)] transition-[transform,filter] hover:-translate-y-0.5 hover:brightness-105 disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:translate-y-0"
       >
-        {busy ? (
-          "Working..."
-        ) : step === 3 ? (
-          <>Copy prompt &amp; finish <span aria-hidden="true">→</span></>
-        ) : (
-          <>Copy &amp; continue <span aria-hidden="true">→</span></>
-        )}
+        {busy ? "Working..." : label}
       </button>
+      {microcopy && (
+        <p className="mx-auto mt-1.5 max-w-xl text-center text-[10px] leading-snug text-muted">
+          {microcopy}
+        </p>
+      )}
     </div>
   );
 }
 
-function MissionSummary({
+function PhotoStep() {
+  return (
+    <div className="rounded-xl border border-line bg-raised/70 p-3 sm:p-4">
+      <p className="text-sm font-bold leading-relaxed text-cream">
+        Attach 1-3 clear images of your person or character directly in ChatGPT.
+      </p>
+      <p className="mt-1.5 text-xs leading-relaxed text-muted">
+        One image works. Multiple angles or expressions can help ChatGPT preserve
+        the subject more accurately.
+      </p>
+      <a
+        href="https://chatgpt.com/"
+        target="_blank"
+        rel="noreferrer"
+        className="mt-3 inline-flex min-h-11 items-center rounded-lg border border-gold/35 bg-gold/8 px-3 text-xs font-extrabold text-gold-bright transition-colors hover:bg-gold hover:text-ink"
+      >
+        Open ChatGPT to attach photos ↗
+      </a>
+    </div>
+  );
+}
+
+function AccordionStep({
   step,
   title,
-  image,
-  detail,
-  active,
+  description,
+  expanded,
+  complete,
   locked,
   children,
-  onEdit,
+  onToggle,
 }: {
-  step: 1 | 2 | 3;
+  step: ContentStep;
   title: string;
-  image?: ManifestImage;
-  detail?: string;
-  active: boolean;
+  description: string;
+  expanded: boolean;
+  complete: boolean;
   locked: boolean;
   children?: React.ReactNode;
-  onEdit: () => void;
+  onToggle: () => void;
 }) {
-  if (active) {
-    return (
-      <section className="min-h-0 flex-1 overflow-hidden rounded-xl border border-gold/45 bg-surface/80 p-3 shadow-[0_18px_44px_rgba(0,0,0,.25)]">
-        <div className="flex h-full min-h-0 flex-col">
-          <StepIntro step={step} title={title}>
-            {step === 1
-              ? "Choose one base. Confirming it unlocks the style mission."
-              : step === 2
-                ? "Choose an art reference. Your hero will not copy its theme."
-                : "Name your hero and finish the prompt."}
-          </StepIntro>
-          {children}
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section
-      className={`flex min-h-12 shrink-0 items-center gap-2.5 rounded-xl border px-2.5 py-2 ${
+      className={`min-h-0 shrink-0 overflow-hidden rounded-xl border transition-colors ${
+        expanded ? "flex flex-1 flex-col border-gold/45 bg-surface/80" : ""
+      } ${
         locked
           ? "border-line bg-raised/35 text-muted opacity-55"
-          : "border-line bg-raised text-cream"
+          : expanded
+            ? "text-cream"
+            : "border-line bg-raised text-cream"
       }`}
     >
-      <span
-        className={`grid size-7 shrink-0 place-items-center rounded-lg text-xs font-black ${
-          locked ? "border border-line" : "bg-gold text-ink"
-        }`}
+      <button
+        type="button"
+        disabled={locked}
+        aria-expanded={expanded}
+        onClick={onToggle}
+        className="flex min-h-12 w-full items-center gap-2.5 px-3 text-left"
       >
-        {locked ? "•" : "✓"}
-      </span>
-      {image && (
-        <span className="relative size-8 shrink-0 overflow-hidden rounded-md border border-line">
-          <Image src={image.src} alt="" fill sizes="32px" className="object-cover" />
-        </span>
-      )}
-      <span className="min-w-0 flex-1">
-        <span className="block text-xs font-extrabold">{title}</span>
-        <span className="block truncate text-[10px] text-muted">
-          {locked ? "Locked until the previous mission is confirmed" : detail}
-        </span>
-      </span>
-      {!locked && (
-        <button
-          type="button"
-          onClick={onEdit}
-          className="min-h-11 rounded-lg px-2 text-[11px] font-extrabold text-gold transition-colors hover:bg-surface"
+        <span
+          className={`display grid size-7 shrink-0 place-items-center rounded-lg text-sm ${
+            expanded || complete
+              ? "bg-gold text-ink"
+              : "border border-line text-muted"
+          }`}
         >
-          Edit
-        </button>
+          {step}
+        </span>
+        <span className="min-w-0 flex-1 truncate text-sm font-extrabold">
+          {title}
+        </span>
+        <span className="text-[10px] font-extrabold uppercase tracking-[.05em] text-muted">
+          {locked ? "Locked" : complete ? "Done" : ""}
+        </span>
+        <span
+          aria-hidden="true"
+          className={`text-sm text-gold transition-transform ${
+            expanded ? "rotate-180" : ""
+          }`}
+        >
+          ↓
+        </span>
+      </button>
+      {expanded && (
+        <div className="flex min-h-0 flex-1 flex-col overflow-hidden border-t border-line px-3 pb-3 pt-2.5">
+          <p className="mb-2.5 shrink-0 text-[11px] leading-relaxed text-muted sm:text-xs">
+            {description}
+          </p>
+          <div className="min-h-0 flex-1 overflow-y-auto pr-0.5">
+            {children}
+          </div>
+        </div>
       )}
     </section>
   );
@@ -641,118 +676,90 @@ function ActivePanel({
   const style =
     styles.find((image) => image.slug === state.selectedStyle) ?? styles[0];
 
-  if (state.activeStep === 4) {
-    return (
-      <Completion
-        base={base}
-        style={style}
-        name={state.name}
-        dispatch={dispatch}
-      />
-    );
-  }
-
-  const content =
-    state.activeStep === 1 ? (
-      <>
-        <StepIntro step={1} title="Choose your base card">
-          Select a rank background. The image copies only after you confirm.
-        </StepIntro>
-        <BaseOptions
-          concept={concept}
-          state={state}
-          dispatch={dispatch}
-          templates={templates}
-        />
-      </>
-    ) : state.activeStep === 2 ? (
-      <>
-        <StepIntro step={2} title="Choose a hero style">
-          Pick the visual quality and placement you like. The character theme will
-          stay original.
-        </StepIntro>
-        <StyleOptions
-          concept={concept}
-          state={state}
-          dispatch={dispatch}
-          styles={styles}
-        />
-      </>
-    ) : (
-      <>
-        <StepIntro step={3} title="Build your prompt">
-          Add a name, optionally guide the character, then copy the finished prompt.
-        </StepIntro>
-        <PromptFields state={state} dispatch={dispatch} prompt={prompt} />
-      </>
-    );
-
-  if (concept === "missions") {
-    const confirmedBase = templates.find(
-      (image) => image.slug === state.confirmedBase
-    );
-    const confirmedStyle = styles.find(
-      (image) => image.slug === state.confirmedStyle
-    );
-
-    return (
-      <div className="flex h-full min-h-0 flex-col gap-2">
-        <MissionSummary
-          step={1}
-          title="Base card"
-          image={confirmedBase}
-          detail={
-            confirmedBase
-              ? `${rankFromBase(confirmedBase)} rank confirmed`
-              : undefined
-          }
-          active={state.activeStep === 1}
-          locked={false}
-          onEdit={() => dispatch({ type: "go-to", step: 1 })}
-        >
-          <BaseOptions
-            concept="missions"
-            state={state}
-            dispatch={dispatch}
-            templates={templates}
-          />
-        </MissionSummary>
-        <MissionSummary
-          step={2}
-          title="Hero style"
-          image={confirmedStyle}
-          detail={confirmedStyle ? heroRefName(confirmedStyle) : undefined}
-          active={state.activeStep === 2}
-          locked={!state.confirmedBase}
-          onEdit={() => dispatch({ type: "go-to", step: 2 })}
-        >
-          <StyleOptions
-            concept="missions"
-            state={state}
-            dispatch={dispatch}
-            styles={styles}
-          />
-        </MissionSummary>
-        <MissionSummary
-          step={3}
-          title="Prompt"
-          detail={state.name ? `${state.name} prompt ready` : "Add your hero name"}
-          active={state.activeStep === 3}
-          locked={!state.confirmedStyle}
-          onEdit={() => dispatch({ type: "go-to", step: 3 })}
-        >
-          <div className="min-h-0 overflow-y-auto pr-0.5">
-            <PromptFields state={state} dispatch={dispatch} prompt={prompt} />
-          </div>
-        </MissionSummary>
-      </div>
-    );
-  }
-
   return (
-    <section className="hero-concept-panel mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col overflow-hidden rounded-2xl border border-line bg-surface/78 p-3 shadow-[0_24px_70px_rgba(0,0,0,.28)] sm:p-4">
-      {content}
-    </section>
+    <div className="mx-auto flex h-full min-h-0 w-full max-w-4xl flex-col gap-2">
+      {state.activeStep === 5 ? (
+        <Completion
+          base={base}
+          style={style}
+          name={state.name}
+          dispatch={dispatch}
+        />
+      ) : (
+        <>
+          <AccordionStep
+            step={1}
+            title={stepLabels[0]}
+            description="Choose the rank template that sets your card background and game UI."
+            expanded={state.expandedStep === 1}
+            complete={Boolean(state.confirmedBase)}
+            locked={false}
+            onToggle={() =>
+              state.activeStep === 1
+                ? dispatch({ type: "toggle-step", step: 1 })
+                : dispatch({ type: "go-to", step: 1 })
+            }
+          >
+            <BaseOptions
+              concept={concept}
+              state={state}
+              dispatch={dispatch}
+              templates={templates}
+            />
+          </AccordionStep>
+          <AccordionStep
+            step={2}
+            title={stepLabels[1]}
+            description="Choose a hero image that shows ChatGPT the game's visual style, lighting, and character placement."
+            expanded={state.expandedStep === 2}
+            complete={Boolean(state.confirmedStyle)}
+            locked={!state.confirmedBase}
+            onToggle={() =>
+              state.activeStep === 2
+                ? dispatch({ type: "toggle-step", step: 2 })
+                : dispatch({ type: "go-to", step: 2 })
+            }
+          >
+            <StyleOptions
+              concept={concept}
+              state={state}
+              dispatch={dispatch}
+              styles={styles}
+            />
+          </AccordionStep>
+          <AccordionStep
+            step={3}
+            title={stepLabels[2]}
+            description="Attach 1-3 images of the person or character you want to transform."
+            expanded={state.expandedStep === 3}
+            complete={state.confirmedPhoto}
+            locked={!state.confirmedStyle}
+            onToggle={() =>
+              state.activeStep === 3
+                ? dispatch({ type: "toggle-step", step: 3 })
+                : dispatch({ type: "go-to", step: 3 })
+            }
+          >
+            <PhotoStep />
+          </AccordionStep>
+          <AccordionStep
+            step={4}
+            title={stepLabels[3]}
+            description="Name your hero, add optional creative details, and copy the final prompt into ChatGPT."
+            expanded={state.expandedStep === 4}
+            complete={false}
+            locked={!state.confirmedPhoto}
+            onToggle={() =>
+              state.activeStep === 4
+                ? dispatch({ type: "toggle-step", step: 4 })
+                : dispatch({ type: "go-to", step: 4 })
+            }
+          >
+            <PromptFields state={state} dispatch={dispatch} prompt={prompt} />
+          </AccordionStep>
+        </>
+      )}
+    </div>
   );
 }
 
@@ -770,10 +777,13 @@ export function HeroWizard({
   const meta = conceptMeta[concept];
   const [state, dispatch] = useReducer(reducer, {
     activeStep: 1,
+    expandedStep: 1,
+    revision: 0,
     selectedBase: templates[0].slug,
     confirmedBase: null,
     selectedStyle: styles[0].slug,
     confirmedStyle: null,
+    confirmedPhoto: false,
     rank: rankFromBase(templates[0]),
     customLetter: "",
     customColor: "",
@@ -782,27 +792,59 @@ export function HeroWizard({
     promptOpen: false,
   });
   const [busy, setBusy] = useState(false);
+  const [prepared, setPrepared] = useState<PreparedTransfer | null>(null);
   const [feedback, setFeedback] = useState<{
     kind: "status" | "error";
     text: string;
   } | null>(null);
 
-  const prompt = heroCardPrompt(selectedRank(state), state.name, state.details);
-
-  useEffect(() => {
-    if (!feedback || feedback.kind === "error") return;
-    const timer = window.setTimeout(() => setFeedback(null), 5200);
-    return () => window.clearTimeout(timer);
-  }, [feedback]);
+  const prompt = heroCardPrompt(
+    selectedRank(state),
+    state.name,
+    state.details,
+    { multiplePhotos: true }
+  );
+  const currentTransferKey =
+    state.activeStep === 1
+      ? `${state.revision}:${state.selectedBase}`
+      : state.activeStep === 2
+        ? `${state.revision}:${state.selectedStyle}`
+        : state.activeStep === 4
+          ? `${state.revision}:${prompt}`
+          : "";
+  const isPrepared =
+    prepared?.step === state.activeStep && prepared.key === currentTransferKey;
 
   async function performAction() {
     setFeedback(null);
 
     if (state.activeStep === 3) {
+      dispatch({ type: "confirm-photo" });
+      setPrepared(null);
+      return;
+    }
+
+    if (isPrepared) {
+      if (state.activeStep === 1) {
+        const image = templates.find(
+          (item) => item.slug === state.selectedBase
+        );
+        if (!image) return;
+        dispatch({ type: "confirm-base", rank: rankFromBase(image) });
+      } else if (state.activeStep === 2) {
+        dispatch({ type: "confirm-style" });
+      } else if (state.activeStep === 4) {
+        dispatch({ type: "complete" });
+      }
+      setPrepared(null);
+      return;
+    }
+
+    if (state.activeStep === 4) {
       if (!state.name.trim()) {
         setFeedback({
           kind: "error",
-          text: "Add your hero character name before finishing.",
+          text: "Add your hero character name before copying the prompt.",
         });
         return;
       }
@@ -817,8 +859,11 @@ export function HeroWizard({
         });
         return;
       }
-      dispatch({ type: "complete" });
-      setFeedback({ kind: "status", text: "Prompt copied. Your hero kit is ready." });
+      setPrepared({
+        step: 4,
+        key: currentTransferKey,
+        method: "copied",
+      });
       return;
     }
 
@@ -843,24 +888,38 @@ export function HeroWizard({
       return;
     }
 
-    if (state.activeStep === 1) {
-      dispatch({ type: "confirm-base", rank: rankFromBase(image) });
-    } else {
-      dispatch({ type: "confirm-style" });
-    }
-
-    setFeedback({
-      kind: "status",
-      text:
-        result === "copied"
-          ? "Copied. Paste it into ChatGPT when you are ready."
-          : "Downloaded. Attach the saved image in ChatGPT when you are ready.",
+    setPrepared({
+      step: state.activeStep === 1 ? 1 : 2,
+      key: currentTransferKey,
+      method: result,
     });
   }
 
   const actionDisabled =
     (state.activeStep === 1 && !state.selectedBase) ||
     (state.activeStep === 2 && !state.selectedStyle);
+  const actionLabel =
+    state.activeStep === 3
+      ? "Ready for next step →"
+      : isPrepared
+        ? state.activeStep === 4
+          ? "Ready to finish →"
+          : "Ready for next step →"
+        : state.activeStep === 4
+          ? "Copy prompt"
+          : "Copy & continue";
+  const actionMicrocopy =
+    state.activeStep === 3
+      ? "Attach 1-3 photos directly in ChatGPT before moving to the prompt."
+      : isPrepared
+        ? state.activeStep === 4
+          ? "Make sure you pasted the prompt into ChatGPT before finishing."
+          : prepared?.method === "downloaded"
+            ? "Make sure you attached the downloaded image in ChatGPT before moving on."
+            : "Make sure you pasted the image into ChatGPT before moving on."
+        : undefined;
+  const showActionDock =
+    state.activeStep <= 4 && state.expandedStep === state.activeStep;
 
   return (
     <div
@@ -881,8 +940,7 @@ export function HeroWizard({
             </span>
           </Link>
           <div className="min-w-0 text-right">
-            <p className="hud text-[8px] text-gold">{meta.eyebrow}</p>
-            <p className="truncate text-[11px] font-bold text-muted">
+            <p className="truncate text-xs font-extrabold text-gold-bright">
               {meta.title}
             </p>
           </div>
@@ -891,8 +949,7 @@ export function HeroWizard({
 
       <div className="mx-auto flex h-[calc(100dvh-3rem)] min-h-0 max-w-6xl flex-col">
         <div className="shrink-0 space-y-2 px-3 pb-2 pt-2 sm:px-4">
-          <Progress state={state} dispatch={dispatch} />
-          <CompactExampleDropdown walkthrough={walkthrough} />
+          <WorkflowHelpDropdowns walkthrough={walkthrough} />
           {feedback && (
             <p
               role={feedback.kind === "error" ? "alert" : "status"}
@@ -918,12 +975,15 @@ export function HeroWizard({
           />
         </div>
 
-        <ActionDock
-          step={state.activeStep}
-          busy={busy}
-          disabled={actionDisabled}
-          onAction={performAction}
-        />
+        {showActionDock && (
+          <ActionDock
+            busy={busy}
+            disabled={actionDisabled}
+            label={actionLabel}
+            microcopy={actionMicrocopy}
+            onAction={performAction}
+          />
+        )}
       </div>
     </div>
   );

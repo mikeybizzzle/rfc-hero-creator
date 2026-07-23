@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 export function SiteFooter() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/hero/concepts")) return null;
+  if (pathname.startsWith("/hero/concepts") || pathname.startsWith("/redesign")) return null;
 
   return (
     <footer className="mt-14 border-t border-line bg-raised/55">

@@ -43,14 +43,31 @@ function rankLinesFor(sel: RankSelection): string {
 - Keep the badge icons in the same positions.`;
 }
 
-export function heroCardPrompt(rank: RankSelection, name: string, details: string): string {
+export function heroCardPrompt(
+  rank: RankSelection,
+  name: string,
+  details: string,
+  options?: { multiplePhotos?: boolean }
+): string {
   const heroName = name.trim() || "[HERO CHARACTER NAME]";
   const extra = details.trim();
-  return `Use the 3 attached images as references:
+  const photoReferenceLine = options?.multiplePhotos
+    ? "Images 3 onward = one to three images of the person/character to transform into the hero character."
+    : "Image 3 = the person/character to transform into the hero character.";
+  const photoSource = options?.multiplePhotos
+    ? "the person/character shown in Images 3 onward"
+    : "Image 3";
+  const photoReference = options?.multiplePhotos
+    ? "reference images #3 onward"
+    : "reference image #3";
+  const referenceCountLine = options?.multiplePhotos
+    ? "Use all attached images as references:"
+    : "Use the 3 attached images as references:";
+  return `${referenceCountLine}
 
 Image 1 = the base hero-card background with UI elements and no character.
 Image 2 = the example hero character image showing the target style, realism, lighting, character placement, scale, and game-card format.
-Image 3 = the person/character to transform into the hero character.
+${photoReferenceLine}
 
 Generate a new hero character image using Image 1 as the exact base composition.
 
@@ -60,7 +77,7 @@ ${rankLinesFor(rank)}
 - Replace the name with: “${heroName}”
 - Match the name text style: bold cream/white letters, thick black outline, game UI font, same placement.
 
-Create the hero character from Image 3 in the same style as Image 2:
+Create the hero character from ${photoSource} in the same style as Image 2:
 - Turn the subject into a high-quality realistic game hero character.
 - Preserve the subject’s key identity, facial features, body/character traits, colors, accessories, and personality.
 - Adapt the subject into a cinematic survival-shooter/mobile-game hero design.
@@ -70,7 +87,7 @@ Create the hero character from Image 3 in the same style as Image 2:
 - Make the character look powerful, memorable, and slightly exaggerated in a fun hero-card style, while still recognizable from Image 3.
 
 Important:
-- Do not copy the theme of the hero from reference image #2, but rather imagine an entirely new character theme for the new hero character from your analysis of reference image #3.
+- Do not copy the theme of the hero from reference image #2, but rather imagine an entirely new character theme for the new hero character from your analysis of ${photoReference}.
 - Do not add extra text, buttons, menus, watermarks, logos, or unrelated UI.
 - Do not crop off important parts of the character.
 - Keep the final image clean, polished, and ready to use as a hero character card.

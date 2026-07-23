@@ -13,7 +13,7 @@ const links = [
 export function SiteNav() {
   const pathname = usePathname();
 
-  if (pathname.startsWith("/hero/concepts")) return null;
+  if (pathname.startsWith("/hero/concepts") || pathname.startsWith("/redesign")) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur-xl">
