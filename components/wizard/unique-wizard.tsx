@@ -47,10 +47,9 @@ export function UniqueWizard({
   const { toast, copied, flash, copyImage } = useCopyToast();
 
   const prompt = heroCardNoPhotoPrompt(
-    rank,
+    custom ? { letter: customLetter, color: customColor } : rank,
     heroName,
-    details,
-    custom ? { letter: customLetter, color: customColor } : null
+    details
   );
 
   function next() {
