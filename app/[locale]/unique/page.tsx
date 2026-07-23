@@ -5,7 +5,6 @@ import {
   baseTemplates,
   heroRefName,
   heroRefsSorted,
-  chatImages,
 } from "@/lib/data";
 import { ProcessStrip } from "@/components/process-strip";
 import { UniqueWizard } from "@/components/wizard/unique-wizard";
@@ -43,9 +42,6 @@ export default async function UniquePage({
   };
 
   const walkthrough = findWalkthrough("hero-card-no-photo")!;
-  const chat = chatImages.chat3;
-  const provided = chat["message-1-provided-images"];
-  const output = chat["image-outputs"][0];
 
   const templates = templateOrder.map((slug) => {
     const tpl = baseTemplates.find((b) => b.slug === slug)!;
@@ -102,16 +98,7 @@ export default async function UniquePage({
         </div>
       </section>
       <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
-        <UniqueWizard
-          templates={templates}
-          styles={styles}
-          exampleInputs={[
-            { src: provided[0].src, alt: t("altBaseCard") },
-            { src: provided[1].src, alt: t("altHeroStyle") },
-            { src: provided[2].src, alt: t("altHeroStyle") },
-          ]}
-          exampleOutput={{ src: output.src, alt: t("altInvented") }}
-        />
+        <UniqueWizard templates={templates} styles={styles} />
       </div>
     </div>
   );

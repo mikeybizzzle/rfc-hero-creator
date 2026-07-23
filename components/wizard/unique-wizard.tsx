@@ -7,7 +7,6 @@ import { buildReferenceSheet } from "@/lib/reference-sheet";
 import { copyImageBlobAsset } from "@/lib/image-clipboard";
 import {
   CopyTile,
-  ExampleChatModal,
   RankPicker,
   StepSection,
   Toast,
@@ -16,20 +15,16 @@ import {
   WizardModal,
   inputClass,
   labelClass,
-  type ChatImage,
 } from "./shared";
+import { ExampleAnimationModal, UNIQUE_EXAMPLE } from "./example-animation";
 import type { WizardImage } from "./hero-wizard";
 
 export function UniqueWizard({
   templates,
   styles,
-  exampleInputs,
-  exampleOutput,
 }: {
   templates: WizardImage[];
   styles: WizardImage[];
-  exampleInputs: ChatImage[];
-  exampleOutput: ChatImage;
 }) {
   const t = useTranslations("Wizard.unique");
   const tShared = useTranslations("Wizard.shared");
@@ -320,15 +315,7 @@ export function UniqueWizard({
       )}
 
       {modal === "ex" && (
-        <ExampleChatModal
-          onClose={() => setModal(null)}
-          inputs={exampleInputs}
-          message={t.rich("exampleMessage", {
-            note: (chunks) => <span className="text-[#9b9b9b]">{chunks}</span>,
-          })}
-          output={exampleOutput}
-          outputCaption={t("exampleCaption")}
-        />
+        <ExampleAnimationModal config={UNIQUE_EXAMPLE} onClose={() => setModal(null)} />
       )}
 
       <Toast message={toast} />

@@ -45,7 +45,6 @@ export default async function HeroPage({
   const walkthrough = findWalkthrough("hero-card-from-photo")!;
   const chat = chatImages.chat1;
   const provided = chat["message-1-provided-images"];
-  const output = chat["image-outputs"][0];
 
   const templates = templateOrder.map((slug) => {
     const tpl = baseTemplates.find((b) => b.slug === slug)!;
@@ -106,12 +105,6 @@ export default async function HeroPage({
           templates={templates}
           styles={styles}
           photoExample={{ src: provided[2].src, alt: t("altExamplePhoto") }}
-          exampleInputs={[
-            { src: provided[0].src, alt: t("altBaseCard") },
-            { src: provided[1].src, alt: t("altStyleExample") },
-            { src: provided[2].src, alt: t("altYourPhoto") },
-          ]}
-          exampleOutput={{ src: output.src, alt: t("altFinished") }}
         />
       </div>
     </div>

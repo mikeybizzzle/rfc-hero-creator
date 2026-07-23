@@ -8,7 +8,6 @@ import { buildReferenceSheet } from "@/lib/reference-sheet";
 import { copyImageBlobAsset } from "@/lib/image-clipboard";
 import {
   CopyTile,
-  ExampleChatModal,
   RankPicker,
   StepSection,
   Toast,
@@ -19,6 +18,7 @@ import {
   labelClass,
   type ChatImage,
 } from "./shared";
+import { ExampleAnimationModal, HERO_EXAMPLE } from "./example-animation";
 
 export type WizardImage = {
   src: string;
@@ -31,14 +31,10 @@ export function HeroWizard({
   templates,
   styles,
   photoExample,
-  exampleInputs,
-  exampleOutput,
 }: {
   templates: WizardImage[];
   styles: WizardImage[];
   photoExample: ChatImage;
-  exampleInputs: ChatImage[];
-  exampleOutput: ChatImage;
 }) {
   const t = useTranslations("Wizard.hero");
   const tShared = useTranslations("Wizard.shared");
@@ -412,15 +408,7 @@ export function HeroWizard({
       )}
 
       {modal === "ex" && (
-        <ExampleChatModal
-          onClose={() => setModal(null)}
-          inputs={exampleInputs}
-          message={t.rich("exampleMessage", {
-            note: (chunks) => <span className="text-[#9b9b9b]">{chunks}</span>,
-          })}
-          output={exampleOutput}
-          outputCaption={t("exampleCaption")}
-        />
+        <ExampleAnimationModal config={HERO_EXAMPLE} onClose={() => setModal(null)} />
       )}
 
       <Toast message={toast} />
