@@ -13,7 +13,7 @@ import { CopyButton } from "./copy-button";
 const rankChoices: RankChoice[] = ["S", "A", "B", "custom"];
 
 const inputClass =
-  "w-full min-h-12 bg-raised border border-[rgba(255,214,122,.28)] rounded-[10px] px-3.5 py-3 text-base text-cream placeholder:text-muted/70 outline-none transition-[border-color,box-shadow] duration-200 focus:border-gold focus:shadow-[0_0_0_3px_rgba(255,208,90,.1)]";
+  "w-full min-h-12 bg-raised border border-line rounded-[10px] px-3.5 py-3 text-base text-cream placeholder:text-muted/70 outline-none transition-[border-color,box-shadow] duration-200 focus:border-gold focus:shadow-[0_0_0_3px_rgba(255,227,126,.12)]";
 
 const PLACEHOLDER_TOKENS = [
   "[HERO CHARACTER NAME]",
@@ -121,10 +121,10 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
                     aria-checked={rank === r}
                     tabIndex={rank === r ? 0 : -1}
                     onClick={() => setRank(r)}
-                    className={`min-h-11 rounded-lg border border-[rgba(255,214,122,.28)] px-4 py-2 text-[13.5px] font-extrabold tracking-[.5px] transition-[color,background-color,border-color,transform] active:scale-[.98] ${
+                    className={`min-h-11 rounded-lg border px-4 py-2 text-[13.5px] font-extrabold tracking-[.5px] transition-[color,background-color,border-color,transform] active:scale-[.98] ${
                       rank === r
-                        ? "bg-gradient-to-br from-gold to-orange text-ink"
-                        : "bg-raised text-cream/90 hover:text-cream hover:border-gold"
+                        ? "border-transparent bg-gradient-to-b from-amber to-orange text-white"
+                        : "border-line bg-raised text-cream/90 hover:text-cream hover:border-gold"
                     }`}
                   >
                     {r === "custom" ? "Custom" : r}
@@ -183,7 +183,7 @@ export function PromptForm({ mode }: { mode: "photo" | "no-photo" | "group" }) {
         )}
       </div>
 
-      <div className="flex min-h-0 flex-col overflow-hidden rounded-[14px] border border-[rgba(255,214,122,.24)] bg-raised shadow-[inset_0_1px_0_rgba(255,255,255,.025)]">
+      <div className="flex min-h-0 flex-col overflow-hidden rounded-[14px] border border-line bg-raised shadow-[inset_0_1px_0_rgba(255,255,255,.025)]">
         <div className="flex items-center justify-between gap-2.5 border-b border-line bg-surface/60 px-3 py-2.5 sm:px-3.5">
           <span className="text-[11.5px] font-extrabold uppercase tracking-[1px] text-muted sm:text-[12.5px]">
             Your prompt{mode !== "group" && ` · ${rankLabel} rank card`}

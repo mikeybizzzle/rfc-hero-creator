@@ -80,34 +80,3 @@ export async function copyImageAsset(
   if (copied) return "copied";
   return downloadImage(url, filename) ? "downloaded" : "failed";
 }
-
-export async function copyText(text: string): Promise<boolean> {
-  if (navigator.clipboard?.writeText) {
-    try {
-      const copied = await Promise.race([
-        navigator.clipboard.writeText(text).then(() => true),
-        new Promise<boolean>((resolve) =>
-          window.setTimeout(() => resolve(false), 2500)
-        ),
-      ]);
-      if (copied) return true;
-    } catch {
-      // Continue to the legacy selection fallback.
-    }
-  }
-
-  try {
-    const textarea = document.createElement("textarea");
-    textarea.value = text;
-    textarea.readOnly = true;
-    textarea.style.position = "fixed";
-    textarea.style.opacity = "0";
-    document.body.appendChild(textarea);
-    textarea.select();
-    const copied = document.execCommand("copy");
-    textarea.remove();
-    return copied;
-  } catch {
-    return false;
-  }
-}

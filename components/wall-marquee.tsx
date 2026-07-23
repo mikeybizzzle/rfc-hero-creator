@@ -21,13 +21,7 @@ async function toPngBlob(blob: Blob): Promise<Blob> {
   );
 }
 
-export function WallMarquee({
-  items,
-  tone = "dark",
-}: {
-  items: WallItem[];
-  tone?: "dark" | "light";
-}) {
+export function WallMarquee({ items }: { items: WallItem[] }) {
   const [toast, setToast] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -72,11 +66,7 @@ export function WallMarquee({
             title="Copy image"
             aria-hidden={i >= items.length || undefined}
             tabIndex={i >= items.length ? -1 : undefined}
-            className={`relative mr-2.5 w-[min(31vw,160px)] shrink-0 cursor-pointer overflow-hidden rounded-xl border text-left transition-[border-color,transform] hover:-translate-y-0.5 active:scale-[.99] ${
-              tone === "light"
-                ? "border-[#c9c8c7] bg-white hover:border-[#e5691e]"
-                : "border-line bg-surface hover:border-gold"
-            }`}
+            className="relative mr-2.5 w-[min(31vw,160px)] shrink-0 cursor-pointer overflow-hidden rounded-xl border border-line bg-surface text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99]"
           >
             <div className="relative aspect-square">
               <Image
@@ -87,21 +77,11 @@ export function WallMarquee({
                 className="object-cover"
               />
             </div>
-            <div
-              className={`px-2 py-1.5 font-bold text-[12.5px] whitespace-nowrap overflow-hidden text-ellipsis ${
-                tone === "light" ? "text-[#333]" : "text-cream/90"
-              }`}
-            >
+            <div className="px-2 py-1.5 font-bold text-[12.5px] text-cream/90 whitespace-nowrap overflow-hidden text-ellipsis">
               {item.name}
             </div>
             {copied === item.src && (
-              <span
-                className={`absolute inset-0 grid place-items-center display text-lg ${
-                  tone === "light"
-                    ? "bg-white/85 text-[#e5691e]"
-                    : "bg-bg/80 text-gold-bright"
-                }`}
-              >
+              <span className="absolute inset-0 grid place-items-center bg-bg/80 text-gold-bright display text-lg">
                 COPIED &#10003;
               </span>
             )}
@@ -111,7 +91,7 @@ export function WallMarquee({
       {toast && (
         <div
           role="status"
-          className="fixed bottom-[max(22px,env(safe-area-inset-bottom))] left-1/2 z-50 max-w-[90vw] -translate-x-1/2 rounded-xl bg-gradient-to-br from-gold to-orange px-[18px] py-[11px] text-center text-sm font-extrabold text-ink shadow-[0_10px_32px_rgba(0,0,0,.55)]"
+          className="fixed bottom-[max(22px,env(safe-area-inset-bottom))] left-1/2 z-50 max-w-[90vw] -translate-x-1/2 rounded-xl bg-gradient-to-b from-amber to-orange px-[18px] py-[11px] text-center text-sm font-extrabold text-white shadow-[0_10px_32px_rgba(0,0,0,.55)]"
         >
           {toast}
         </div>

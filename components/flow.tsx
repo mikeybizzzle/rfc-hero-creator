@@ -33,7 +33,7 @@ export function FlowHeader({
 export function StepHeading({ n, title }: { n: string; title: string }) {
   return (
     <div className="relative z-10 mb-2.5 flex items-center gap-3">
-      <span className="display grid h-9 min-w-9 place-items-center rounded-[10px] bg-gradient-to-br from-gold to-orange text-[19px] text-ink shadow-[0_7px_18px_rgba(242,106,32,.18)]">
+      <span className="display grid h-9 min-w-9 place-items-center rounded-[10px] bg-gradient-to-b from-amber to-orange text-[19px] text-white shadow-[0_7px_18px_rgba(232,133,10,.22)]">
         {n}
       </span>
       <h2 className="display text-balance text-[22px] leading-tight sm:text-[24px]">{title}</h2>

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import type { Walkthrough } from "@/lib/chats";
 
-const thumbBorder = "border border-[rgba(255,214,122,.28)]";
+const thumbBorder = "border border-line";
 
 export function ProcessStrip({
   walkthrough,

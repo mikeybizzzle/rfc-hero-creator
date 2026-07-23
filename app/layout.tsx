@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Barlow, Lilita_One } from "next/font/google";
+import { Barlow, Gemunu_Libre } from "next/font/google";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import "./globals.css";
@@ -10,10 +10,10 @@ const barlow = Barlow({
   weight: ["400", "500", "600", "700", "800"],
 });
 
-const lilita = Lilita_One({
-  variable: "--font-lilita",
+const gemunu = Gemunu_Libre({
+  variable: "--font-gemunu",
   subsets: ["latin", "latin-ext"],
-  weight: "400",
+  weight: "800",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${barlow.variable} ${lilita.variable} h-full antialiased`}
+      className={`${barlow.variable} ${gemunu.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <a href="#main-content" className="skip-link">
