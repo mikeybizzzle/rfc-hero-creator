@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { metaPrompt } from "@/lib/prompts";
 import {
-  CopyTile,
   ExampleChatModal,
-  PromptActions,
   StepSection,
   Toast,
   TopActions,
@@ -16,14 +14,11 @@ import {
   labelClass,
   type ChatImage,
 } from "./shared";
-import type { WizardImage } from "./hero-wizard";
 
 export function CustomWizard({
-  refs,
   exampleInputs,
   exampleOutput,
 }: {
-  refs: WizardImage[];
   exampleInputs: ChatImage[];
   exampleOutput: ChatImage;
 }) {
@@ -32,23 +27,40 @@ export function CustomWizard({
   const [step, setStep] = useState(1);
   const [modal, setModal] = useState<"how" | "ex" | null>(null);
   const [idea, setIdea] = useState("");
-  const { toast, copied, flash, copyImage } = useCopyToast();
+  const [promptStage, setPromptStage] = useState<0 | 1>(0);
+  const [promptDone, setPromptDone] = useState(false);
+  const { toast, flash } = useCopyToast();
 
-  const ctas = [t("cta1"), t("cta2"), t("cta3")];
   const strong = (chunks: React.ReactNode) => (
     <strong className="text-cream">{chunks}</strong>
   );
 
-  const message = metaPrompt(idea);
+  const ready = idea.trim() !== "";
+
+  async function handlePrompt() {
+    const promptText = metaPrompt(idea);
+    if (promptStage === 0) {
+      try {
+        await navigator.clipboard.writeText(promptText);
+        setPromptStage(1);
+      } catch {
+        flash(tShared("copyFailedToast"));
+      }
+      return;
+    }
+    window.open(
+      `https://chatgpt.com/?q=${encodeURIComponent(promptText)}`,
+      "_blank",
+      "noopener"
+    );
+    setPromptDone(true);
+  }
 
   function next() {
-    if (step >= 3) {
-      setStep(1);
-      setModal(null);
-      flash(t("doneToast"));
-    } else {
-      setStep(step + 1);
-    }
+    setModal(null);
+    setPromptStage(0);
+    setPromptDone(false);
+    flash(t("doneToast"));
   }
 
   return (
@@ -61,8 +73,9 @@ export function CustomWizard({
           title={t("step1Title")}
           step={step}
           onOpen={setStep}
-          cta={ctas[0]}
+          cta={t("cta1")}
           onNext={next}
+          ctaVariant="outline"
         >
           <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
             {t.rich("step1Body", { strong })}
@@ -77,56 +90,20 @@ export function CustomWizard({
               className={`${inputClass} resize-y`}
             />
           </label>
-          <PromptActions
-            prompt={message}
-            copyLabel={t("copyMessage")}
-            viewLabel={t("fullMessage")}
-            onFail={flash}
-          />
-        </StepSection>
-
-        <StepSection
-          index={2}
-          title={t("step2Title")}
-          step={step}
-          onOpen={setStep}
-          cta={ctas[1]}
-          onNext={next}
-        >
-          <p className="mb-2 text-[13.5px] leading-normal text-muted">
-            {t.rich("step2Body", { strong })}
-          </p>
-          <p className="mb-2 text-xs font-bold text-cream/90">
-            {t("needImages")}
-          </p>
-          <div className="scrollbar-none -mx-3.5 flex gap-2 overflow-x-auto px-3.5 pb-2">
-            {refs.map((r) => (
-              <CopyTile
-                key={r.src}
-                src={r.src}
-                alt={r.name}
-                label={r.label}
-                sizes="112px"
-                className="w-28 shrink-0"
-                copied={copied === r.copyUrl}
-                onCopy={() => copyImage(r.copyUrl, r.name)}
-              />
-            ))}
-          </div>
-          <p className="text-[11.5px] text-muted">{tShared("scrollHint")}</p>
-        </StepSection>
-
-        <StepSection
-          index={3}
-          title={t("step3Title")}
-          step={step}
-          onOpen={setStep}
-          cta={ctas[2]}
-          onNext={next}
-        >
-          <p className="mb-2.5 text-[13.5px] leading-normal text-muted">
-            {t.rich("step3Body", { strong })}
-          </p>
+          <button
+            type="button"
+            onClick={handlePrompt}
+            disabled={!ready}
+            className={`lz-cta mb-2 min-h-12 w-full px-3 py-3 text-xs font-extrabold tracking-[.5px] disabled:opacity-50 ${
+              ready && !promptDone ? "lz-glow" : ""
+            }`}
+          >
+            {promptDone
+              ? `✓ ${t("copyPromptGo")}`
+              : promptStage === 1
+                ? t("promptAgain")
+                : t("copyPromptGo")}
+          </button>
           <div className="flex items-start gap-2.5 rounded-xl border border-line bg-raised px-3.5 py-3">
             <span className="display text-[15px] text-gold">{t("tip")}</span>
             <p className="text-[12.5px] leading-normal text-cream/90">
@@ -151,7 +128,6 @@ export function CustomWizard({
             <li>{t("howStep2")}</li>
             <li>{t("howStep3")}</li>
             <li>{t("howStep4")}</li>
-            <li>{t("howStep5")}</li>
           </ol>
           <p className="text-[13px] font-bold leading-normal text-gold">
             {t("howResult")}

@@ -82,6 +82,7 @@ export function StepSection({
   onOpen,
   cta,
   onNext,
+  ctaVariant = "solid",
   children,
 }: {
   index: number;
@@ -90,6 +91,7 @@ export function StepSection({
   onOpen: (step: number) => void;
   cta: string;
   onNext: () => void;
+  ctaVariant?: "solid" | "outline";
   children: React.ReactNode;
 }) {
   const open = step === index;
@@ -144,7 +146,11 @@ export function StepSection({
           <button
             type="button"
             onClick={onNext}
-            className="lz-cta mt-3.5 min-h-12 w-full px-4 py-3 text-sm font-extrabold tracking-[.5px]"
+            className={
+              ctaVariant === "outline"
+                ? "mt-3.5 min-h-12 w-full rounded-xl border border-line bg-raised px-4 py-3 text-sm font-extrabold tracking-[.5px] text-gold transition-colors hover:border-gold"
+                : "lz-cta mt-3.5 min-h-12 w-full px-4 py-3 text-sm font-extrabold tracking-[.5px]"
+            }
           >
             {cta}
           </button>
@@ -260,6 +266,8 @@ export function CopyTile({
   onCopy,
   className = "",
   sizes,
+  selected,
+  title,
 }: {
   src: string;
   alt: string;
@@ -268,14 +276,18 @@ export function CopyTile({
   onCopy: () => void;
   className?: string;
   sizes: string;
+  selected?: boolean;
+  title?: string;
 }) {
   const t = useTranslations("Wizard.shared");
   return (
     <button
       type="button"
       onClick={onCopy}
-      title={t("copyImageTitle")}
-      className={`relative cursor-pointer overflow-hidden rounded-xl border border-line bg-raised text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99] ${className}`}
+      title={title ?? t("copyImageTitle")}
+      className={`relative cursor-pointer overflow-hidden rounded-xl border ${
+        selected ? "border-gold" : "border-line"
+      } bg-raised text-left transition-[border-color,transform] hover:-translate-y-0.5 hover:border-gold active:scale-[.99] ${className}`}
     >
       <div className="relative aspect-square">
         <Image src={src} alt={alt} fill sizes={sizes} className="object-cover" />
@@ -441,6 +453,14 @@ export function PromptActions({
       >
         <span role="status">{copied ? t("copied") : copyText}</span>
       </button>
+      <a
+        href={`https://chatgpt.com/?q=${encodeURIComponent(prompt)}`}
+        target="_blank"
+        rel="noopener"
+        className="grid min-h-11 w-full place-items-center rounded-xl border border-line bg-raised px-3 py-2.5 text-xs font-extrabold tracking-[.5px] text-gold transition-colors hover:border-gold"
+      >
+        {t("openChatGpt")}
+      </a>
       <button
         type="button"
         onClick={() => setOpen(!open)}

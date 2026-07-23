@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { findWalkthrough } from "@/lib/chats";
-import { findGallery, chatImages } from "@/lib/data";
+import { chatImages } from "@/lib/data";
 import { ProcessStrip } from "@/components/process-strip";
 import { CustomWizard } from "@/components/wizard/custom-wizard";
 
@@ -14,25 +14,6 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "Metadata" });
   return { title: t("customTitle"), description: t("customDescription") };
 }
-
-const refList: [slug: string, name: string][] = [
-  ["supert-diamond-party", "SuperT · Diamond Party"],
-  ["supert", "SuperT"],
-  ["ausryte", "Aušrytė"],
-  ["ironbastion", "IronBastion"],
-  ["deathhawk", "DeathHawk"],
-  ["babyyaga", "BabyYaga"],
-  ["coqueta-farm", "CoquetaFarm"],
-  ["kriss-de-valnor", "Kriss de Valnor"],
-  ["remon-pharaoh", "Remon Pharaoh"],
-  ["yousef-rocket-man", "Yousef Rocket Man"],
-  ["nyabinghi-x", "Nyabinghi X"],
-  ["castor-troy", "Castor Troy"],
-  ["mr-bean", "Mr Bean"],
-  ["oldhippie", "OldHippie"],
-  ["pope-bear", "Pope Bear"],
-  ["lolybear", "LolyBear"],
-];
 
 export default async function CustomPage({
   params,
@@ -47,16 +28,6 @@ export default async function CustomPage({
   const chat = chatImages.chat2;
   const provided = chat["message-1-provided-images"];
   const output = chat["image-outputs"][0];
-
-  const refs = refList.map(([slug, name]) => {
-    const img = findGallery(slug);
-    return {
-      src: img.src,
-      copyUrl: img.download ?? img.src,
-      name,
-      label: name,
-    };
-  });
 
   return (
     <div className="pb-6">
@@ -99,7 +70,6 @@ export default async function CustomPage({
       </section>
       <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
         <CustomWizard
-          refs={refs}
           exampleInputs={provided.map((img, i) => ({
             src: img.src,
             alt: i === 0 ? t("altBaseImage") : t("altHero"),

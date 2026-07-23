@@ -67,6 +67,24 @@ function downloadImage(url: string, filename?: string): boolean {
   }
 }
 
+export async function copyImageBlobAsset(
+  blob: Blob,
+  filename: string
+): Promise<ImageTransferResult> {
+  if (typeof ClipboardItem !== "undefined" && navigator.clipboard?.write) {
+    try {
+      await navigator.clipboard.write([
+        new ClipboardItem({ "image/png": blob }),
+      ]);
+      return "copied";
+    } catch {}
+  }
+  const url = URL.createObjectURL(blob);
+  const downloaded = downloadImage(url, filename);
+  URL.revokeObjectURL(url);
+  return downloaded ? "downloaded" : "failed";
+}
+
 export async function copyImageAsset(
   url: string,
   filename?: string
