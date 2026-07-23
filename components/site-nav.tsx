@@ -1,14 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-
-const links = [
-  { label: "Hero (From Image)", mobileLabel: "From photo", href: "/hero" },
-  { label: "Custom Image", mobileLabel: "Custom", href: "/custom" },
-  { label: "Hero (Without Image)", mobileLabel: "No photo", href: "/unique" },
-  { label: "Gallery", mobileLabel: "Gallery", href: "/gallery" },
-] as const;
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+import { LocaleSwitcher } from "./locale-switcher";
 
 function pillClass(active: boolean) {
   return `shrink-0 rounded-lg px-3 py-1.5 text-[13px] font-bold transition-colors ${
@@ -19,7 +13,15 @@ function pillClass(active: boolean) {
 }
 
 export function SiteNav() {
+  const t = useTranslations("Nav");
   const pathname = usePathname();
+
+  const links = [
+    { label: t("hero"), mobileLabel: t("heroMobile"), href: "/hero" },
+    { label: t("custom"), mobileLabel: t("customMobile"), href: "/custom" },
+    { label: t("unique"), mobileLabel: t("uniqueMobile"), href: "/unique" },
+    { label: t("gallery"), mobileLabel: t("galleryMobile"), href: "/gallery" },
+  ];
 
   return (
     <header className="sticky top-0 z-40 bg-black">
@@ -27,7 +29,7 @@ export function SiteNav() {
         <Link
           href="/"
           className="group flex shrink-0 items-center gap-2.5 text-white"
-          aria-label="RfC Hero Forge home"
+          aria-label={t("homeAria")}
         >
           <span className="display rounded-[9px] bg-gradient-to-b from-amber to-orange px-2.5 py-1 text-lg leading-none text-white transition-transform duration-200 group-hover:-rotate-2 group-hover:scale-105">
             RfC
@@ -35,25 +37,28 @@ export function SiteNav() {
           <span className="display text-xl leading-none">Hero Forge</span>
         </Link>
 
-        <nav aria-label="Main navigation" className="hidden items-center gap-2 sm:flex">
-          {links.map(({ label, href }) => {
-            const active = pathname === href || pathname.startsWith(href + "/");
-            return (
-              <Link
-                key={href}
-                href={href}
-                aria-current={active ? "page" : undefined}
-                className={pillClass(active)}
-              >
-                {label}
-              </Link>
-            );
-          })}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav aria-label={t("mainAria")} className="hidden items-center gap-2 sm:flex">
+            {links.map(({ label, href }) => {
+              const active = pathname === href || pathname.startsWith(href + "/");
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  aria-current={active ? "page" : undefined}
+                  className={pillClass(active)}
+                >
+                  {label}
+                </Link>
+              );
+            })}
+          </nav>
+          <LocaleSwitcher />
+        </div>
       </div>
 
       <nav
-        aria-label="Main navigation"
+        aria-label={t("mainAria")}
         className="scrollbar-none mx-auto flex w-full max-w-6xl gap-2 overflow-x-auto border-t border-white/10 px-3 py-1.5 sm:hidden"
       >
         {links.map(({ mobileLabel, href }) => {

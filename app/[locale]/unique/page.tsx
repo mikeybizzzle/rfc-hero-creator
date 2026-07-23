@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { findWalkthrough } from "@/lib/chats";
 import {
   baseTemplates,
@@ -9,37 +10,48 @@ import {
 import { ProcessStrip } from "@/components/process-strip";
 import { UniqueWizard } from "@/components/wizard/unique-wizard";
 
-export const metadata: Metadata = {
-  title: "Hero Character (Without Image) — RfC Hero Forge",
-  description:
-    "No photo needed: describe your hero character in text and build the card with ChatGPT.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Metadata" });
+  return { title: t("uniqueTitle"), description: t("uniqueDescription") };
+}
 
-const templateMeta: Record<string, { name: string; label: string }> = {
-  "s-orange-template": { name: "S rank · gold base card", label: "S · gold" },
-  "a-purple-template": {
-    name: "A rank · purple base card",
-    label: "A · purple",
-  },
-  "b-blue-template": { name: "B rank · blue base card", label: "B · blue" },
-};
 const templateOrder = [
   "s-orange-template",
   "a-purple-template",
   "b-blue-template",
 ];
 
-export default function UniquePage() {
+export default async function UniquePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("UniquePage");
+  const tTemplates = await getTranslations("Templates");
+
+  const templateMeta: Record<string, { name: string; label: string }> = {
+    "s-orange-template": { name: tTemplates("sName"), label: tTemplates("sLabel") },
+    "a-purple-template": { name: tTemplates("aName"), label: tTemplates("aLabel") },
+    "b-blue-template": { name: tTemplates("bName"), label: tTemplates("bLabel") },
+  };
+
   const walkthrough = findWalkthrough("hero-card-no-photo")!;
   const chat = chatImages.chat3;
   const provided = chat["message-1-provided-images"];
   const output = chat["image-outputs"][0];
 
   const templates = templateOrder.map((slug) => {
-    const t = baseTemplates.find((b) => b.slug === slug)!;
+    const tpl = baseTemplates.find((b) => b.slug === slug)!;
     return {
-      src: t.src,
-      copyUrl: t.download ?? t.src,
+      src: tpl.src,
+      copyUrl: tpl.download ?? tpl.src,
       name: templateMeta[slug].name,
       label: templateMeta[slug].label,
     };
@@ -61,19 +73,20 @@ export default function UniquePage() {
         <div className="mx-auto grid max-w-6xl gap-6 px-4 pb-8 pt-7 sm:pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-12">
           <div>
             <h1 className="display max-w-[820px] text-balance text-[clamp(30px,5.5vw,46px)] leading-[1.02] tracking-[-0.01em]">
-              Hero Character (Without Image)
+              {t("title")}
             </h1>
             <p className="mt-3 max-w-[640px] text-pretty text-[clamp(14px,2.5vw,17px)] leading-relaxed text-muted">
-              No photo needed — describe a hero and ChatGPT invents them.
-              You&rsquo;ll paste{" "}
-              <strong className="text-cream">3 images + 1 prompt</strong> into
-              ChatGPT.
+              {t.rich("intro", {
+                strong: (chunks) => (
+                  <strong className="text-cream">{chunks}</strong>
+                ),
+              })}
             </p>
             <div className="mt-4">
               <ProcessStrip
                 walkthrough={walkthrough}
-                inputLabels={["Base card", "Hero style", "Hero style"]}
-                outputLabel="Your hero card"
+                inputLabels={[t("inputBase"), t("inputStyle"), t("inputStyle")]}
+                outputLabel={t("outputLabel")}
               />
             </div>
           </div>
@@ -81,11 +94,11 @@ export default function UniquePage() {
             templates={templates}
             styles={styles}
             exampleInputs={[
-              { src: provided[0].src, alt: "Base card" },
-              { src: provided[1].src, alt: "Hero style" },
-              { src: provided[2].src, alt: "Hero style" },
+              { src: provided[0].src, alt: t("altBaseCard") },
+              { src: provided[1].src, alt: t("altHeroStyle") },
+              { src: provided[2].src, alt: t("altHeroStyle") },
             ]}
-            exampleOutput={{ src: output.src, alt: "Invented hero card" }}
+            exampleOutput={{ src: output.src, alt: t("altInvented") }}
           />
         </div>
       </section>

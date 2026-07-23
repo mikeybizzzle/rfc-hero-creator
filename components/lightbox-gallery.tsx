@@ -2,11 +2,13 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 import type { ManifestImage } from "@/lib/data";
 
 export type GalleryItem = ManifestImage & { name: string };
 
 export function LightboxGallery({ items }: { items: GalleryItem[] }) {
+  const t = useTranslations("Lightbox");
   const [index, setIndex] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -69,7 +71,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               setIndex(i);
             }}
             className="interactive-card group card-frame overflow-hidden text-left"
-            aria-label={`View ${item.name}`}
+            aria-label={t("viewAria", { name: item.name })}
           >
             <div className="relative aspect-square overflow-hidden">
               <Image
@@ -118,7 +120,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               onClick={() => step(-1)}
               className="flex min-h-11 items-center rounded-lg px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-muted transition-colors hover:bg-raised hover:text-gold"
             >
-              Prev
+              {t("prev")}
             </button>
             <span className="min-w-0 truncate px-1 text-sm font-bold text-cream">
               {items[index].name}
@@ -127,7 +129,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
               onClick={() => step(1)}
               className="flex min-h-11 items-center rounded-lg px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-muted transition-colors hover:bg-raised hover:text-gold"
             >
-              Next
+              {t("next")}
             </button>
           </div>
           <button
@@ -135,7 +137,7 @@ export function LightboxGallery({ items }: { items: GalleryItem[] }) {
             onClick={close}
             className="absolute right-3 top-3 flex min-h-11 items-center rounded-lg border border-line bg-bg/75 px-3 py-2 text-xs font-extrabold uppercase tracking-[.6px] text-cream backdrop-blur-md transition-colors hover:border-gold hover:text-gold sm:right-5 sm:top-5"
           >
-            Close
+            {t("close")}
           </button>
         </div>
       )}

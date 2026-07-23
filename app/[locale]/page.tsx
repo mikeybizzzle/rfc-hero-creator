@@ -1,28 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { findGallery } from "@/lib/data";
 import { WallMarquee } from "@/components/wall-marquee";
-
-const paths = [
-  {
-    href: "/hero",
-    title: "Hero Character (From Image)",
-    text: "Turn yourself — or anyone — into a hero card with your name on it.",
-    imageSlug: "ausryte",
-  },
-  {
-    href: "/unique",
-    title: "Hero Character (Without Image)",
-    text: "No photo needed — describe your hero and ChatGPT invents them.",
-    imageSlug: "coqueta-farm",
-  },
-  {
-    href: "/custom",
-    title: "Custom Image",
-    text: "Make any kind of hero image you want — group shots, events, themes.",
-    imageSlug: "diamond-party-heros",
-  },
-];
 
 const wall: [string, string][] = [
   ["ausryte", "Aušrytė"],
@@ -53,7 +33,36 @@ const wall: [string, string][] = [
   ["new-season-heros", "New Season Heroes"],
 ];
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("Home");
+
+  const paths = [
+    {
+      href: "/hero",
+      title: t("pathHeroTitle"),
+      text: t("pathHeroText"),
+      imageSlug: "ausryte",
+    },
+    {
+      href: "/unique",
+      title: t("pathUniqueTitle"),
+      text: t("pathUniqueText"),
+      imageSlug: "coqueta-farm",
+    },
+    {
+      href: "/custom",
+      title: t("pathCustomTitle"),
+      text: t("pathCustomText"),
+      imageSlug: "diamond-party-heros",
+    },
+  ];
+
   const wallItems = wall.map(([slug, name]) => {
     const img = findGallery(slug);
     return { src: img.src, copyUrl: img.download ?? img.src, name };
@@ -64,18 +73,19 @@ export default function Home() {
       <section className="atmosphere border-b border-line/60">
         <div className="mx-auto max-w-6xl px-4 pb-10 pt-9 sm:pb-12 sm:pt-14">
           <h1 className="display max-w-[860px] text-[clamp(38px,6.8vw,68px)] leading-[1.02] tracking-[-0.01em] text-balance">
-            Make your own{" "}
-            <span className="lz-goldtext">
-              <span aria-hidden="true" className="lz-goldtext-outline">
-                Last&nbsp;Z
-              </span>
-              <span className="lz-goldtext-fill">Last&nbsp;Z</span>
-            </span>{" "}
-            hero card
+            {t.rich("title", {
+              gold: (chunks) => (
+                <span className="lz-goldtext">
+                  <span aria-hidden="true" className="lz-goldtext-outline">
+                    {chunks}
+                  </span>
+                  <span className="lz-goldtext-fill">{chunks}</span>
+                </span>
+              ),
+            })}
           </h1>
           <p className="mt-4 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-muted">
-            Copy a few reference images, fill in a prompt, paste it all into
-            ChatGPT. Two minutes, no skills needed.
+            {t("subtitle")}
           </p>
         </div>
       </section>
@@ -83,10 +93,8 @@ export default function Home() {
       <div className="mx-auto max-w-6xl px-4">
         <section className="pt-9 sm:pt-12">
           <div className="mb-4">
-            <h2 className="display text-[clamp(25px,4vw,34px)]">Pick your path</h2>
-            <p className="mt-1 text-[15px] text-muted">
-              Three ways to forge an image — each page walks you through it.
-            </p>
+            <h2 className="display text-[clamp(25px,4vw,34px)]">{t("pickPath")}</h2>
+            <p className="mt-1 text-[15px] text-muted">{t("pickPathSub")}</p>
           </div>
           <div className="scrollbar-none -mx-4 overflow-x-auto overscroll-x-contain px-4 pb-3 snap-x snap-mandatory md:mx-0 md:overflow-visible md:px-0 md:pb-0">
             <div className="grid auto-cols-[min(82vw,340px)] grid-flow-col gap-3.5 md:auto-cols-auto md:grid-flow-row md:grid-cols-3">
@@ -117,7 +125,7 @@ export default function Home() {
                         {o.text}
                       </p>
                       <span className="lz-cta mt-auto inline-flex min-h-10 items-center gap-2 px-5 text-[15px]">
-                        Start <span aria-hidden="true">&rarr;</span>
+                        {t("start")} <span aria-hidden="true">&rarr;</span>
                       </span>
                     </div>
                   </Link>
@@ -132,15 +140,12 @@ export default function Home() {
             <h2 className="display text-[clamp(25px,4vw,34px)]">
               <span className="lz-goldtext">
                 <span aria-hidden="true" className="lz-goldtext-outline">
-                  The wall
+                  {t("wallTitle")}
                 </span>
-                <span className="lz-goldtext-fill">The wall</span>
+                <span className="lz-goldtext-fill">{t("wallTitle")}</span>
               </span>
             </h2>
-            <p className="mb-4 mt-1 text-[15px] text-gold">
-              Heroes forged by RfC so far. Tap any image to copy it — great as
-              style references.
-            </p>
+            <p className="mb-4 mt-1 text-[15px] text-gold">{t("wallSub")}</p>
             <WallMarquee items={wallItems} />
           </div>
         </section>
