@@ -11,6 +11,11 @@ const LABELS: Record<(typeof routing.locales)[number], string> = {
   es: "ES",
   de: "DE",
   fr: "FR",
+  pt: "PT",
+  ru: "RU",
+  ar: "AR",
+  zh: "ZH",
+  hu: "HU",
 };
 
 export function LocaleSwitcher() {

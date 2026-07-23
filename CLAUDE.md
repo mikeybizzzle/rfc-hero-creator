@@ -32,7 +32,7 @@ See `context/` for workflow summaries and where each piece of site content comes
 
 - `app/[locale]/` — routes: `/` (home), `/hero`, `/unique`, `/custom`, `/gallery`, localized via next-intl
 - `i18n/` — next-intl routing/request/navigation config; `proxy.ts` handles locale detection
-- `messages/` — UI copy per locale (`en`, `it`, `es`, `de`, `fr`); keep files key-identical to `en.json`
+- `messages/` — UI copy per locale (`en`, `it`, `es`, `de`, `fr`, `pt`, `ru`, `ar`, `zh`, `hu`); keep files key-identical to `en.json`
 - `lib/prompts.ts` — verbatim prompt templates + fill functions
 - `lib/data.ts` — image manifests (gallery, hero refs, base templates)
 - `lib/chats.ts` — walkthrough transcript data
