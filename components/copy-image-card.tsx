@@ -78,12 +78,12 @@ export function CopyImageCard({
       type="button"
       onClick={onClick}
       className="card-frame overflow-hidden group text-left w-full snap-start transition-colors hover:border-gold/60 active:border-gold active:scale-[0.99] transition-transform duration-100"
-      aria-label={`Copy ${label} to clipboard`}
+      aria-label={`Copy ${prefix ?? ""}${label} to clipboard`}
     >
       <div className="relative aspect-square">
         <Image
           src={image.src}
-          alt={label}
+          alt={`${prefix ?? ""}${label}`}
           fill
           sizes={sizes}
           priority={priority}
