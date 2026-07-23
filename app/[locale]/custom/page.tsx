@@ -60,42 +60,51 @@ export default async function CustomPage({
 
   return (
     <div className="pb-6">
-      <section className="atmosphere">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 pb-8 pt-7 sm:pt-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:items-start lg:gap-12">
-          <div>
-            <h1 className="display max-w-[820px] text-balance text-[clamp(30px,5.5vw,46px)] leading-[1.02] tracking-[-0.01em]">
-              {t("title")}
-            </h1>
-            <p className="mt-3 max-w-[640px] text-pretty text-[clamp(14px,2.5vw,17px)] leading-relaxed text-muted">
-              {t.rich("intro", {
-                strong: (chunks) => (
-                  <strong className="text-cream">{chunks}</strong>
-                ),
-              })}
-            </p>
-            <div className="mt-4">
-              <ProcessStrip
-                walkthrough={walkthrough}
-                inputLabels={[
-                  t("inputBase"),
-                  t("inputHero"),
-                  t("inputHero"),
-                  t("inputHero"),
-                ]}
-                outputLabel={t("outputLabel")}
-              />
-            </div>
+      <section className="atmosphere border-b border-line/60">
+        <div className="mx-auto max-w-6xl px-4 pb-7 pt-8 sm:pb-9 sm:pt-12">
+          <h1 className="display max-w-[860px] text-balance text-[clamp(34px,6vw,56px)] leading-[1.02] tracking-[-0.01em]">
+            {t.rich("title", {
+              gold: (chunks) => (
+                <span className="lz-goldtext">
+                  <span aria-hidden="true" className="lz-goldtext-outline">
+                    {chunks}
+                  </span>
+                  <span className="lz-goldtext-fill">{chunks}</span>
+                </span>
+              ),
+            })}
+          </h1>
+          <p className="mt-3 max-w-[620px] text-pretty text-[clamp(16px,2.5vw,19px)] leading-relaxed text-muted">
+            {t.rich("intro", {
+              strong: (chunks) => (
+                <strong className="text-cream">{chunks}</strong>
+              ),
+            })}
+          </p>
+          <div className="mt-5">
+            <ProcessStrip
+              walkthrough={walkthrough}
+              inputLabels={[
+                t("inputBase"),
+                t("inputHero"),
+                t("inputHero"),
+                t("inputHero"),
+              ]}
+              outputLabel={t("outputLabel")}
+            />
           </div>
-          <CustomWizard
-            refs={refs}
-            exampleInputs={provided.map((img, i) => ({
-              src: img.src,
-              alt: i === 0 ? t("altBaseImage") : t("altHero"),
-            }))}
-            exampleOutput={{ src: output.src, alt: t("altResult") }}
-          />
         </div>
       </section>
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:pt-8">
+        <CustomWizard
+          refs={refs}
+          exampleInputs={provided.map((img, i) => ({
+            src: img.src,
+            alt: i === 0 ? t("altBaseImage") : t("altHero"),
+          }))}
+          exampleOutput={{ src: output.src, alt: t("altResult") }}
+        />
+      </div>
     </div>
   );
 }
