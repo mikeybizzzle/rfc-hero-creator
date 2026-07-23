@@ -159,8 +159,10 @@ export const metaPromptExample =
   "Generate a prompt for adding additional hero characters to the image of Super T throwing a diamond party, using image 1 (the image of Super T throwing a diamond party) as the base image we want to work from and each additional image will contain the hero characters that we want to incorporate into the Super T Diamond Party image. Maintain the same quality and level of detail of the images. This prompt will be provided along with the images. Format the prompt similar to the reference prompt below.";
 
 export function metaPrompt(description: string): string {
-  const details = description.trim() || "[Details about the image you want generated]";
-  return `${details}
+  const details = description.trim() || "[description here]";
+  return `Generate a prompt for: ${details}
+
+Maintain the same quality and level of detail of the images. This prompt will be provided along with the images. Format the prompt similar to the reference prompt below.
 
 ## REFERENCE PROMPT
 
