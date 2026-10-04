@@ -1,40 +1,39 @@
 .main {
   display: flex;
-  flex-direction: column;
+  min-height: 100dvh;
   align-items: center;
   justify-content: center;
-  gap: 16px;
-  flex: 1;
   padding: 16px;
   box-sizing: border-box;
 }
 
-.video {
+/* Image is 64% of the stage width (1448x1086, so 48% tall); 14% tucks behind the video, leaving 34% above it.
+   The matching 34% spacer below keeps the video itself vertically centered. */
+.stage {
+  width: min(100%, 1000px, calc((100dvh - 64px) / 1.2425));
+}
+
+.stage::after {
+  content: "";
   display: block;
-  max-width: 100%;
-  max-height: calc(100dvh - 32px);
-  border: 4px solid #ffe37e;
-  box-sizing: border-box;
+  padding-top: 34%;
 }
 
 .image {
   display: block;
-  width: 100%;
+  position: relative;
+  z-index: 0;
+  width: 64%;
   height: auto;
+  margin: 0 auto -14%;
+  pointer-events: none;
 }
 
-@media (min-width: 768px) {
-  .main {
-    flex-direction: row;
-  }
-
-  .videoCol {
-    flex: 2;
-    min-width: 0;
-  }
-
-  .imageCol {
-    flex: 1;
-    min-width: 0;
-  }
+.video {
+  display: block;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: 4px solid #ffe37e;
+  box-sizing: border-box;
 }

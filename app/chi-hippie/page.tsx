@@ -5,11 +5,9 @@ import styles from "./page.module.css";
 export default function ChiHippiePage() {
   return (
     <main className={styles.main}>
-      <div className={styles.videoCol}>
+      <div className={styles.stage}>
+        <Image src={chiHippie} alt="" sizes="(min-width: 1000px) 640px, 64vw" priority className={styles.image} />
         <video src="/videos/chi-hippie.mp4" controls playsInline className={styles.video} />
-      </div>
-      <div className={styles.imageCol}>
-        <Image src={chiHippie} alt="" sizes="(min-width: 768px) 33vw, 100vw" className={styles.image} />
       </div>
     </main>
   );
