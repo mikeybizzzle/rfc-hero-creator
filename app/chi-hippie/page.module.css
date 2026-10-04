@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  min-height: 100dvh;
+  flex: 1;
   padding: 16px;
   box-sizing: border-box;
 }
