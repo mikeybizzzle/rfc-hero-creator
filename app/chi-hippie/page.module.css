@@ -1,0 +1,40 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  min-height: 100dvh;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.video {
+  display: block;
+  max-width: 100%;
+  max-height: calc(100dvh - 32px);
+  border: 4px solid #ffe37e;
+  box-sizing: border-box;
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (min-width: 768px) {
+  .main {
+    flex-direction: row;
+  }
+
+  .videoCol {
+    flex: 2;
+    min-width: 0;
+  }
+
+  .imageCol {
+    flex: 1;
+    min-width: 0;
+  }
+}

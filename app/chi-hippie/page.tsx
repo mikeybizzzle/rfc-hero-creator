@@ -1,12 +1,16 @@
+import Image from "next/image";
+import chiHippie from "@/public/images/chi-hippie.png";
+import styles from "./page.module.css";
+
 export default function ChiHippiePage() {
   return (
-    <main style={{ display: "flex", minHeight: "100dvh", alignItems: "center", justifyContent: "center", padding: 16, boxSizing: "border-box" }}>
-      <video
-        src="/videos/chi-hippie.mp4"
-        controls
-        playsInline
-        style={{ display: "block", maxWidth: "100%", maxHeight: "calc(100dvh - 32px)", border: "4px solid #ffe37e", boxSizing: "border-box" }}
-      />
+    <main className={styles.main}>
+      <div className={styles.videoCol}>
+        <video src="/videos/chi-hippie.mp4" controls playsInline className={styles.video} />
+      </div>
+      <div className={styles.imageCol}>
+        <Image src={chiHippie} alt="" sizes="(min-width: 768px) 33vw, 100vw" className={styles.image} />
+      </div>
     </main>
   );
 }
